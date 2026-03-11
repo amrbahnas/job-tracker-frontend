@@ -66,7 +66,11 @@ export default useMutation
 
 const errorMessageHandler = (error: any) => {
   if (error && error.response?.data?.message) {
-    return error.response?.data?.message
+    return (
+      error.response?.data?.message ||
+      error.response?.data ||
+      "Internal Server Error"
+    )
   }
   return null
 }
