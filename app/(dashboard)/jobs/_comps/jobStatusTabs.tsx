@@ -1,8 +1,7 @@
-import React from "react"
+import { Button } from "@/components/ui/button"
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Briefcase, Check, FolderPlus, Tag } from "lucide-react"
-import { Button } from "@/components/ui/button"
-import { cn } from "@/lib/utils"
+import React from "react"
 
 const STATUS_OPTIONS: {
   value: string
