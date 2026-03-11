@@ -65,10 +65,10 @@ const useMutation = (
 export default useMutation
 
 const errorMessageHandler = (error: any) => {
-  if (error && error.response?.data?.message) {
+  if (error) {
     return (
       error.response?.data?.message ||
-      error.response?.data ||
+      error.response?.data?.error ||
       "Internal Server Error"
     )
   }
