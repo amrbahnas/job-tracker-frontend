@@ -4,7 +4,7 @@ import { useCallback } from "react"
 import { VirtuosoGrid } from "react-virtuoso"
 
 import { Button } from "@/components/ui/button"
-import ReactPullToRefresh from "react-pull-to-refresh"
+import PullToRefresh from "react-simple-pull-to-refresh"
 import { useGetJobs } from "../_api/quieries"
 import useJobsFilters from "../hooks/useJobsFilters"
 import { JobCard } from "./jobCard"
@@ -31,11 +31,8 @@ export function JobsList() {
   }, [isLoading, pagination])
 
   return (
-    <ReactPullToRefresh
-      onRefresh={refetch as any}
-      loading={isLoading}
-      icon={isLoading ? <Spinner className="mx-auto mb-4" /> : null}
-    >
+    <PullToRefresh onRefresh={refetch as any}>
+      {isLoading ? <Spinner className="mx-auto mb-4" /> : null}
       <section aria-label="Job results" className="relative space-y-4">
         {error && !isLoading && !hasJobs && (
           <div
@@ -106,6 +103,6 @@ export function JobsList() {
           />
         )}
       </section>
-    </ReactPullToRefresh>
+    </PullToRefresh>
   )
 }
