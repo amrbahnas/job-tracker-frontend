@@ -1,0 +1,355 @@
+"use client"
+
+import { Button } from "@/components/ui/button"
+import { Form, FormItem } from "@/components/ui/form"
+import { Input } from "@/components/ui/input"
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select"
+import { Switch } from "@/components/ui/switch"
+import { Code, Info } from "lucide-react"
+import { useEffect } from "react"
+import { Controller, useForm } from "react-hook-form"
+import { useCreateWebsite, useUpdateWebsite } from "../_api/mutations"
+import { AutofillWithAiDialog } from "./autofillWithAiDialog"
+import { WebsiteUrlsEditor } from "./websiteUrlsEditor"
+import {
+  Collapsible,
+  CollapsibleContent,
+  CollapsibleTrigger,
+} from "@/components/ui/collapsible"
+
+export type WebsiteFormValues = {
+  name: string
+  urls: string[]
+  scrapeIntervalMinutes: number
+  enabled: boolean
+  selectors: {
+    jobCard: string
+    title: string
+    company?: string
+    link: string
+    location?: string
+    salary?: string
+    date?: string
+    description?: string
+  }
+}
+
+type WebsiteFormProps = {
+  website?: Website | null
+  onCancel?: () => void
+  onSuccess?: () => void
+}
+
+const SCRAPE_INTERVAL_OPTIONS = [
+  { label: "Every 10 minutes", value: 10 },
+  { label: "Every 15 minutes", value: 15 },
+  { label: "Every 30 minutes", value: 30 },
+  { label: "Every 1 hour", value: 60 },
+  { label: "Every 3 hours", value: 180 },
+  { label: "Every 6 hours", value: 360 },
+]
+
+export function WebsiteForm({
+  website,
+  onCancel,
+  onSuccess,
+}: WebsiteFormProps) {
+  const isEditing = Boolean(website?._id)
+
+  const form = useForm<WebsiteFormValues>({
+    defaultValues: {
+      name: website?.name ?? "",
+      urls:
+        Array.isArray(website?.urls) && website.urls.length > 0
+          ? website.urls
+          : [""],
+      scrapeIntervalMinutes: website?.scrapeIntervalMinutes ?? 60,
+      enabled: website?.enabled ?? true,
+      selectors: {
+        jobCard: website?.selectors?.jobCard ?? "",
+        title: website?.selectors?.title ?? "",
+        company: website?.selectors?.company ?? "",
+        link: website?.selectors?.link ?? "",
+        location: website?.selectors?.location ?? "",
+        salary: website?.selectors?.salary ?? "",
+        date: website?.selectors?.date ?? "",
+        description: website?.selectors?.description ?? "",
+      },
+    },
+  })
+
+  const {
+    control,
+    formState: { isSubmitting, errors },
+    setValue,
+    watch,
+    reset,
+    setError,
+  } = form
+
+  const createMutation = useCreateWebsite()
+  const updateMutation = useUpdateWebsite(website?._id || "")
+
+  useEffect(() => {
+    if (website) {
+      reset({
+        name: website.name,
+        urls:
+          Array.isArray(website.urls) && website.urls.length > 0
+            ? website.urls
+            : [""],
+        scrapeIntervalMinutes: website.scrapeIntervalMinutes ?? 60,
+        enabled: website.enabled,
+        selectors: {
+          jobCard: website.selectors?.jobCard ?? "",
+          title: website.selectors?.title ?? "",
+          company: website.selectors?.company ?? "",
+          link: website.selectors?.link ?? "",
+          location: website.selectors?.location ?? "",
+          salary: website.selectors?.salary ?? "",
+          date: website.selectors?.date ?? "",
+          description: website.selectors?.description ?? "",
+        },
+      })
+    }
+  }, [website, reset])
+
+  const submitting =
+    isSubmitting || createMutation.loading || updateMutation.loading
+
+  const onSubmit = (values: WebsiteFormValues) => {
+    const urls = (values.urls || []).map((u) => u.trim()).filter(Boolean)
+    if (urls.length === 0) {
+      setError("urls", {
+        type: "manual",
+        message: "Add at least one target URL.",
+      })
+      return Promise.reject()
+    }
+
+    const payload = {
+      name: values.name.trim(),
+      urls,
+      selectors: {
+        jobCard: values.selectors.jobCard.trim(),
+        title: values.selectors.title.trim(),
+        company: values.selectors.company?.trim() || undefined,
+        link: values.selectors.link.trim(),
+        location: values.selectors.location?.trim() || undefined,
+        salary: values.selectors.salary?.trim() || undefined,
+        date: values.selectors.date?.trim() || undefined,
+        description: values.selectors.description?.trim() || undefined,
+      },
+      enabled: values.enabled,
+      scrapeIntervalMinutes: values.scrapeIntervalMinutes || 60,
+    }
+
+    const mutation = isEditing ? updateMutation : createMutation
+
+    return new Promise<void>((resolve, reject) => {
+      mutation.mutate(payload, {
+        onSuccess: () => {
+          onSuccess?.()
+          resolve()
+        },
+        onError: () => {
+          reject()
+        },
+      })
+    })
+  }
+
+  const selectedInterval = watch("scrapeIntervalMinutes") ?? 60
+
+  const handleSelectorsExtracted = (selectors: {
+    jobCard?: string
+    title?: string
+    company?: string
+    location?: string
+    link?: string
+    description?: string
+    salary?: string
+    date?: string
+  }) => {
+    setValue("selectors.jobCard", selectors.jobCard ?? "", {
+      shouldDirty: true,
+    })
+    setValue("selectors.title", selectors.title ?? "", { shouldDirty: true })
+    setValue("selectors.company", selectors.company ?? "", {
+      shouldDirty: true,
+    })
+    setValue("selectors.location", selectors.location ?? "", {
+      shouldDirty: true,
+    })
+    setValue("selectors.link", selectors.link ?? "", { shouldDirty: true })
+    setValue("selectors.description", selectors.description ?? "", {
+      shouldDirty: true,
+    })
+    setValue("selectors.salary", selectors.salary ?? "", { shouldDirty: true })
+    setValue("selectors.date", selectors.date ?? "", { shouldDirty: true })
+  }
+
+  return (
+    <Form<WebsiteFormValues>
+      form={form}
+      onSubmit={onSubmit}
+      className="space-y-8"
+    >
+      <div className="space-y-4 rounded-lg border bg-card p-4 md:grid-cols-[2fr,1fr]">
+        <h3 className="flex items-center gap-2 text-base font-semibold text-primary">
+          <Info className="size-4" />
+          Basic information
+        </h3>
+
+        <div className="grid gap-4 md:grid-cols-2">
+          <FormItem name="name">
+            <Input label="Platform name" placeholder="e.g., LinkedIn, Indeed" />
+          </FormItem>
+          <div className="space-y-2">
+            <label className="text-md mb-3 block font-medium tracking-[-0.32px] text-gray-700 first-letter:uppercase">
+              Scrape interval
+            </label>
+            <Select
+              value={String(selectedInterval)}
+              onValueChange={(value) =>
+                setValue("scrapeIntervalMinutes", Number(value), {
+                  shouldDirty: true,
+                })
+              }
+            >
+              <SelectTrigger className="w-full">
+                <SelectValue placeholder="Select interval" />
+              </SelectTrigger>
+              <SelectContent>
+                {SCRAPE_INTERVAL_OPTIONS.map((option) => (
+                  <SelectItem key={option.value} value={String(option.value)}>
+                    {option.label}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+          </div>
+        </div>
+
+        <div className="space-y-3">
+          <label className="text-md mb-3 block font-medium tracking-[-0.32px] text-gray-700 first-letter:uppercase">
+            Target URLs
+          </label>
+          <WebsiteUrlsEditor
+            urls={watch("urls") ?? [""]}
+            onChange={(next) =>
+              setValue("urls", next, {
+                shouldDirty: true,
+              })
+            }
+            errorMessage={
+              typeof (errors.urls as any)?.message === "string"
+                ? (errors.urls as any).message
+                : undefined
+            }
+          />
+        </div>
+        <div className="flex items-center justify-between gap-4 rounded-lg border border-input/50 bg-background p-4">
+          <div className="space-y-0.5">
+            <label className="text-md font-medium tracking-[-0.32px] text-gray-700 first-letter:uppercase">
+              Active status
+            </label>
+            <p className="text-sm text-muted-foreground">
+              Enable or disable background scraping for this platform
+            </p>
+          </div>
+          <Controller
+            name="enabled"
+            control={control}
+            render={({ field }) => (
+              <Switch
+                checked={field.value}
+                onCheckedChange={field.onChange}
+                size="default"
+              />
+            )}
+          />
+        </div>
+      </div>
+      <div className="mb-0 w-full space-y-4 rounded-lg border bg-card p-4">
+        <div className="flex flex-wrap items-center justify-between gap-2">
+          <h3 className="flex items-center gap-2 text-base font-semibold text-primary">
+            <Code className="size-4" />
+            Data selectors
+          </h3>
+
+          <AutofillWithAiDialog
+            onSelectorsExtracted={handleSelectorsExtracted}
+          />
+        </div>
+        <Collapsible>
+          <p className="text-sm text-muted-foreground">
+            Use AI to detect selectors from a URL,{" "}
+            <CollapsibleTrigger className="cursor-pointer text-primary/70 underline">
+              or add them manually.
+            </CollapsibleTrigger>
+          </p>
+          <CollapsibleContent className="mt-4">
+            <div className="grid gap-4 md:grid-cols-2">
+              <FormItem name="selectors.jobCard">
+                <Input
+                  label="Job card wrapper"
+                  placeholder=".job-card-container"
+                />
+              </FormItem>
+              <FormItem name="selectors.company">
+                <Input label="Company name" placeholder=".company-link" />
+              </FormItem>
+
+              <FormItem name="selectors.title">
+                <Input label="Job title" placeholder="h3.title" />
+              </FormItem>
+              <FormItem name="selectors.location">
+                <Input label="Location" placeholder=".job-location" />
+              </FormItem>
+
+              <FormItem name="selectors.link">
+                <Input label="Job link" placeholder="a.apply-btn" />
+              </FormItem>
+              <FormItem name="selectors.salary">
+                <Input label="Salary range" placeholder=".salary-metadata" />
+              </FormItem>
+
+              <FormItem name="selectors.date">
+                <Input label="Posting date" placeholder="time.posted-on" />
+              </FormItem>
+              <FormItem name="selectors.description">
+                <Input label="Description summary" placeholder=".job-snippet" />
+              </FormItem>
+            </div>
+          </CollapsibleContent>
+        </Collapsible>
+      </div>
+
+      <div className="sticky bottom-0 flex items-center justify-end gap-2 bg-background py-6">
+        {onCancel && (
+          <Button
+            type="button"
+            variant="outline"
+            size="sm"
+            onClick={onCancel}
+            disabled={submitting}
+          >
+            Cancel
+          </Button>
+        )}
+        <Button type="submit" size="sm" disabled={submitting}>
+          {isEditing ? "Save changes" : "Save platform"}
+        </Button>
+      </div>
+    </Form>
+  )
+}
+
+export default WebsiteForm

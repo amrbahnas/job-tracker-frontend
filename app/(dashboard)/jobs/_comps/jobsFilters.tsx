@@ -1,0 +1,47 @@
+"use client"
+
+import SortSelector from "@/components/selectors/sortSelector"
+import { WebsiteSelector } from "@/components/selectors/WebsiteSelector"
+import SearchInput from "@/components/ui/searchInput"
+import { Globe, SortAsc } from "lucide-react"
+import useJobsFilters from "../hooks/useJobsFilters"
+import JobStatusTabs from "./jobStatusTabs"
+
+export function JobsFilters() {
+  const { filters, setFilters } = useJobsFilters()
+  const { status, sort, websiteId, search } = filters
+
+  return (
+    <section
+      className="flex flex-col-reverse justify-between gap-4 rounded-md sm:flex-row sm:items-center sm:border sm:bg-card sm:p-4"
+      aria-label="Jobs filters"
+    >
+      <div className="flex flex-1 gap-2 overflow-hidden">
+        <SearchInput
+          value={search}
+          onChange={(value) => setFilters({ search: value })}
+          className="transition-all duration-300 focus:w-screen sm:max-w-[380px] focus:sm:w-auto"
+        />
+        <WebsiteSelector
+          value={websiteId}
+          onChange={(value) =>
+            setFilters({ websiteId: value ?? ("" as string) })
+          }
+          className="w-full sm:w-40"
+          leftIcon={<Globe className="size-4" />}
+        />
+        <SortSelector
+          value={sort}
+          className="w-full sm:w-40"
+          onChange={(value) => setFilters({ sort: value })}
+          leftIcon={<SortAsc className="size-4" />}
+        />
+      </div>
+
+      <JobStatusTabs
+        value={status}
+        onChange={(value) => setFilters({ status: value })}
+      />
+    </section>
+  )
+}
