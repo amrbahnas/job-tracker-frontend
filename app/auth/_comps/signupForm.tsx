@@ -10,11 +10,13 @@ import { Button } from "@/components/ui/button"
 import Link from "next/link"
 import { useAuthActions } from "../_api/mutations"
 import PasswordInput from "@/components/ui/password-input"
+import ReCAPTCHA from "./ReCAPTCHA"
 
 const signupSchema = z.object({
   fullName: z.string().min(1, "Full name is required"),
   email: z.email("Invalid email"),
   password: z.string().min(8, "Password must be at least 8 characters long"),
+  recaptchaToken: z.string().min(1, "Please complete the ReCAPTCHA"),
   keepLoggedIn: z.boolean().optional(),
 })
 
@@ -61,14 +63,19 @@ export function SignupForm() {
         <FormItem name="password">
           <PasswordInput label="Password" />
         </FormItem>
-        <label className="flex cursor-pointer items-center gap-2">
+        {/* <label className="flex cursor-pointer items-center gap-2">
           <input
             type="checkbox"
             {...form.register("keepLoggedIn")}
             className="size-4 rounded border-input"
           />
           <span className="text-sm">Keep me logged in</span>
-        </label>
+        </label> */}
+        <ReCAPTCHA
+          onChange={(token) => {
+            form.setValue("recaptchaToken", token, { shouldValidate: true })
+          }}
+        />
         <Button
           type="submit"
           className="w-full"

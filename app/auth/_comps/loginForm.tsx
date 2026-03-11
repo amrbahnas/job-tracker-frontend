@@ -10,10 +10,12 @@ import { Button } from "@/components/ui/button"
 import { useAuthActions } from "../_api/mutations"
 import Link from "next/link"
 import PasswordInput from "@/components/ui/password-input"
+import ReCAPTCHA from "./ReCAPTCHA"
 
 const loginSchema = z.object({
   email: z.email("Invalid email"),
   password: z.string().min(8, "Password must be at least 8 characters long"),
+  recaptchaToken: z.string().min(1, "Please complete the ReCAPTCHA"),
   keepLoggedIn: z.boolean().optional(),
 })
 
@@ -62,14 +64,19 @@ export function LoginForm() {
             <PasswordInput checkStrength={false} />
           </FormItem>
         </div>
-        <label className="flex cursor-pointer items-center gap-2">
+        {/* <label className="flex cursor-pointer items-center gap-2">
           <input
             type="checkbox"
             {...form.register("keepLoggedIn")}
             className="size-4 rounded border-input"
           />
           <span className="text-sm">Keep me logged in</span>
-        </label>
+        </label> */}
+        <ReCAPTCHA
+          onChange={(token) => {
+            form.setValue("recaptchaToken", token, { shouldValidate: true })
+          }}
+        />
         <Button
           type="submit"
           className="w-full"
