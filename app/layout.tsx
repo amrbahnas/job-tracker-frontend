@@ -1,11 +1,9 @@
-import { Geist, Geist_Mono, Figtree } from "next/font/google"
+import { Figtree, Geist_Mono } from "next/font/google"
 
-import "./globals.css"
-import { ThemeProvider } from "@/components/theme-provider"
-import { cn } from "@/lib/utils"
 import ClientSideLayout from "@/components/layouts/clientSideLayout"
+import { cn } from "@/lib/utils"
 import { NuqsAdapter } from "nuqs/adapters/next/app"
-import { Toaster } from "sonner"
+import "./globals.css"
 
 const figtree = Figtree({ subsets: ["latin"], variable: "--font-sans" })
 
@@ -32,11 +30,8 @@ export default function RootLayout({
     >
       <body>
         <NuqsAdapter>
-          <ClientSideLayout>
-            <ThemeProvider>{children}</ThemeProvider>
-          </ClientSideLayout>
+          <ClientSideLayout>{children}</ClientSideLayout>
         </NuqsAdapter>
-        <Toaster position="bottom-right" richColors />
       </body>
     </html>
   )
