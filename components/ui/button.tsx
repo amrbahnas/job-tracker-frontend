@@ -48,6 +48,7 @@ function Button({
   size = "default",
   asChild = false,
   loading = false,
+  children,
   ...props
 }: React.ComponentProps<"button"> &
   VariantProps<typeof buttonVariants> & {
@@ -64,8 +65,10 @@ function Button({
       className={cn(buttonVariants({ variant, size, className }))}
       {...props}
     >
-      {loading && <Spinner className="size-4" />}
-      {props.children}
+      <span>
+        {loading && <Spinner className="size-4" />}
+        {children}
+      </span>
     </Comp>
   )
 }
