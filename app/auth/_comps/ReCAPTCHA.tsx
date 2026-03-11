@@ -1,12 +1,6 @@
-import GoogleCaptcha from "react-google-recaptcha"
-
+import { GoogleReCaptcha } from "react-google-recaptcha-v3"
 const ReCAPTCHA = ({ onChange }: { onChange: (value: string) => void }) => {
-  return (
-    <GoogleCaptcha
-      sitekey={process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY || ""}
-      onChange={(token) => onChange(token || "")}
-    />
-  )
+  return <GoogleReCaptcha onVerify={(token) => onChange(token || "")} />
 }
 
 export default ReCAPTCHA
