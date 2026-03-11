@@ -47,7 +47,7 @@ function useInfiniteQuery<T>(endpoint: string, options?: QueryOptionsType) {
     queryFn: fetchPage,
     initialPageParam: 1,
     getNextPageParam: (lastPage) => {
-      const pagination = lastPage?.data?.pagination
+      const pagination = lastPage?.pagination
       if (pagination?.currentPage < pagination?.totalPages) {
         return pagination.currentPage + 1
       }

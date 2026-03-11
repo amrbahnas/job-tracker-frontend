@@ -8,8 +8,6 @@ import PullToRefresh from "react-simple-pull-to-refresh"
 import { useGetJobs } from "../_api/quieries"
 import useJobsFilters from "../hooks/useJobsFilters"
 import { JobCard } from "./jobCard"
-import { Loader2 } from "lucide-react"
-import { Spinner } from "@/components/ui/spinner"
 export function JobsList() {
   const { filters } = useJobsFilters()
   const {
@@ -32,7 +30,6 @@ export function JobsList() {
 
   return (
     <PullToRefresh onRefresh={refetch as any}>
-      {isLoading ? <Spinner className="mx-auto mb-4" /> : null}
       <section aria-label="Job results" className="relative space-y-4">
         {error && !isLoading && !hasJobs && (
           <div
@@ -73,34 +70,32 @@ export function JobsList() {
           <VirtuosoGrid
             useWindowScroll
             data={jobs}
-            overscan={200}
+            overscan={12}
             endReached={handleEndReached}
             listClassName="grid gap-4 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3"
             itemClassName="min-h-[120px]"
             computeItemKey={(_, job) => (job as Job)._id ?? ""}
-            components={{
-              Footer: () => (
-                <>
-                  {pagination?.isFetchingNextPage && (
-                    <p
-                      className="col-span-full mt-2 text-center text-xs text-muted-foreground"
-                      role="status"
-                    >
-                      Loading more jobs…
-                    </p>
-                  )}
-                  {!pagination?.hasMore && !isLoading && jobs.length > 12 && (
-                    <p className="col-span-full mt-2 text-center text-xs text-muted-foreground">
-                      You&apos;ve reached the end of the list.
-                    </p>
-                  )}
-                </>
-              ),
-            }}
             itemContent={(_, job) => (
               <JobCard job={job as Job} refetch={refetch} />
             )}
           />
+        )}
+        {hasJobs && (
+          <>
+            {pagination?.isFetchingNextPage && (
+              <p
+                className="col-span-full mt-2 text-center text-xs text-muted-foreground"
+                role="status"
+              >
+                Loading more jobs…
+              </p>
+            )}
+            {!pagination?.hasMore && !isLoading && (
+              <p className="col-span-full mt-2 text-center text-xs text-muted-foreground">
+                You&apos;ve reached the end of the list.
+              </p>
+            )}
+          </>
         )}
       </section>
     </PullToRefresh>
