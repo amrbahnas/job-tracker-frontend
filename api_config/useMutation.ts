@@ -4,6 +4,7 @@ import { toast } from "sonner"
 import useAppStore from "@/store/useAppStore"
 import axiosInstance from "./proxyClient"
 import { useAuthControl } from "@/hooks/useAuthControl"
+import { useQueryClient } from "@tanstack/react-query"
 
 const useMutation = (
   endpoint: string,
@@ -12,11 +13,12 @@ const useMutation = (
     onSuccess?: (a: any, b: any, c: any) => void
     onError?: (a: any, b: any, c: any) => void
     headers?: any
+    invalidateQueries?: string[]
   }
 ) => {
   const method = options?.method || "post"
   const isLogin = useAppStore((state) => state.isLogin)
-
+  const queryClient = useQueryClient()
   const { authLogout } = useAuthControl()
 
   const { error, ...result } = reactUseMutation<
@@ -39,6 +41,11 @@ const useMutation = (
       // context => {queryClient, queryKey, queryVariables}
       // result => response from server
       options?.onSuccess && options.onSuccess(result, variables, context)
+      if (options?.invalidateQueries) {
+        options.invalidateQueries.forEach((query) => {
+          queryClient.invalidateQueries({ queryKey: [query] })
+        })
+      }
     },
 
     onError: (error, variables, context) => {

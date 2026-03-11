@@ -14,7 +14,7 @@ import { Switch } from "@/components/ui/switch"
 import { Code, Info } from "lucide-react"
 import { useEffect } from "react"
 import { Controller, useForm } from "react-hook-form"
-import { useCreateWebsite, useUpdateWebsite } from "../_api/mutations"
+
 import { AutofillWithAiDialog } from "./autofillWithAiDialog"
 import { WebsiteUrlsEditor } from "./websiteUrlsEditor"
 import {
@@ -22,6 +22,8 @@ import {
   CollapsibleContent,
   CollapsibleTrigger,
 } from "@/components/ui/collapsible"
+import { useWebsitesActions } from "../_api/mutations"
+import { toast } from "sonner"
 
 export type WebsiteFormValues = {
   name: string
@@ -43,7 +45,6 @@ export type WebsiteFormValues = {
 type WebsiteFormProps = {
   website?: Website | null
   onCancel?: () => void
-  onSuccess?: () => void
 }
 
 const SCRAPE_INTERVAL_OPTIONS = [
@@ -55,11 +56,7 @@ const SCRAPE_INTERVAL_OPTIONS = [
   { label: "Every 6 hours", value: 360 },
 ]
 
-export function WebsiteForm({
-  website,
-  onCancel,
-  onSuccess,
-}: WebsiteFormProps) {
+export function WebsiteForm({ website, onCancel }: WebsiteFormProps) {
   const isEditing = Boolean(website?._id)
 
   const form = useForm<WebsiteFormValues>({
@@ -93,8 +90,9 @@ export function WebsiteForm({
     setError,
   } = form
 
-  const createMutation = useCreateWebsite()
-  const updateMutation = useUpdateWebsite(website?._id || "")
+  const { create, createLoading, update, updateLoading } = useWebsitesActions(
+    website?._id
+  )
 
   useEffect(() => {
     if (website) {
@@ -120,8 +118,7 @@ export function WebsiteForm({
     }
   }, [website, reset])
 
-  const submitting =
-    isSubmitting || createMutation.loading || updateMutation.loading
+  const submitting = isSubmitting || createLoading || updateLoading
 
   const onSubmit = (values: WebsiteFormValues) => {
     const urls = (values.urls || []).map((u) => u.trim()).filter(Boolean)
@@ -150,18 +147,17 @@ export function WebsiteForm({
       scrapeIntervalMinutes: values.scrapeIntervalMinutes || 60,
     }
 
-    const mutation = isEditing ? updateMutation : createMutation
+    const mutation = isEditing ? update : create
 
-    return new Promise<void>((resolve, reject) => {
-      mutation.mutate(payload, {
-        onSuccess: () => {
-          onSuccess?.()
-          resolve()
-        },
-        onError: () => {
-          reject()
-        },
-      })
+    mutation(payload, {
+      onSuccess: () => {
+        toast.success(
+          isEditing
+            ? "Website updated successfully"
+            : "Website created successfully"
+        )
+        onCancel?.()
+      },
     })
   }
 

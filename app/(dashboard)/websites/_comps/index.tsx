@@ -48,7 +48,6 @@ function WebsitesView() {
         editingWebsite={editingWebsite}
         isOpen={isFormOpen}
         onClose={handleCloseForm}
-        onSuccess={refetch}
       />
     </main>
   )

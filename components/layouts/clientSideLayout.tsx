@@ -1,5 +1,6 @@
 "use client"
 
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools"
 import useFirebaseNotifications from "@/hooks/useFirebaseNotifications"
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query"
 import { useTheme } from "next-themes"
@@ -13,6 +14,7 @@ const ClientSideLayout = ({ children }: { children: React.ReactNode }) => {
   useFirebaseNotifications()
   return (
     <QueryClientProvider client={queryClient}>
+      <ReactQueryDevtools />
       <GoogleReCaptchaProvider
         reCaptchaKey={process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY || ""}
       >

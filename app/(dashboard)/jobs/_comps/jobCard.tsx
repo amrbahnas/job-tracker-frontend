@@ -16,7 +16,6 @@ import { toast } from "sonner"
 
 type JobCardProps = {
   job: Job
-  refetch: () => void
 }
 
 function getStatusStyles(status: Job["status"]) {
@@ -64,7 +63,7 @@ function formatScrapedTime(createdAt: string) {
   return `Scraped ${diffDays} day${diffDays === 1 ? "" : "s"} ago`
 }
 
-export function JobCard({ job, refetch }: JobCardProps) {
+export function JobCard({ job }: JobCardProps) {
   const { updateJobStatus, isUpdatingJobStatus, deleteJob, isDeletingJob } =
     useJobActions({
       id: job._id,
@@ -90,7 +89,6 @@ export function JobCard({ job, refetch }: JobCardProps) {
       { status: nextStatus },
       {
         onSuccess: () => {
-          refetch()
           toast.success(`Job status updated to ${nextStatus} successfully`)
         },
       }
@@ -123,7 +121,7 @@ export function JobCard({ job, refetch }: JobCardProps) {
 
     deleteJob(undefined, {
       onSuccess: () => {
-        refetch()
+        toast.success(`Job deleted successfully`)
       },
     })
   }

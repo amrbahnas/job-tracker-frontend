@@ -10,12 +10,10 @@ const WebsiteFormDialog = ({
   editingWebsite,
   isOpen,
   onClose,
-  onSuccess,
 }: {
   editingWebsite: Website | null
   isOpen: boolean
   onClose: () => void
-  onSuccess: () => void
 }) => {
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
@@ -26,11 +24,7 @@ const WebsiteFormDialog = ({
           </DialogTitle>
         </DialogHeader>
 
-        <WebsiteForm
-          website={editingWebsite}
-          onCancel={onClose}
-          onSuccess={onSuccess}
-        />
+        <WebsiteForm website={editingWebsite} onCancel={onClose} />
       </DialogContent>
     </Dialog>
   )

@@ -35,8 +35,8 @@ function useQuery<T>(endpoint: string, options?: UseQueryOptionsType) {
     initialData: options?.initialResults,
     retry: options?.retry || 2,
     retryDelay: (retryCount: number) => retryCount * 2000,
-    staleTime: options?.staleTime || 0,
-    refetchOnWindowFocus: options?.refetchOnWindowFocus || false,
+    staleTime: options?.staleTime || 60 * 1000, // 1 minute
+    refetchOnWindowFocus: options?.refetchOnWindowFocus || true,
   })
 
   useEffect(() => {

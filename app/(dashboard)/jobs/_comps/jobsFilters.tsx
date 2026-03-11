@@ -1,9 +1,11 @@
 "use client"
 
+import RefetchBTN from "@/components/common/refetchBTN"
 import SortSelector from "@/components/selectors/sortSelector"
 import { WebsiteSelector } from "@/components/selectors/WebsiteSelector"
 import SearchInput from "@/components/ui/searchInput"
 import { Globe, SortAsc } from "lucide-react"
+import JOBS_KEYS from "../_api/keys"
 import useJobsFilters from "../hooks/useJobsFilters"
 import JobStatusTabs from "./jobStatusTabs"
 
@@ -36,6 +38,7 @@ export function JobsFilters() {
           onChange={(value) => setFilters({ sort: value })}
           leftIcon={<SortAsc className="size-4" />}
         />
+        <RefetchBTN queryKey={JOBS_KEYS.getJobs} className="hidden sm:flex" />
       </div>
 
       <JobStatusTabs

@@ -42,7 +42,7 @@ function usePagination<T>(endpoint: string, options?: QueryOptionsType) {
   const { data, isLoading, ...result } = reactUseQuery<any, CustomError>({
     queryKey: [endpoint, page, options?.params || "", pageSize],
     queryFn,
-    staleTime: options?.staleTime || "5s",
+    staleTime: options?.staleTime || 60 * 1000, // 1 minute
     retryDelay: (retryCount: number) => retryCount * 2000,
     retry: options?.retry || 3,
     initialData: options?.initialData,
@@ -50,7 +50,7 @@ function usePagination<T>(endpoint: string, options?: QueryOptionsType) {
     placeholderData: options?.keepPreviousData
       ? keepPreviousDataPlaceholder
       : undefined,
-    refetchOnWindowFocus: options?.refetchOnWindowFocus || false,
+    refetchOnWindowFocus: options?.refetchOnWindowFocus || true,
   })
 
   useEffect(() => {

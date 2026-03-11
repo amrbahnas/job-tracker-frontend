@@ -1,6 +1,5 @@
 "use client"
 
-import { useEffect, useState } from "react"
 import { Button } from "@/components/ui/button"
 import {
   Dialog,
@@ -10,26 +9,25 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog"
+import { useState } from "react"
 import { WebsiteUrlsEditor } from "./websiteUrlsEditor"
-import { useUpdateWebsiteUrls } from "../_api/mutations"
+
 import { Link2 } from "lucide-react"
+import { toast } from "sonner"
+import { useWebsitesActions } from "../_api/mutations"
 
 type WebsiteUrlsDialogProps = {
   website: Website
-  onSuccess?: () => void
 }
 
-export function WebsiteUrlsDialog({
-  website,
-  onSuccess,
-}: WebsiteUrlsDialogProps) {
+export function WebsiteUrlsDialog({ website }: WebsiteUrlsDialogProps) {
   const [urlsDialogOpen, setUrlsDialogOpen] = useState(false)
   const [urls, setUrls] = useState<string[]>(website.urls)
   const [errorMessage, setErrorMessage] = useState<string | undefined>(
     undefined
   )
 
-  const { mutate, loading } = useUpdateWebsiteUrls(website._id)
+  const { updateUrls, updateUrlsLoading } = useWebsitesActions(website._id)
 
   const handleSubmit = (event: React.FormEvent) => {
     event.preventDefault()
@@ -39,11 +37,11 @@ export function WebsiteUrlsDialog({
       return
     }
 
-    mutate(
+    updateUrls(
       { urls: cleanedUrls },
       {
         onSuccess: () => {
-          onSuccess?.()
+          toast.success("Website URLs updated successfully")
           setUrlsDialogOpen(false)
         },
       }
@@ -85,11 +83,16 @@ export function WebsiteUrlsDialog({
               variant="outline"
               size="sm"
               onClick={() => setUrlsDialogOpen(false)}
-              disabled={loading}
+              disabled={updateUrlsLoading}
             >
               Cancel
             </Button>
-            <Button type="submit" size="sm" disabled={loading}>
+            <Button
+              type="submit"
+              size="sm"
+              disabled={updateUrlsLoading}
+              loading={updateUrlsLoading}
+            >
               Save URLs
             </Button>
           </DialogFooter>

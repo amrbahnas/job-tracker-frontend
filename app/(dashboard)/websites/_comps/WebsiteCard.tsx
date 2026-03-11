@@ -1,11 +1,11 @@
 "use client"
 
-import { useState } from "react"
 import { Button } from "@/components/ui/button"
-import { useDeleteWebsite } from "../_api/mutations"
+
+import { Pencil, Trash2 } from "lucide-react"
 import { toast } from "sonner"
-import { Link2, Pencil, Trash2 } from "lucide-react"
 import { WebsiteUrlsDialog } from "./websiteUrlsDialog"
+import { useWebsitesActions } from "../_api/mutations"
 
 type WebsiteStatus = "active" | "paused" | string
 
@@ -95,18 +95,19 @@ function formatInterval(minutes?: number) {
   return `${minutes}m interval`
 }
 
-export function WebsiteCard({
-  website,
-  onEditWebsite,
-  refetch,
-}: WebsiteCardProps) {
-  const { mutate, loading } = useDeleteWebsite(website._id)
+export function WebsiteCard({ website, onEditWebsite }: WebsiteCardProps) {
+  const { deleteWebsite, deleteWebsiteLoading } = useWebsitesActions()
   const urlsCount = website.urls?.length ?? 0
 
   const handleDelete = () => {
-    if (loading) return
-    mutate({}, { onSuccess: () => refetch?.() })
-    toast.success("Website deleted successfully")
+    deleteWebsite(
+      {},
+      {
+        onSuccess: () => {
+          toast.success("Website deleted successfully")
+        },
+      }
+    )
   }
 
   return (
@@ -131,7 +132,7 @@ export function WebsiteCard({
           </p>
         </div>
         <div className="flex items-center justify-between gap-2 text-xs">
-          <WebsiteUrlsDialog website={website} onSuccess={refetch} />
+          <WebsiteUrlsDialog website={website} />
         </div>
       </header>
 
@@ -153,7 +154,7 @@ export function WebsiteCard({
             className="size-7 hover:text-destructive"
             aria-label={`Delete ${website.name}`}
             onClick={handleDelete}
-            disabled={loading}
+            disabled={deleteWebsiteLoading}
           >
             <Trash2 className="size-3.5" />
           </Button>

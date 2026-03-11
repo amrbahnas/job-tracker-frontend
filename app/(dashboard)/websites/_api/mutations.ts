@@ -1,50 +1,48 @@
-import { useQueryClient } from "@tanstack/react-query"
 import useMutation from "@/api_config/useMutation"
+import WEBSITES_KEYS from "./keys"
 
-export const useCreateWebsite = () => {
-  const queryClient = useQueryClient()
-
-  return useMutation("/websites", {
-    method: "post",
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["/websites"] })
-    },
+export const useWebsitesActions = (id?: string) => {
+  const { mutate: create, loading: createLoading } = useMutation("websites", {
+    invalidateQueries: [WEBSITES_KEYS.getWebsites],
   })
-}
+  const { mutate: update, loading: updateLoading } = useMutation(
+    `websites/${id}`,
+    {
+      method: "put",
+      invalidateQueries: [WEBSITES_KEYS.getWebsites],
+    }
+  )
+  const { mutate: deleteWebsite, loading: deleteWebsiteLoading } = useMutation(
+    `websites/${id}`,
+    {
+      method: "delete",
+      invalidateQueries: [WEBSITES_KEYS.getWebsites],
+    }
+  )
+  const { mutate: updateUrls, loading: updateUrlsLoading } = useMutation(
+    `website-urls/${id}`,
+    {
+      invalidateQueries: [WEBSITES_KEYS.getWebsites],
+    }
+  )
 
-export const useUpdateWebsite = (id: string) => {
-  const queryClient = useQueryClient()
-
-  return useMutation(`/websites/${id}`, {
-    method: "put",
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["/websites"] })
-    },
-  })
-}
-
-export const useDeleteWebsite = (id: string) => {
-  const queryClient = useQueryClient()
-
-  return useMutation(`/websites/${id}`, {
-    method: "delete",
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["/websites"] })
-    },
-  })
-}
-
-export const useUpdateWebsiteUrls = (id: string) => {
-  const queryClient = useQueryClient()
-
-  return useMutation(`/website-urls/${id}`, {
-    method: "patch",
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["/websites"] })
-    },
-  })
+  return {
+    create,
+    createLoading,
+    update,
+    updateLoading,
+    deleteWebsite,
+    deleteWebsiteLoading,
+    updateUrls,
+    updateUrlsLoading,
+  }
 }
 
 export const useExtractSelectors = () => {
-  return useMutation("/ats/extract-selectors")
+  const { mutate: extractSelectors, loading: extractSelectorsLoading } =
+    useMutation("/ats/extract-selectors")
+  return {
+    extractSelectors,
+    extractSelectorsLoading,
+  }
 }

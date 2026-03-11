@@ -53,11 +53,12 @@ function useInfiniteQuery<T>(endpoint: string, options?: QueryOptionsType) {
       }
       return undefined
     },
-    staleTime: options?.staleTime || "5s",
+    staleTime: options?.staleTime || 60 * 1000, // 1 minute
     retry: options?.retry || 3,
     initialData: options?.initialData,
     enabled: !options?.skip,
-    refetchOnWindowFocus: options?.refetchOnWindowFocus || false,
+
+    refetchOnWindowFocus: options?.refetchOnWindowFocus || true,
   })
 
   useEffect(() => {
