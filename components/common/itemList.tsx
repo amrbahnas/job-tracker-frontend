@@ -22,7 +22,7 @@ export function ItemList({
   isLoading: boolean
   error: Error | null
   refetch: () => void
-  itemContent: (data: any, item: any) => React.ReactNode
+  itemContent: (data: any, item: any, index: number) => React.ReactNode
   listClassName?: string
   itemClassName?: string
   messages?: {

@@ -12,6 +12,7 @@ import {
 } from "lucide-react"
 
 import { Button } from "@/components/ui/button"
+import { DangerConfirmButton } from "@/components/common/DangerConfirmButton"
 import { useJobActions } from "../_api/mutations"
 import { toast } from "sonner"
 import dayjs from "dayjs"
@@ -47,13 +48,6 @@ export function JobCard({ job }: JobCardProps) {
   }
 
   const handleDelete = () => {
-    const confirmed =
-      typeof window === "undefined"
-        ? true
-        : window.confirm("Are you sure you want to delete this job?")
-
-    if (!confirmed) return
-
     deleteJob(undefined, {
       onSuccess: () => {
         toast.success(`Job deleted successfully`)
@@ -246,17 +240,20 @@ export function JobCard({ job }: JobCardProps) {
           <div className="flex flex-col gap-1">{renderFooterMessage()}</div>
 
           <div className="ml-auto flex items-center gap-1.5">
-            <Button
-              type="button"
-              size="icon-sm"
-              variant="ghost"
+            <DangerConfirmButton
               aria-label="Delete job"
               disabled={isMutating}
-              onClick={handleDelete}
+              onConfirm={handleDelete}
+              size="icon-sm"
+              variant="ghost"
               className="text-[#6B7280] hover:text-red-500 dark:text-slate-400 dark:hover:text-red-400"
+              title="Delete job?"
+              description="This will permanently remove this job from your list."
+              confirmText="Delete"
+              cancelText="Cancel"
             >
               <Trash2 className="size-3.5" />
-            </Button>
+            </DangerConfirmButton>
             {renderActionsByStatus()}
           </div>
         </footer>

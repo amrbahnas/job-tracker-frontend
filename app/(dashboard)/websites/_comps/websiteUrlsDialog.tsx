@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button"
 import {
   Dialog,
   DialogContent,
+  DialogDescription,
   DialogFooter,
   DialogHeader,
   DialogTitle,
@@ -15,6 +16,7 @@ import { WebsiteUrlsEditor } from "./websiteUrlsEditor"
 import { Link2 } from "lucide-react"
 import { toast } from "sonner"
 import { useWebsitesActions } from "../_api/mutations"
+import getPlatformBadge from "@/utilies/getPlatformBadge"
 
 type WebsiteUrlsDialogProps = {
   website: Website
@@ -29,6 +31,12 @@ export function WebsiteUrlsDialog({ website }: WebsiteUrlsDialogProps) {
 
   const { updateUrls, updateUrlsLoading } = useWebsitesActions(website._id)
 
+  const handleClose = () => {
+    setUrlsDialogOpen(false)
+    setUrls(website.urls)
+    setErrorMessage(undefined)
+  }
+
   const handleSubmit = (event: React.FormEvent) => {
     event.preventDefault()
     const cleanedUrls = urls.map((u) => u.trim()).filter(Boolean)
@@ -42,30 +50,39 @@ export function WebsiteUrlsDialog({ website }: WebsiteUrlsDialogProps) {
       {
         onSuccess: () => {
           toast.success("Website URLs updated successfully")
-          setUrlsDialogOpen(false)
+          handleClose()
         },
       }
     )
   }
 
   return (
-    <Dialog open={urlsDialogOpen} onOpenChange={setUrlsDialogOpen}>
+    <Dialog
+      open={urlsDialogOpen}
+      onOpenChange={(value) =>
+        value ? setUrlsDialogOpen(true) : handleClose()
+      }
+    >
       <DialogTrigger asChild>
         <Button
           type="button"
           variant="outline"
           size="sm"
-          className="h-7 px-2 text-[11px]"
+          className="px-2 text-[11px]"
           onClick={() => setUrlsDialogOpen(true)}
         >
           <Link2 className="mr-1 size-3" />
           Manage URLs
         </Button>
       </DialogTrigger>
-      <DialogContent>
+      <DialogContent className="py-0 sm:max-w-3xl">
         <form onSubmit={handleSubmit} className="space-y-4">
-          <DialogHeader>
-            <DialogTitle>Manage target URLs</DialogTitle>
+          <DialogHeader className="py-6">
+            <DialogTitle className="text-md flex items-center gap-1 leading-tight font-semibold">
+              {getPlatformBadge(website.name, 8)}
+              <span className="capitalize">{website.name}</span>
+              <span>URLs</span>
+            </DialogTitle>
           </DialogHeader>
 
           <WebsiteUrlsEditor
@@ -76,13 +93,15 @@ export function WebsiteUrlsDialog({ website }: WebsiteUrlsDialogProps) {
             }}
             errorMessage={errorMessage}
           />
-
-          <DialogFooter className="mt-4">
+          <DialogDescription>
+            These pages will be scraped on the configured interval.
+          </DialogDescription>
+          <DialogFooter className="mt-12 py-6">
             <Button
               type="button"
               variant="outline"
               size="sm"
-              onClick={() => setUrlsDialogOpen(false)}
+              onClick={handleClose}
               disabled={updateUrlsLoading}
             >
               Cancel

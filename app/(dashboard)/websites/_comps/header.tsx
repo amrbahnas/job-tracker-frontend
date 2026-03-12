@@ -1,11 +1,9 @@
-import React from "react"
 import { Button } from "@/components/ui/button"
+import { useState } from "react"
+import WebsiteFormDialog from "./websiteFormDialog"
 
-type HeaderProps = {
-  onAddClick: () => void
-}
-
-const Header = ({ onAddClick }: HeaderProps) => {
+const Header = () => {
+  const [isFormOpen, setIsFormOpen] = useState(false)
   return (
     <header className="flex flex-wrap items-baseline justify-between gap-2">
       <div>
@@ -21,10 +19,15 @@ const Header = ({ onAddClick }: HeaderProps) => {
       </div>
 
       <div className="flex items-center gap-2">
-        <Button type="button" size="sm" onClick={onAddClick}>
+        <Button type="button" size="sm" onClick={() => setIsFormOpen(true)}>
           Add website
         </Button>
       </div>
+      <WebsiteFormDialog
+        editingWebsite={null}
+        isOpen={isFormOpen}
+        onClose={() => setIsFormOpen(false)}
+      />
     </header>
   )
 }

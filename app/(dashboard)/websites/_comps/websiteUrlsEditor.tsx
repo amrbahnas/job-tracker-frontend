@@ -1,5 +1,6 @@
 "use client"
 
+import { Error } from "@/components/common/error"
 import { Button } from "@/components/ui/button"
 import { Plus, Trash2 } from "lucide-react"
 
@@ -57,20 +58,21 @@ export function WebsiteUrlsEditor({
       <button
         type="button"
         onClick={handleAdd}
-        className="flex h-10 w-full items-center justify-center gap-2 rounded-lg border border-dashed border-input bg-transparent text-sm font-medium text-muted-foreground transition-colors hover:border-muted-foreground/50 hover:bg-muted/30 hover:text-foreground"
+        disabled={urls.length >= 10}
+        className="flex h-10 w-full cursor-pointer items-center justify-center gap-2 rounded-lg border border-dashed border-input bg-transparent text-sm font-medium text-muted-foreground transition-colors hover:border-muted-foreground/50 hover:bg-muted/30 hover:text-foreground disabled:cursor-not-allowed"
       >
         <Plus className="size-4" />
         Add URL
       </button>
-      {errorMessage && (
-        <p className="text-xs text-destructive">{errorMessage}</p>
-      )}
-      <p className="text-xs text-muted-foreground">
-        These pages will be scraped on the configured interval.
-      </p>
+      <Error
+        error={
+          errorMessage ||
+          (urls.length >= 10 ? "You can only add up to 10 URLs" : undefined)
+        }
+        hideOkButton
+      />
     </div>
   )
 }
 
 export default WebsiteUrlsEditor
-

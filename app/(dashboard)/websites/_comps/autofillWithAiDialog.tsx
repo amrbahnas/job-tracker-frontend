@@ -14,7 +14,7 @@ import {
 import { Label } from "@/components/ui/label"
 import { cn } from "@/lib/utils"
 import { Code, Info, Sparkles } from "lucide-react"
-import { useState } from "react"
+import { useCallback, useState } from "react"
 import { toast } from "sonner"
 import { useExtractSelectors } from "../_api/mutations"
 
@@ -39,10 +39,9 @@ export function AutofillWithAiDialog({
   const [open, setOpen] = useState(false)
   const [cardHtml, setCardHtml] = useState("")
 
-  const { mutate: extractSelectors, isPending: isExtractingSelectors } =
-    useExtractSelectors()
+  const { extractSelectors, extractSelectorsLoading } = useExtractSelectors()
 
-  const handleExtract = () => {
+  const handleExtract = useCallback(() => {
     const trimmed = cardHtml?.trim()
     if (!trimmed) return
     extractSelectors(
@@ -68,7 +67,7 @@ export function AutofillWithAiDialog({
         },
       }
     )
-  }
+  }, [cardHtml, extractSelectors, onSelectorsExtracted])
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
@@ -83,7 +82,7 @@ export function AutofillWithAiDialog({
           Autofill with AI
         </Button>
       </DialogTrigger>
-      <DialogContent className="sm:max-w-lg">
+      <DialogContent className="">
         <DialogHeader>
           <DialogTitle className="flex items-center gap-2">
             <Code className="size-5" aria-hidden />
@@ -114,7 +113,7 @@ export function AutofillWithAiDialog({
             onChange={(e) => setCardHtml(e.target.value)}
             placeholder="Paste the HTML code of a single job card here..."
             className="min-h-[160px] w-full resize-y rounded-lg border border-input bg-background px-3 py-2 text-sm shadow-xs outline-none placeholder:text-muted-foreground focus-visible:border-ring focus-visible:ring-2 focus-visible:ring-ring/50"
-            disabled={isExtractingSelectors}
+            disabled={extractSelectorsLoading}
           />
         </div>
 
@@ -123,7 +122,7 @@ export function AutofillWithAiDialog({
             <Button
               type="button"
               variant="outline"
-              disabled={isExtractingSelectors}
+              disabled={extractSelectorsLoading}
             >
               Cancel
             </Button>
@@ -131,7 +130,7 @@ export function AutofillWithAiDialog({
           <Button
             type="button"
             onClick={handleExtract}
-            disabled={!cardHtml?.trim() || isExtractingSelectors}
+            disabled={!cardHtml?.trim() || extractSelectorsLoading}
           >
             <Sparkles className="size-4" aria-hidden />
             Extract Selectors
