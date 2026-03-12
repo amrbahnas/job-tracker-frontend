@@ -312,7 +312,12 @@ export function WebsiteForm({ website, onCancel }: WebsiteFormProps) {
             Cancel
           </Button>
         )}
-        <Button type="submit" size="sm" disabled={submitting}>
+        <Button
+          type="submit"
+          size="sm"
+          disabled={submitting}
+          loading={submitting}
+        >
           {isEditing ? "Save changes" : "Save platform"}
         </Button>
       </div>
