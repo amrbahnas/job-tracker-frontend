@@ -8,6 +8,7 @@ import { Globe, SortAsc } from "lucide-react"
 import JOBS_KEYS from "../_api/keys"
 import useJobsFilters from "../hooks/useJobsFilters"
 import JobStatusTabs from "./jobStatusTabs"
+import ScrapeBTN from "./scraptBTN"
 
 export function JobsFilters() {
   const { filters, setFilters } = useJobsFilters()
@@ -22,7 +23,7 @@ export function JobsFilters() {
         <SearchInput
           value={search}
           onChange={(value) => setFilters({ search: value })}
-          className="transition-all duration-300 focus:w-screen sm:max-w-[380px] focus:sm:w-auto"
+          className="min transition-all duration-300 focus:w-screen sm:max-w-[380px] focus:sm:w-auto"
         />
         <WebsiteSelector
           value={websiteId}
@@ -32,12 +33,15 @@ export function JobsFilters() {
           className="w-full sm:w-40"
           leftIcon={<Globe className="size-4" />}
         />
-        <SortSelector
+        {/* <SortSelector
           value={sort}
-          className="w-full sm:w-40"
+          className="hidden w-full sm:flex sm:w-40"
           onChange={(value) => setFilters({ sort: value })}
           leftIcon={<SortAsc className="size-4" />}
-        />
+        /> */}
+        <span className="block sm:hidden">
+          <ScrapeBTN />
+        </span>
         <RefetchBTN queryKey={JOBS_KEYS.getJobs} className="hidden sm:flex" />
       </div>
 

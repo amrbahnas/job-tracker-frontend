@@ -91,12 +91,12 @@ export function ItemList({
               "grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3",
               listClassName
             )}
-            itemClassName={cn("min-h-[120px]", itemClassName)}
+            itemClassName={cn("h-46", itemClassName)}
             computeItemKey={(_, item) => (item as any)._id ?? ""}
             itemContent={itemContent}
           />
         )}
-        {hasJobs && (
+        {hasJobs && data.length > 8 && (
           <>
             {pagination?.isFetchingNextPage && (
               <p

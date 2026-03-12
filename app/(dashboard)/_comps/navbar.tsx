@@ -117,13 +117,13 @@ const Navbar = () => {
 
         <div className="flex flex-1 justify-center">
           {/* Desktop nav links */}
-          <div className="hidden items-center gap-6 text-sm md:flex">
+          <div className="text-md hidden items-center gap-6 md:flex">
             {NAV_LINKS.map((link) => (
               <Link
                 key={link.href}
                 href={link.href}
                 className={cn(
-                  "flex items-center gap-2 font-medium",
+                  "flex items-center gap-1 font-medium hover:text-primary",
                   pathname === link.href && "text-primary"
                 )}
               >

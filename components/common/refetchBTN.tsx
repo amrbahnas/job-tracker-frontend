@@ -2,6 +2,7 @@ import { useRefetch } from "@/api_config/useRefetch"
 import { Button } from "@/components/ui/button"
 import { Spinner } from "@/components/ui/spinner"
 import { RefreshCcw } from "lucide-react"
+import { useState } from "react"
 
 const RefetchBTN = ({
   queryKey,
@@ -10,13 +11,19 @@ const RefetchBTN = ({
   queryKey: string | string[]
   className?: string
 }) => {
-  const { loading, refetch } = useRefetch(queryKey)
+  const [loading, setLoading] = useState(false)
+  const { refetch } = useRefetch(queryKey)
   return (
     <Button
       size="icon-lg"
       variant="outline"
       disabled={loading}
-      onClick={refetch}
+      onClick={() => {
+        setLoading(true)
+        refetch().then(() => {
+          setLoading(false)
+        })
+      }}
       className={className}
     >
       {loading ? (

@@ -4,6 +4,7 @@ import {
   Archive,
   Building2,
   Check,
+  Clock,
   ExternalLink,
   Link2,
   MapPin,
@@ -13,54 +14,11 @@ import {
 import { Button } from "@/components/ui/button"
 import { useJobActions } from "../_api/mutations"
 import { toast } from "sonner"
-
+import dayjs from "dayjs"
+import relativeTime from "dayjs/plugin/relativeTime"
+dayjs.extend(relativeTime)
 type JobCardProps = {
   job: Job
-}
-
-function getStatusStyles(status: Job["status"]) {
-  switch (status) {
-    case "new":
-      return "bg-primary/10 text-primary dark:bg-primary/40 dark:text-white"
-    case "applied":
-      return "bg-emerald-100 text-emerald-800 dark:bg-emerald-900/50 dark:text-emerald-200"
-    case "archived":
-      return "bg-[#E8EAEF] text-[#6B7280] dark:bg-slate-700/50 dark:text-slate-300"
-    default:
-      return "bg-muted text-foreground"
-  }
-}
-
-function formatShortDate(dateStr: string) {
-  const d = new Date(dateStr)
-  if (Number.isNaN(d.getTime())) return ""
-
-  return d.toLocaleDateString("en-US", {
-    month: "short",
-    day: "numeric",
-  })
-}
-
-function formatScrapedTime(createdAt: string) {
-  const createdDate = new Date(createdAt)
-  if (Number.isNaN(createdDate.getTime())) return "Recently scraped"
-
-  const diffMs = Date.now() - createdDate.getTime()
-  if (diffMs <= 0) return "Scraped just now"
-
-  const diffMinutes = Math.round(diffMs / 60000)
-
-  if (diffMinutes < 60) {
-    return `Scraped ${diffMinutes} minute${diffMinutes === 1 ? "" : "s"} ago`
-  }
-
-  const diffHours = Math.round(diffMinutes / 60)
-  if (diffHours < 24) {
-    return `Scraped ${diffHours} hour${diffHours === 1 ? "" : "s"} ago`
-  }
-
-  const diffDays = Math.round(diffHours / 24)
-  return `Scraped ${diffDays} day${diffDays === 1 ? "" : "s"} ago`
 }
 
 export function JobCard({ job }: JobCardProps) {
@@ -74,17 +32,10 @@ export function JobCard({ job }: JobCardProps) {
   const isNew = job.status === "new"
 
   const statusClassName = getStatusStyles(job.status)
-  const createdShortDate = formatShortDate(job.createdAt)
-  const scrapedTimeLabel = formatScrapedTime(job.createdAt)
 
   const isMutating = isUpdatingJobStatus || isDeletingJob
 
-  const updateStatus = (
-    nextStatus: Job["status"],
-    allowedStatuses: Job["status"][]
-  ) => {
-    if (!allowedStatuses.includes(job.status)) return
-
+  const updateStatus = (nextStatus: Job["status"]) => {
     updateJobStatus(
       { status: nextStatus },
       {
@@ -93,22 +44,6 @@ export function JobCard({ job }: JobCardProps) {
         },
       }
     )
-  }
-
-  const handleArchive = () => {
-    updateStatus("archived", ["new", "applied"])
-  }
-
-  const handleRestore = () => {
-    updateStatus("new", ["archived"])
-  }
-
-  const handleMarkUnapplied = () => {
-    updateStatus("new", ["applied"])
-  }
-
-  const handleMarkApplied = () => {
-    updateStatus("applied", ["new"])
   }
 
   const handleDelete = () => {
@@ -140,8 +75,7 @@ export function JobCard({ job }: JobCardProps) {
     if (isArchived) {
       return (
         <p className="text-[11px] text-[#9CA3AF] dark:text-slate-500">
-          Moved to archive
-          {createdShortDate && <> on {createdShortDate}</>}
+          Moved to archive on {dayjs(job.createdAt).format("MMM D, YYYY")}
         </p>
       )
     }
@@ -150,8 +84,7 @@ export function JobCard({ job }: JobCardProps) {
       return (
         <p className="inline-flex items-center gap-1.5 text-[11px] font-medium text-emerald-600 dark:text-emerald-400">
           <Check className="size-3.5 shrink-0" aria-hidden="true" />
-          Application submitted
-          {createdShortDate && <> on {createdShortDate}</>}
+          submitted on {dayjs(job.createdAt).format("MMM D, YYYY")}
         </p>
       )
     }
@@ -163,7 +96,7 @@ export function JobCard({ job }: JobCardProps) {
             href={job.scrapedFrom}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-1 text-xs text-primary hover:underline"
+            className="inline-flex items-center gap-1 text-xs text-foreground/50 hover:underline"
           >
             <span>View Scraped Page</span>
             <ExternalLink className="size-3.5" aria-hidden="true" />
@@ -187,7 +120,7 @@ export function JobCard({ job }: JobCardProps) {
           variant="outline"
           className="h-8 rounded-md border-[#D1D5DB] bg-[#E5E7EB] px-3 text-[#4B5563] hover:bg-[#D1D5DB] dark:border-slate-600 dark:bg-slate-700 dark:text-slate-200 dark:hover:bg-slate-600"
           disabled={isMutating}
-          onClick={handleRestore}
+          onClick={() => updateStatus("new")}
         >
           Restore
         </Button>
@@ -203,7 +136,7 @@ export function JobCard({ job }: JobCardProps) {
             variant="ghost"
             aria-label="Archive job"
             disabled={isMutating}
-            onClick={handleArchive}
+            onClick={() => updateStatus("archived")}
           >
             <Archive className="size-3.5 text-[#6B7280] dark:text-slate-400" />
           </Button>
@@ -213,7 +146,7 @@ export function JobCard({ job }: JobCardProps) {
             variant="outline"
             className="h-8 rounded-md border-blue-200 bg-blue-50 px-3 text-gray-700 hover:bg-blue-100 dark:border-blue-800 dark:bg-blue-900/40 dark:text-blue-200 dark:hover:bg-blue-900/60"
             disabled={isMutating}
-            onClick={handleMarkUnapplied}
+            onClick={() => updateStatus("new")}
           >
             Mark Unapplied
           </Button>
@@ -230,7 +163,7 @@ export function JobCard({ job }: JobCardProps) {
             variant="ghost"
             aria-label="Archive job"
             disabled={isMutating}
-            onClick={handleArchive}
+            onClick={() => updateStatus("archived")}
           >
             <Archive className="size-3.5 text-[#6B7280] dark:text-slate-400" />
           </Button>
@@ -241,7 +174,7 @@ export function JobCard({ job }: JobCardProps) {
             className="inline-flex"
           >
             <Button
-              onClick={handleMarkApplied}
+              onClick={() => updateStatus("applied")}
               size="sm"
               className="text-xs sm:text-sm"
               disabled={isMutating}
@@ -259,61 +192,51 @@ export function JobCard({ job }: JobCardProps) {
 
   return (
     <article
-      className={`flex h-52 gap-3 rounded-xl border p-4 shadow-sm transition ${cardBgClass} ${cardStateClasses}`}
+      className={`flex h-full gap-3 rounded-xl border p-4 shadow-sm transition ${cardBgClass} ${cardStateClasses}`}
       aria-label={`${job.title} at ${job.company}`}
     >
-      {/* <div className="flex items-start">
-        <input
-          type="checkbox"
-          aria-label="Select job"
-          className="mt-0.5 h-4 w-4 cursor-pointer rounded border border-muted-foreground/40 text-primary ring-offset-background outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-1"
-        />
-      </div> */}
-
       <div className="flex min-w-0 flex-1 flex-col gap-2">
-        <header className="flex flex-wrap items-start justify-between gap-3">
-          <div className="min-w-0 space-y-1">
-            <div className="flex flex-wrap items-center gap-2">
-              <h2 className="truncate text-sm leading-tight font-semibold text-foreground sm:text-base">
-                {job.title}
-              </h2>
-              <span
-                className={`inline-flex items-center rounded-full px-2.5 py-0.5 text-[11px] font-medium uppercase ${statusClassName}`}
-              >
-                {job.status}
+        <header className="min-w-0 space-y-1">
+          <div className="flex flex-wrap items-center justify-between gap-2">
+            <h2 className="max-w-[75%] truncate text-sm leading-tight font-semibold text-foreground sm:text-base">
+              {job.title}
+            </h2>
+            <span
+              className={`inline-flex items-center rounded-full px-2.5 py-0.5 text-[11px] font-medium uppercase ${statusClassName}`}
+            >
+              {job.status}
+            </span>
+          </div>
+
+          <div className="flex flex-wrap items-center gap-3 text-xs text-[#6B7280] dark:text-slate-400">
+            <div className="inline-flex max-w-[40%] items-center gap-1 truncate">
+              <Building2 className="size-3.5 shrink-0" aria-hidden="true" />
+              <span className="truncate font-medium text-foreground dark:text-slate-200">
+                {job.company}
               </span>
             </div>
 
-            <div className="flex flex-wrap items-center gap-3 text-xs text-[#6B7280] dark:text-slate-400">
+            {job.location && (
               <div className="inline-flex items-center gap-1">
-                <Building2 className="size-3.5 shrink-0" aria-hidden="true" />
-                <span className="font-medium text-foreground dark:text-slate-200">
-                  {job.company}
-                </span>
+                <MapPin className="size-3.5 shrink-0" aria-hidden="true" />
+                <span>{job.location}</span>
               </div>
+            )}
 
-              {job.location && (
-                <div className="inline-flex items-center gap-1">
-                  <MapPin className="size-3.5 shrink-0" aria-hidden="true" />
-                  <span>{job.location}</span>
-                </div>
-              )}
-
-              {job.website && (
-                <div className="inline-flex items-center gap-1 text-blue-600 dark:text-blue-400">
-                  <Link2 className="size-3.5 shrink-0" aria-hidden="true" />
-                  <span>{job.website.name}</span>
-                </div>
-              )}
+            {job.website && (
+              <div className="inline-flex max-w-[30%] items-center gap-1 truncate text-blue-600 dark:text-blue-400">
+                <Link2 className="size-3.5 shrink-0" aria-hidden="true" />
+                <span className="truncate">{job.website.name}</span>
+              </div>
+            )}
+            <div className="flex items-center gap-1">
+              <Clock className="size-3.5 shrink-0" aria-hidden="true" />
+              <span>{job.datePosted ?? dayjs(job.createdAt).fromNow()}</span>
             </div>
-          </div>
-
-          <div className="flex flex-col items-end gap-1 text-right text-[11px] text-[#9CA3AF] dark:text-slate-400">
-            <span>{scrapedTimeLabel}</span>
           </div>
         </header>
 
-        <p className="line-clamp-2 flex-1 text-xs text-[#6B7280] sm:text-sm dark:text-slate-400">
+        <p className="mt-2 line-clamp-2 flex-1 text-xs text-[#6B7280] sm:text-sm dark:text-slate-400">
           {job.description ? job.description : "No description available"}
         </p>
 
@@ -340,4 +263,17 @@ export function JobCard({ job }: JobCardProps) {
       </div>
     </article>
   )
+}
+
+function getStatusStyles(status: Job["status"]) {
+  switch (status) {
+    case "new":
+      return "bg-primary/10 text-primary dark:bg-primary/40 dark:text-white"
+    case "applied":
+      return "bg-emerald-100 text-emerald-800 dark:bg-emerald-900/50 dark:text-emerald-200"
+    case "archived":
+      return "bg-[#E8EAEF] text-[#6B7280] dark:bg-slate-700/50 dark:text-slate-300"
+    default:
+      return "bg-muted text-foreground"
+  }
 }

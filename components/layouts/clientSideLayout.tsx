@@ -11,7 +11,6 @@ import { ThemeProvider } from "../theme-provider"
 
 const ClientSideLayout = ({ children }: { children: React.ReactNode }) => {
   const queryClient = new QueryClient()
-  useFirebaseNotifications()
   return (
     <QueryClientProvider client={queryClient}>
       <ReactQueryDevtools />
@@ -29,6 +28,8 @@ const ClientSideLayout = ({ children }: { children: React.ReactNode }) => {
 
 const Toaster = () => {
   const { theme } = useTheme()
+  useFirebaseNotifications()
+
   return (
     <SonnerToaster
       position="bottom-right"

@@ -18,10 +18,8 @@ export function LandingCta() {
           role="group"
           aria-label="Get started"
         >
-          <Button size="lg" asChild>
-            <Link href="/auth?tab=signup" className="px-12 py-6">
-              Get Started Now
-            </Link>
+          <Button size="lg" asChild className="px-12 py-6!">
+            <Link href="/auth?tab=signup">Get Started Now</Link>
           </Button>
           <Button size="lg" variant="secondary" asChild className="px-8 py-6">
             <Link href="/auth">View Demo</Link>

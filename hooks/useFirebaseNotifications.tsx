@@ -8,6 +8,8 @@ import {
   requestNotificationPermission,
 } from "@/firebase/firebaseClient"
 import { toast } from "sonner"
+import { useRefetch } from "@/api_config/useRefetch"
+import JOBS_KEYS from "@/app/(dashboard)/jobs/_api/keys"
 
 type Options = {
   onNotificationReceived?: () => void
@@ -20,6 +22,7 @@ const playBeep = () => {
 
 export const useFirebaseNotifications = (options: Options = {}) => {
   const unsubscribeRef = useRef<null | (() => void)>(null)
+  const { refetch } = useRefetch(JOBS_KEYS.getJobs)
   const user = useAppStore((s) => s.user)
 
   useEffect(() => {
@@ -41,6 +44,7 @@ export const useFirebaseNotifications = (options: Options = {}) => {
         }
 
         unsubscribeRef.current = await onMessageListener((payload) => {
+          refetch()
           playBeep()
           const title = payload.notification?.title || "New notification"
           const body =

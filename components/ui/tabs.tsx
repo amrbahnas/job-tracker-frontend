@@ -86,7 +86,7 @@ function TabsTrigger({
       <span className="z-10">{children}</span>
       {currentValue === props.value && variant === "card" && (
         <div
-          className="absolute inset-0 z-0 h-full w-full rounded-md bg-white shadow-sm dark:bg-primary/20"
+          className="absolute inset-0 z-0 h-full w-full rounded-md bg-white shadow-sm dark:bg-primary/10"
           data-slot="tabs-trigger-card-bg"
         />
       )}

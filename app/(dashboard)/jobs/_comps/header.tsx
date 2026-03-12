@@ -1,4 +1,5 @@
 import React from "react"
+import ScrapeBTN from "./scraptBTN"
 
 const Header = () => {
   return (
@@ -14,6 +15,7 @@ const Header = () => {
           Track and manage your career opportunities across the web.
         </p>
       </div>
+      <ScrapeBTN />
     </header>
   )
 }
