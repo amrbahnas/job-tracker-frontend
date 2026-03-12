@@ -76,7 +76,7 @@ export function AutofillWithAiDialog({
           type="button"
           variant="secondary"
           size="sm"
-          className="cursor-pointer border border-primary/20 bg-primary/10 text-primary"
+          className="cursor-pointer border border-primary/20 bg-primary/10 text-primary dark:text-primary-foreground"
         >
           <Sparkles className="size-4" />
           Autofill with AI

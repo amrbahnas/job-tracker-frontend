@@ -30,11 +30,12 @@ export default function Page() {
         form={form}
         className="w-full max-w-md"
       >
+        {/* FormItem automatic pass value,onchange to input */}
         <FormItem name="name">
-          <Input />
+          <Input label="Name" />
         </FormItem>
         <FormItem name="email">
-          <Input />
+          <Input label="Email" />
         </FormItem>
         <Button type="submit">Submit</Button>
       </Form>

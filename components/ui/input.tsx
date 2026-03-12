@@ -45,7 +45,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
                 e as unknown as React.MouseEvent<HTMLInputElement, MouseEvent>
               )
             }}
-            className="text-md mb-3 font-medium tracking-[-0.32px] text-gray-700 first-letter:uppercase"
+            className="text-md mb-3 font-medium tracking-[-0.32px] text-gray-700 first-letter:uppercase dark:text-gray-300"
           >
             {label}
           </label>

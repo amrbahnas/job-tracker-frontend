@@ -29,7 +29,9 @@ function formatInterval(minutes?: number) {
 }
 
 export function WebsiteCard({ website, onEditWebsite }: WebsiteCardProps) {
-  const { deleteWebsite, deleteWebsiteLoading } = useWebsitesActions()
+  const { deleteWebsite, deleteWebsiteLoading } = useWebsitesActions(
+    website._id
+  )
   const urlsCount = website.urls?.length ?? 0
   const CardBody = [
     {

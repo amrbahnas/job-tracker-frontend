@@ -3,27 +3,21 @@
 import { Button } from "@/components/ui/button"
 import { Form, FormItem } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select"
 import { Switch } from "@/components/ui/switch"
 import { Code, Info } from "lucide-react"
 import { useEffect } from "react"
 import { Controller, useForm } from "react-hook-form"
 
-import { AutofillWithAiDialog } from "./autofillWithAiDialog"
-import { WebsiteUrlsEditor } from "./websiteUrlsEditor"
 import {
   Collapsible,
   CollapsibleContent,
   CollapsibleTrigger,
 } from "@/components/ui/collapsible"
-import { useWebsitesActions } from "../_api/mutations"
 import { toast } from "sonner"
+import { useWebsitesActions } from "../_api/mutations"
+import { AutofillWithAiDialog } from "./autofillWithAiDialog"
+import IntervalSelector from "./intervalSelector"
+import { WebsiteUrlsEditor } from "./websiteUrlsEditor"
 
 export type WebsiteFormValues = {
   name: string
@@ -46,15 +40,6 @@ type WebsiteFormProps = {
   website?: Website | null
   onCancel?: () => void
 }
-
-const SCRAPE_INTERVAL_OPTIONS = [
-  { label: "Every 10 minutes", value: 10 },
-  { label: "Every 15 minutes", value: 15 },
-  { label: "Every 30 minutes", value: 30 },
-  { label: "Every 1 hour", value: 60 },
-  { label: "Every 3 hours", value: 180 },
-  { label: "Every 6 hours", value: 360 },
-]
 
 export function WebsiteForm({ website, onCancel }: WebsiteFormProps) {
   const isEditing = Boolean(website?._id)
@@ -197,8 +182,8 @@ export function WebsiteForm({ website, onCancel }: WebsiteFormProps) {
       onSubmit={onSubmit}
       className="space-y-8"
     >
-      <div className="space-y-4 rounded-lg border bg-card p-4 md:grid-cols-[2fr,1fr]">
-        <h3 className="flex items-center gap-2 text-base font-semibold text-primary">
+      <div className="space-y-4 rounded-lg border bg-card p-4 md:grid-cols-[2fr,1fr] dark:bg-muted/20">
+        <h3 className="flex items-center gap-2 text-base font-semibold text-primary dark:text-primary-foreground">
           <Info className="size-4" />
           Basic information
         </h3>
@@ -208,33 +193,20 @@ export function WebsiteForm({ website, onCancel }: WebsiteFormProps) {
             <Input label="Platform name" placeholder="e.g., LinkedIn, Indeed" />
           </FormItem>
           <div className="space-y-2">
-            <label className="text-md mb-3 block font-medium tracking-[-0.32px] text-gray-700 first-letter:uppercase">
+            <label className="text-md mb-3 block font-medium tracking-[-0.32px] text-gray-700 first-letter:uppercase dark:text-gray-300">
               Scrape interval
             </label>
-            <Select
-              value={String(selectedInterval)}
-              onValueChange={(value) =>
-                setValue("scrapeIntervalMinutes", Number(value), {
-                  shouldDirty: true,
-                })
+            <IntervalSelector
+              value={selectedInterval}
+              onChange={(value) =>
+                setValue("scrapeIntervalMinutes", value, { shouldDirty: true })
               }
-            >
-              <SelectTrigger className="w-full">
-                <SelectValue placeholder="Select interval" />
-              </SelectTrigger>
-              <SelectContent>
-                {SCRAPE_INTERVAL_OPTIONS.map((option) => (
-                  <SelectItem key={option.value} value={String(option.value)}>
-                    {option.label}
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
+            />
           </div>
         </div>
 
         <div className="space-y-3">
-          <label className="text-md mb-3 block font-medium tracking-[-0.32px] text-gray-700 first-letter:uppercase">
+          <label className="text-md mb-3 block font-medium tracking-[-0.32px] text-gray-700 first-letter:uppercase dark:text-gray-300">
             Target URLs
           </label>
           <WebsiteUrlsEditor
@@ -253,7 +225,7 @@ export function WebsiteForm({ website, onCancel }: WebsiteFormProps) {
         </div>
         <div className="flex items-center justify-between gap-4 rounded-lg border border-input/50 bg-background p-4">
           <div className="space-y-0.5">
-            <label className="text-md font-medium tracking-[-0.32px] text-gray-700 first-letter:uppercase">
+            <label className="text-md font-medium tracking-[-0.32px] text-gray-700 first-letter:uppercase dark:text-gray-300">
               Active status
             </label>
             <p className="text-sm text-muted-foreground">
@@ -273,9 +245,9 @@ export function WebsiteForm({ website, onCancel }: WebsiteFormProps) {
           />
         </div>
       </div>
-      <div className="mb-0 w-full space-y-4 rounded-lg border bg-card p-4">
+      <div className="mb-0 w-full space-y-4 rounded-lg border bg-card p-4 dark:bg-muted/20">
         <div className="flex flex-wrap items-center justify-between gap-2">
-          <h3 className="flex items-center gap-2 text-base font-semibold text-primary">
+          <h3 className="flex items-center gap-2 text-base font-semibold text-primary dark:text-primary-foreground">
             <Code className="size-4" />
             Data selectors
           </h3>
@@ -287,7 +259,7 @@ export function WebsiteForm({ website, onCancel }: WebsiteFormProps) {
         <Collapsible>
           <p className="text-sm text-muted-foreground">
             Use AI to detect selectors from a URL,{" "}
-            <CollapsibleTrigger className="cursor-pointer text-primary/70 underline">
+            <CollapsibleTrigger className="cursor-pointer text-primary/70 underline dark:text-primary-foreground/70">
               or add them manually.
             </CollapsibleTrigger>
           </p>
