@@ -35,8 +35,11 @@ const SearchInput = ({
         setSearchValue(e.target.value)
       }}
       iconStart={<SearchIcon className="text-neutral-gray-500 size-4" />}
-      className={cn("h-full flex-1", className)}
-      inputClassName={cn("h-full flex-1 shadow-none", inputClassName)}
+      className={cn(
+        "h-full flex-1 focus-visible:shadow-none! focus-visible:ring-0",
+        className
+      )}
+      inputClassName={cn("h-full flex-1", inputClassName)}
       disabled={disabled}
     />
   )
