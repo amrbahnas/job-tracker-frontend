@@ -23,7 +23,7 @@ export function LandingHeader() {
       className={cn(
         "fixed top-0 z-50 w-full bg-background/95 py-4 transition-colors",
         scrolled
-          ? "light:text-white border-b backdrop-blur supports-[backdrop-filter]:bg-background/60"
+          ? "light:text-white border-b backdrop-blur supports-backdrop-filter:bg-background/60"
           : "bg-transparent"
       )}
       role="banner"
@@ -42,7 +42,7 @@ export function LandingHeader() {
           >
             <Send className="size-5" />
           </span>
-          <span className="text-lg font-semibold">JobTracker</span>
+          <span className="text-lg font-semibold">Dorly</span>
         </Link>
         <nav
           className={cn(
@@ -51,6 +51,24 @@ export function LandingHeader() {
           )}
           aria-label="Main"
         >
+          <Link
+            href="#features"
+            className="text-sm font-medium transition-colors hover:text-foreground"
+          >
+            Features
+          </Link>
+          <Link
+            href="#pricing"
+            className="text-sm font-medium transition-colors hover:text-foreground"
+          >
+            Pricing
+          </Link>
+          <Link
+            href="#about"
+            className="text-sm font-medium transition-colors hover:text-foreground"
+          >
+            About
+          </Link>
           <DarkModeToggle />
           <div className="flex items-center gap-2">
             <Button className="px-4" asChild>

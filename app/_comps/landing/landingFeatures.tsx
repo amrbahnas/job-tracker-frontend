@@ -5,43 +5,45 @@ import Container from "@/components/ui/container"
 const features = [
   {
     icon: Lock,
-    title: "100% Free",
+    title: "All Features, Always Free",
     description:
-      "Access all core tracking and management features without ever opening your wallet. No hidden fees.",
+      "Dorly is built for job seekers, not recruiters. You get every feature, unlimited boards, and unlimited searches — with zero cost.",
   },
   {
     icon: LayoutGrid,
-    title: "Multi-platform",
+    title: "Multi‑platform Job Aggregation",
     description:
-      "One-click sync for applications from LinkedIn, Indeed, Glassdoor, and dozens of other job boards.",
+      "Connect searches from LinkedIn, Indeed, Bayt, and other job boards so new roles appear in a single, unified job feed.",
   },
   {
     icon: Bell,
-    title: "Smart Notifications",
+    title: "Instant New‑Job Alerts",
     description:
-      "Get timely alerts for follow-ups, upcoming interviews, and when it's time to reach out to recruiters.",
+      "Get notified as soon as new matching jobs appear so you can be among the very first to apply.",
   },
 ] as const
 
 export function LandingFeatures() {
   return (
     <Container
+      id="features"
       className="rounded-3xl border-t bg-muted/30 py-16"
       aria-labelledby="features-heading"
     >
       <div className="mx-auto max-w-4xl px-6">
         <p className="mb-2 text-center text-xs font-medium tracking-wider text-muted-foreground uppercase">
-          Why JobTracker
+          Why Dorly
         </p>
         <h2
           id="features-heading"
           className="mb-4 text-center text-2xl font-semibold sm:text-3xl"
         >
-          Streamline Your Career Search
+          Beat Other Candidates to New Roles
         </h2>
         <p className="mx-auto mb-12 max-w-xl text-center text-muted-foreground">
-          Our tools are designed to take the stress out of job hunting by
-          automating the busy work.
+          Dorly automates the repetitive parts of job hunting — checking
+          multiple sites, refreshing tabs, and copying links — so you can focus
+          on sending stronger applications earlier than everyone else.
         </p>
         <ul className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3" role="list">
           {features.map(({ icon: Icon, title, description }, i) => (
@@ -58,7 +60,7 @@ export function LandingFeatures() {
               >
                 <Icon className="size-5" />
               </span>
-              <span className="mb-2 block font-semibold">{title}</span>
+              <h3 className="mb-2 font-semibold">{title}</h3>
               <p className="text-sm text-muted-foreground">{description}</p>
             </li>
           ))}

@@ -18,7 +18,7 @@ export function LandingFooter() {
           >
             <Send className="size-4" />
           </span>
-          <span className="font-semibold">JobTracker</span>
+          <span className="font-semibold">Dorly</span>
         </Link>
         <nav
           className="flex flex-wrap items-center justify-center gap-6 text-sm text-muted-foreground"
@@ -35,7 +35,7 @@ export function LandingFooter() {
           </Link>
         </nav>
         <p className="text-sm text-muted-foreground">
-          © {year} JobTracker Inc. All rights reserved.
+          © {year} Dorly. All rights reserved.
         </p>
       </Container>
     </footer>

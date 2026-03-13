@@ -1,5 +1,10 @@
 import Container from "@/components/ui/container"
 import Navbar from "./_comps/navbar"
+import type { Metadata } from "next"
+
+export const metadata: Metadata = {
+  robots: { index: false, follow: true },
+}
 
 export default function MainLayout({
   children,
