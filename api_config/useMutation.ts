@@ -49,12 +49,13 @@ const useMutation = (
     },
 
     onError: (error, variables, context) => {
-      toast.error(errorMessageHandler(error))
-
-      if (isLogin) {
-        if (error.response?.status === 401) {
-          return authLogout()
-        }
+      if (isLogin && error.response?.status === 401) {
+        return authLogout()
+      }
+      if (error.response?.status === 409) {
+        toast.info(error.response?.data.message)
+      } else {
+        toast.error(errorMessageHandler(error))
       }
       options?.onError && options.onError(error, variables, context)
     },
@@ -76,6 +77,7 @@ const errorMessageHandler = (error: any) => {
     return (
       error.response?.data?.message ||
       error.response?.data?.error ||
+      error.response?.data ||
       "Internal Server Error"
     )
   }

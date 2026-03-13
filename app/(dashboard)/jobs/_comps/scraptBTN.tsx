@@ -4,6 +4,7 @@ import { toast } from "sonner"
 
 const ScrapeBTN = () => {
   const { scrapeJobs, isScrapingJobs } = useJobActions()
+
   return (
     <Button
       onClick={() =>
@@ -11,15 +12,16 @@ const ScrapeBTN = () => {
           {},
           {
             onSuccess: (res) => {
-              const { message, newJobsCount } = res.data
-              toast.success(message, {
-                description: newJobsCount
-                  ? `${newJobsCount} new jobs found`
-                  : "No new jobs found",
+              toast.success("Scraping started", {
+                description: "You will be notified when it completes.",
+                duration: Infinity,
+                action: {
+                  label: "Close",
+                  onClick: () => {
+                    toast.dismiss()
+                  },
+                },
               })
-            },
-            onError: (err) => {
-              toast.error(err.response?.data.message)
             },
           }
         )
