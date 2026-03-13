@@ -1,14 +1,15 @@
 import { Avatar, AvatarGroup, AvatarImage } from "@/components/ui/avatar"
 import { Button } from "@/components/ui/button"
 import Container from "@/components/ui/container"
-import { getTranslations } from "next-intl/server"
+import { getLocale, getTranslations } from "next-intl/server"
 import Image from "next/image"
 import Link from "next/link"
 
-const HERO_IMAGE = "/images/HeroSection3.png"
-
+const HERO_IMAGE = "/images/HeroSectionEn.png"
+const HERO_IMAGE_AR = "/images/HeroSectionAr.png"
 export async function LandingHero() {
   const t = await getTranslations("landing.hero")
+  const locale = await getLocale()
 
   return (
     <section
@@ -18,12 +19,12 @@ export async function LandingHero() {
       {/* Background image with dark purple overlay */}
       <div className="absolute inset-0 z-0">
         <Image
-          src={HERO_IMAGE}
+          src={locale === "ar" ? HERO_IMAGE_AR : HERO_IMAGE}
           alt={t("imageAlt")}
           fill
           priority
           sizes="100vw"
-          className="object-cover object-center sm:object-right rtl:scale-x-[-1]"
+          className="object-cover object-center sm:object-right"
         />
         <div className="absolute inset-0 z-10 bg-black/50" />
       </div>

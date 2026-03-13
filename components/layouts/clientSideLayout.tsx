@@ -11,17 +11,25 @@ import { ThemeProvider } from "../theme-provider"
 
 const ClientSideLayout = ({ children }: { children: React.ReactNode }) => {
   const queryClient = new QueryClient()
+  const isRecaptchaEnabled = !!process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY
   return (
     <QueryClientProvider client={queryClient}>
-      <ReactQueryDevtools />
-      <GoogleReCaptchaProvider
-        reCaptchaKey={process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY || ""}
-      >
+      {/* <ReactQueryDevtools /> */}
+      {isRecaptchaEnabled ? (
+        <GoogleReCaptchaProvider
+          reCaptchaKey={process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY || ""}
+        >
+          <ThemeProvider>
+            <Toaster />
+            {children}
+          </ThemeProvider>
+        </GoogleReCaptchaProvider>
+      ) : (
         <ThemeProvider>
           <Toaster />
           {children}
         </ThemeProvider>
-      </GoogleReCaptchaProvider>
+      )}
     </QueryClientProvider>
   )
 }
