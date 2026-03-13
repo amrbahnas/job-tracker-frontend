@@ -1,7 +1,12 @@
+"use client"
+
 import React from "react"
+import { useTranslations } from "next-intl"
 import ScrapeBTN from "./scraptBTN"
 
 const Header = () => {
+  const t = useTranslations("jobs.header")
+
   return (
     <header className="hidden flex-wrap items-baseline justify-between gap-2 sm:flex">
       <div>
@@ -9,10 +14,10 @@ const Header = () => {
           id="jobs-dashboard-heading"
           className="text-2xl font-semibold tracking-tight text-foreground"
         >
-          Jobs Dashboard
+          {t("title")}
         </h1>
         <p className="mt-1 text-sm text-muted-foreground">
-          Track and manage your career opportunities across the web.
+          {t("subtitle")}
         </p>
       </div>
       <ScrapeBTN />

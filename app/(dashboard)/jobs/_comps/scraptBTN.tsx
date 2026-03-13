@@ -1,9 +1,11 @@
 import { Button } from "@/components/ui/button"
 import { useJobActions } from "../_api/mutations"
 import { toast } from "sonner"
+import { useTranslations } from "next-intl"
 
 const ScrapeBTN = () => {
   const { scrapeJobs, isScrapingJobs } = useJobActions()
+  const t = useTranslations("jobs.scrape")
 
   return (
     <Button
@@ -12,11 +14,11 @@ const ScrapeBTN = () => {
           {},
           {
             onSuccess: (res) => {
-              toast.success("Scraping started", {
-                description: "You will be notified when it completes.",
+              toast.success(t("toastTitle"), {
+                description: t("toastDescription"),
                 duration: Infinity,
                 action: {
-                  label: "Close",
+                  label: t("toastAction"),
                   onClick: () => {
                     toast.dismiss()
                   },
@@ -31,7 +33,7 @@ const ScrapeBTN = () => {
       variant={"outline"}
       size={"lg"}
     >
-      Scrape Now
+      {t("button")}
     </Button>
   )
 }

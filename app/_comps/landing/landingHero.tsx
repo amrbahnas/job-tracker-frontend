@@ -1,17 +1,15 @@
-import {
-  Avatar,
-  AvatarFallback,
-  AvatarGroup,
-  AvatarImage,
-} from "@/components/ui/avatar"
+import { Avatar, AvatarGroup, AvatarImage } from "@/components/ui/avatar"
 import { Button } from "@/components/ui/button"
 import Container from "@/components/ui/container"
+import { getTranslations } from "next-intl/server"
 import Image from "next/image"
 import Link from "next/link"
 
 const HERO_IMAGE = "/images/HeroSection3.png"
 
-export function LandingHero() {
+export async function LandingHero() {
+  const t = await getTranslations("landing.hero")
+
   return (
     <section
       className="relative mb-16 flex h-svh items-center justify-start overflow-hidden text-start"
@@ -21,11 +19,11 @@ export function LandingHero() {
       <div className="absolute inset-0 z-0">
         <Image
           src={HERO_IMAGE}
-          alt="Job seeker using Dorly dashboard to find new roles on LinkedIn, Indeed, and Bayt"
+          alt={t("imageAlt")}
           fill
           priority
           sizes="100vw"
-          className="object-cover object-center sm:object-right"
+          className="object-cover object-center sm:object-right rtl:scale-x-[-1]"
         />
         <div className="absolute inset-0 z-10 bg-black/50" />
       </div>
@@ -35,19 +33,16 @@ export function LandingHero() {
             id="hero-heading"
             className="text-5xl font-bold tracking-tight text-white sm:text-7xl"
           >
-            Find New Jobs
+            {t("titleLine1")}
             <br />
-            Before
+            {t("titleBefore")}
             <span className="bg-linear-to-r from-primary to-orange-500 bg-clip-text text-transparent">
               {" "}
-              Others
+              {t("titleOthersHighlight")}
             </span>
           </h1>
           <p className="mt-4 max-w-2xl text-lg text-white/95">
-            Dorly automatically scans LinkedIn, Indeed, Bayt, and other job
-            sites for you, then streams the newest roles into one live job feed.
-            Apply earlier, skip the constant refreshing, and stay on top of
-            every application.
+            {t("description")}
           </p>
           <div
             className="mt-8 flex flex-wrap justify-start gap-4"
@@ -59,7 +54,7 @@ export function LandingHero() {
               asChild
               className="border-0 bg-primary px-12 py-6 font-bold text-primary-foreground hover:bg-primary/90"
             >
-              <Link href="/auth?tab=signup">Start Using Dorly Free</Link>
+              <Link href="/auth?tab=signup">{t("primaryCta")}</Link>
             </Button>
             <Button
               size="lg"
@@ -67,7 +62,7 @@ export function LandingHero() {
               asChild
               className="border-white/80 bg-transparent px-8 py-6 text-white hover:bg-white/10 hover:text-white"
             >
-              <Link href="#about">How Dorly Works</Link>
+              <Link href="#about">{t("secondaryCta")}</Link>
             </Button>
           </div>
         </section>
@@ -85,8 +80,7 @@ export function LandingHero() {
             </AvatarGroup>
           </div>
           <p className="text-sm text-white">
-            <strong>5,000+</strong> job seekers use tools like Dorly to stay
-            ahead of new postings.
+            <strong>{t("socialProofPrefix")}</strong> {t("socialProofSuffix")}
           </p>
         </section>
       </Container>

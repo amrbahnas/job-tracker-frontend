@@ -6,10 +6,12 @@ import { useGetWebsites } from "../_api/queries"
 import { WebsiteCard } from "./WebsiteCard"
 import WebsiteFormDialog from "./websiteFormDialog"
 import { Plus } from "lucide-react"
+import { useTranslations } from "next-intl"
 
 export function WebsitesList() {
   const [isFormOpen, setIsFormOpen] = useState(false)
   const [editingWebsite, setEditingWebsite] = useState<Website | null>(null)
+  const t = useTranslations("websites.list")
   const {
     data: websites,
     isPending,
@@ -24,7 +26,7 @@ export function WebsitesList() {
         data={websites.length > 0 ? [...websites, { _id: "add-website" }] : []}
         pagination={pagination}
         isLoading={isPending}
-        error={isError ? new Error("Failed to fetch websites") : null}
+        error={isError ? new Error(t("error")) : null}
         refetch={refetch}
         itemContent={(_, website) =>
           website._id === "add-website" ? (
@@ -37,7 +39,7 @@ export function WebsitesList() {
               }}
             >
               <Plus />
-              <span>Add source</span>
+              <span>{t("addSource")}</span>
             </button>
           ) : (
             <WebsiteCard
@@ -53,12 +55,11 @@ export function WebsitesList() {
         listClassName="grid gap-4 sm:grid-cols-2 xl:grid-cols-3"
         itemClassName="h-56"
         messages={{
-          error: "Failed to fetch websites",
-          noData: "No websites yet",
-          noDataDescription:
-            "Add a website in the Websites section to start scraping job listings.",
-          loading: "Loading websites...",
-          endReached: "You've reached the end of the list.",
+          error: t("error"),
+          noData: t("noData"),
+          noDataDescription: t("noDataDescription"),
+          loading: t("loading"),
+          endReached: t("endReached"),
         }}
       />
       <WebsiteFormDialog

@@ -12,6 +12,7 @@ import Link from "next/link"
 import { OTPInput } from "@/components/ui/input-otp"
 import { toast } from "sonner"
 import { useEffect, useState } from "react"
+import { useTranslations } from "next-intl"
 
 const verifySchema = z.object({
   code: z.string().length(6, "Enter the 6-digit code"),
@@ -31,6 +32,7 @@ export function VerifyCodeStep({
   verifyLoading,
 }: VerifyCodeStepProps) {
   const [resendCooldown, setResendCooldown] = useState(60)
+  const t = useTranslations("auth.resetPassword.verify")
 
   const { mutate: resendCode, loading: resendLoading } = useResendCode({
     onSuccess: () => {
@@ -67,12 +69,10 @@ export function VerifyCodeStep({
           <MailCheck className="size-7" />
         </span>
         <h1 className="text-2xl font-bold tracking-tight text-foreground">
-          Check your email
+          {t("title")}
         </h1>
         <p className="text-sm text-muted-foreground">
-          We&apos;ve sent a 6-digit verification code to{" "}
-          <span className="font-semibold text-primary">{email}</span>. Enter it
-          below to continue.
+          {t("description", { email })}
         </p>
       </div>
 
@@ -91,7 +91,7 @@ export function VerifyCodeStep({
           size="lg"
           loading={verifyLoading}
         >
-          Verify Code
+          {t("verifyButton")}
           <span className="ml-2" aria-hidden>
             <ArrowRight className="size-4" />
           </span>
@@ -99,7 +99,7 @@ export function VerifyCodeStep({
       </Form>
 
       <p className="text-center text-sm text-muted-foreground">
-        Didn&apos;t receive the code?{" "}
+        {t("resendQuestion")}{" "}
         <button
           type="button"
           onClick={() => resendCode({ email })}
@@ -107,8 +107,8 @@ export function VerifyCodeStep({
           className="text-primary hover:underline disabled:cursor-not-allowed disabled:opacity-50"
         >
           {resendCooldown > 0
-            ? `Resend code (${resendCooldown}s)`
-            : "Resend code"}
+            ? t("resendWithSeconds", { seconds: resendCooldown })
+            : t("resend")}
         </button>
       </p>
 

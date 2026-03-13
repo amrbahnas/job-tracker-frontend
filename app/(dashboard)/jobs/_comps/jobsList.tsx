@@ -4,8 +4,10 @@ import { ItemList } from "@/components/common/itemList"
 import { useGetJobs } from "../_api/quieries"
 import useJobsFilters from "../hooks/useJobsFilters"
 import { JobCard } from "./jobCard"
+import { useTranslations } from "next-intl"
 export function JobsList() {
   const { filters } = useJobsFilters()
+  const t = useTranslations("jobs.list")
 
   const {
     data: jobs = [] as Job[],
@@ -26,12 +28,11 @@ export function JobsList() {
       refetch={refetch}
       itemContent={(_, job) => <JobCard job={job as Job} />}
       messages={{
-        error: "Something went wrong while loading your jobs.",
-        noData: "No jobs yet.",
-        noDataDescription:
-          "Add a website in the Websites section to start scraping job listings.",
-        loading: "Loading more jobs…",
-        endReached: "You've reached the end of the list.",
+        error: t("error"),
+        noData: t("noData"),
+        noDataDescription: t("noDataDescription"),
+        loading: t("loading"),
+        endReached: t("endReached"),
       }}
     />
   )

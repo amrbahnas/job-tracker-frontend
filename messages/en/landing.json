@@ -1,0 +1,74 @@
+{
+  "meta": {
+    "title": "Dorly — Find New Jobs Before Everyone Else",
+    "description": "Dorly automatically monitors LinkedIn, Indeed, Bayt, and other job platforms to surface the newest roles in one centralized job feed so you can apply first and stay organized."
+  },
+  "header": {
+    "navFeatures": "Features",
+    "navPricing": "Pricing",
+    "navAbout": "About",
+    "signUp": "Sign Up",
+    "login": "Login"
+  },
+  "hero": {
+    "imageAlt": "Job seeker using Dorly dashboard to find new roles on LinkedIn, Indeed, and Bayt",
+    "titleLine1": "Find New Jobs",
+    "titleBefore": "Before",
+    "titleOthersHighlight": "Others",
+    "description": "Dorly automatically scans LinkedIn, Indeed, Bayt, and other job sites for you, then streams the newest roles into one live job feed. Apply earlier, skip the constant refreshing, and stay on top of every application.",
+    "primaryCta": "Start Using Dorly Free",
+    "secondaryCta": "How Dorly Works",
+    "socialProofPrefix": "5,000+",
+    "socialProofSuffix": "job seekers use tools like Dorly to stay ahead of new postings."
+  },
+  "features": {
+    "eyebrow": "Why Dorly",
+    "title": "Beat Other Candidates to New Roles",
+    "description": "Dorly automates the repetitive parts of job hunting — checking multiple sites, refreshing tabs, and copying links — so you can focus on sending stronger applications earlier than everyone else.",
+    "items": {
+      "allFeaturesTitle": "All Features, Always Free",
+      "allFeaturesDescription": "Dorly is built for job seekers, not recruiters. You get every feature, unlimited boards, and unlimited searches — with zero cost.",
+      "multiPlatformTitle": "Multi‑platform Job Aggregation",
+      "multiPlatformDescription": "Connect searches from LinkedIn, Indeed, Bayt, and other job boards so new roles appear in a single, unified job feed.",
+      "alertsTitle": "Instant New‑Job Alerts",
+      "alertsDescription": "Get notified as soon as new matching jobs appear so you can be among the very first to apply."
+    }
+  },
+  "about": {
+    "eyebrow": "About Dorly",
+    "title": "Built for people serious about their job search",
+    "description": "Dorly was created for job seekers who are tired of opening ten tabs every morning just to see what's new. Instead of manually checking LinkedIn, Indeed, Bayt, and other platforms, Dorly monitors your saved searches and pulls new roles into one simple dashboard.",
+    "missionTitle": "Our mission",
+    "missionDescription": "Help job seekers apply earlier and stay organized so they can focus on preparing stronger applications — not refreshing job boards all day.",
+    "whoTitle": "Who Dorly is for",
+    "whoDescription": "Fresh graduates, software developers, and professionals who track opportunities across multiple platforms and want a single place to monitor, review, and manage every application."
+  },
+  "pricing": {
+    "eyebrow": "Pricing",
+    "title": "All Dorly features are 100% free",
+    "description": "No credit card. No trial period. Dorly is designed for job seekers who need a faster way to discover and manage opportunities — not another subscription to worry about.",
+    "planTitle": "Free Forever",
+    "planDescription": "Everything you need to find and track jobs early.",
+    "priceLabel": "$0",
+    "priceSuffix": "/month",
+    "benefits": {
+      "unlimitedSearches": "Unlimited job searches and tracked boards",
+      "autoScraping": "Automatic scraping of new roles from multiple platforms",
+      "unifiedFeed": "Unified job feed with filters and search",
+      "statusTracking": "Application status tracking and notes",
+      "emailExport": "Email-friendly export of saved opportunities"
+    }
+  },
+  "cta": {
+    "title": "Be the first to see the jobs you want.",
+    "description": "Dorly scans multiple job platforms for you and delivers fresh opportunities into one simple dashboard — completely free.",
+    "primaryCta": "Create Free Dorly Account",
+    "secondaryCta": "Learn More About Dorly"
+  },
+  "footer": {
+    "privacy": "Privacy Policy",
+    "terms": "Terms of service",
+    "contact": "Contact",
+    "copyright": "© {year} Dorly. All rights reserved."
+  }
+}

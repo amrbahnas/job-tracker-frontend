@@ -1,4 +1,5 @@
 import DarkModeToggle from "@/components/common/darkModeToggle"
+import { LanguageToggle } from "@/components/common/language-toggle"
 import Logo from "@/components/common/logo"
 import Container from "@/components/ui/container"
 import Link from "next/link"
@@ -14,6 +15,7 @@ export function AuthHeader() {
           <Logo />
         </Link>
         <nav className="flex items-center gap-2">
+          <LanguageToggle />
           <DarkModeToggle />
           {/* <Button variant="link" asChild>
             <Link href="/login">Support</Link>

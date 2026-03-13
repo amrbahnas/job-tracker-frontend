@@ -2,14 +2,17 @@
 
 import Link from "next/link"
 import { cn } from "@/lib/utils"
-
-const LINKS = [
-  { href: "/privacy", label: "Privacy Policy" },
-  { href: "/terms", label: "Terms of Service" },
-  { href: "/cookies", label: "Cookie Settings" },
-] as const
+import { useTranslations } from "next-intl"
 
 export function AuthFooter({ className }: { className?: string }) {
+  const t = useTranslations("auth.footer")
+
+  const LINKS = [
+    { href: "/privacy", label: t("privacy") },
+    { href: "/terms", label: t("terms") },
+    { href: "/cookies", label: t("cookies") },
+  ] as const
+
   return (
     <footer
       className={cn(
@@ -18,8 +21,7 @@ export function AuthFooter({ className }: { className?: string }) {
       )}
     >
       <span>
-        © {new Date().getFullYear()} Job Tracker. Built with care for your
-        career.
+        © {new Date().getFullYear()} Job Tracker. {t("brandLine")}
       </span>
       <nav aria-label="Legal">
         <ul className="flex flex-wrap items-center justify-center gap-x-1">

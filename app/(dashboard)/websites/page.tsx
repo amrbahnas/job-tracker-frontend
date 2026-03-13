@@ -1,9 +1,15 @@
 import WebsitesView from "./_comps"
 import type { Metadata } from "next"
+import { getTranslations } from "next-intl/server"
 
-export const metadata: Metadata = {
-  title: "Websites",
-  description: "Manage your job board sources: LinkedIn, Indeed, Bayt and more. Add searches and get new roles in one feed.",
+export async function generateMetadata(): Promise<Metadata> {
+  const t = await getTranslations("websites.meta")
+
+  return {
+    title: t("title"),
+    description: t("description"),
+    robots: { index: false, follow: true },
+  }
 }
 
 export default function PlatformsPage() {

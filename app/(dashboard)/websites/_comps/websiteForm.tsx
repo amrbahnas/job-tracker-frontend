@@ -20,6 +20,7 @@ import { useWebsitesActions } from "../_api/mutations"
 import { AutofillWithAiDialog } from "./autofillWithAiDialog"
 import IntervalSelector from "./intervalSelector"
 import { WebsiteUrlsEditor } from "./websiteUrlsEditor"
+import { useTranslations } from "next-intl"
 
 const websiteFormSchema = z.object({
   name: z.string().min(1, "Platform name is required"),
@@ -55,6 +56,7 @@ type WebsiteFormProps = {
 
 export function WebsiteForm({ website, onCancel }: WebsiteFormProps) {
   const isEditing = Boolean(website?._id)
+  const t = useTranslations("websites.form")
 
   const form = useForm<WebsiteFormValues>({
     resolver: zodResolver(websiteFormSchema as any),
@@ -144,9 +146,7 @@ export function WebsiteForm({ website, onCancel }: WebsiteFormProps) {
       mutation(payload, {
         onSuccess: () => {
           toast.success(
-            isEditing
-              ? "Website updated successfully"
-              : "Website created successfully"
+            isEditing ? t("toastUpdated") : t("toastCreated")
           )
           onCancel?.()
         },
@@ -205,16 +205,19 @@ export function WebsiteForm({ website, onCancel }: WebsiteFormProps) {
       <div className="space-y-4 rounded-lg border bg-card p-4 md:grid-cols-[2fr,1fr] dark:bg-muted/20">
         <h3 className="flex items-center gap-2 text-base font-semibold text-primary dark:text-primary-foreground">
           <Info className="size-4" />
-          Basic information
+          {t("sectionBasicInfo")}
         </h3>
 
         <div className="grid gap-4 md:grid-cols-2">
           <FormItem name="name">
-            <Input label="Platform name" placeholder="e.g., LinkedIn, Indeed" />
+            <Input
+              label={t("platformNameLabel")}
+              placeholder={t("platformNamePlaceholder")}
+            />
           </FormItem>
           <div className="space-y-2">
             <label className="text-md mb-3 block font-medium tracking-[-0.32px] text-gray-700 first-letter:uppercase dark:text-gray-300">
-              Scrape interval
+              {t("scrapeIntervalLabel")}
             </label>
             <IntervalSelector
               value={selectedInterval}
@@ -227,7 +230,7 @@ export function WebsiteForm({ website, onCancel }: WebsiteFormProps) {
 
         <div className="space-y-3">
           <label className="text-md mb-3 block font-medium tracking-[-0.32px] text-gray-700 first-letter:uppercase dark:text-gray-300">
-            Target URLs
+            {t("targetUrlsLabel")}
           </label>
           <WebsiteUrlsEditor
             urls={watch("urls") ?? [""]}
@@ -250,10 +253,10 @@ export function WebsiteForm({ website, onCancel }: WebsiteFormProps) {
         <div className="flex items-center justify-between gap-4 rounded-lg border border-input/50 bg-background p-4">
           <div className="space-y-0.5">
             <label className="text-md font-medium tracking-[-0.32px] text-gray-700 first-letter:uppercase dark:text-gray-300">
-              Active status
+              {t("activeStatusLabel")}
             </label>
             <p className="text-sm text-muted-foreground">
-              Enable or disable background scraping for this platform
+              {t("activeStatusDescription")}
             </p>
           </div>
           <Controller
@@ -273,7 +276,7 @@ export function WebsiteForm({ website, onCancel }: WebsiteFormProps) {
         <div className="flex flex-wrap items-center justify-between gap-2">
           <h3 className="flex items-center gap-2 text-base font-semibold text-primary dark:text-primary-foreground">
             <Code className="size-4" />
-            Data selectors
+            {t("sectionSelectors")}
           </h3>
 
           <AutofillWithAiDialog
@@ -282,42 +285,60 @@ export function WebsiteForm({ website, onCancel }: WebsiteFormProps) {
         </div>
         <Collapsible open={selectorsOpen} onOpenChange={setSelectorsOpen}>
           <p className="text-sm text-muted-foreground">
-            Use AI to detect selectors from a URL,{" "}
-            <CollapsibleTrigger className="cursor-pointer text-primary/70 underline dark:text-primary-foreground/70">
-              or add them manually.
-            </CollapsibleTrigger>
+            {t("selectorsHelper")}
           </p>
           <CollapsibleContent className="mt-4">
             <div className="grid gap-4 md:grid-cols-2">
               <FormItem name="selectors.jobCard">
                 <Input
-                  label="Job card wrapper"
-                  placeholder=".job-card-container"
+                  label={t("jobCardLabel")}
+                  placeholder={t("jobCardPlaceholder")}
                 />
               </FormItem>
               <FormItem name="selectors.link">
-                <Input label="Job link" placeholder="a.apply-btn" />
+                <Input
+                  label={t("jobLinkLabel")}
+                  placeholder={t("jobLinkPlaceholder")}
+                />
               </FormItem>
               <FormItem name="selectors.title">
-                <Input label="Job title" placeholder="h3.title" />
+                <Input
+                  label={t("jobTitleLabel")}
+                  placeholder={t("jobTitlePlaceholder")}
+                />
               </FormItem>
               <FormItem name="selectors.company">
-                <Input label="Company name" placeholder=".company-link" />
+                <Input
+                  label={t("companyNameLabel")}
+                  placeholder={t("companyNamePlaceholder")}
+                />
               </FormItem>
 
               <FormItem name="selectors.location">
-                <Input label="Location" placeholder=".job-location" />
+                <Input
+                  label={t("locationLabel")}
+                  placeholder={t("locationPlaceholder")}
+                />
               </FormItem>
 
               <FormItem name="selectors.salary">
-                <Input label="Salary range" placeholder=".salary-metadata" />
+                <Input
+                  label={t("salaryLabel")}
+                  placeholder={t("salaryPlaceholder")}
+                />
               </FormItem>
 
               <FormItem name="selectors.date">
-                <Input label="Posting date" placeholder="time.posted-on" />
+                <Input
+                  label={t("dateLabel")}
+                  placeholder={t("datePlaceholder")}
+                />
               </FormItem>
               <FormItem name="selectors.description">
-                <Input label="Description summary" placeholder=".job-snippet" />
+                <Input
+                  label={t("descriptionLabel")}
+                  placeholder={t("descriptionPlaceholder")}
+                />
               </FormItem>
             </div>
           </CollapsibleContent>
@@ -333,7 +354,7 @@ export function WebsiteForm({ website, onCancel }: WebsiteFormProps) {
             onClick={onCancel}
             disabled={submitting}
           >
-            Cancel
+            {t("cancel")}
           </Button>
         )}
         <Button
@@ -342,7 +363,7 @@ export function WebsiteForm({ website, onCancel }: WebsiteFormProps) {
           disabled={submitting}
           loading={submitting}
         >
-          {isEditing ? "Save changes" : "Save platform"}
+          {isEditing ? t("saveChanges") : t("savePlatform")}
         </Button>
       </div>
     </Form>

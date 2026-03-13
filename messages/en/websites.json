@@ -1,0 +1,106 @@
+{
+  "meta": {
+    "title": "Websites",
+    "description": "Manage your job board sources: LinkedIn, Indeed, Bayt and more. Add searches and get new roles in one feed."
+  },
+  "header": {
+    "title": "Websites",
+    "subtitle": "Manage your automated job board scrapers and tracking intervals.",
+    "addWebsite": "Add website"
+  },
+  "list": {
+    "addSource": "Add source",
+    "error": "Failed to fetch websites",
+    "noData": "No websites yet",
+    "noDataDescription": "Add a website in the Websites section to start scraping job listings.",
+    "loading": "Loading websites...",
+    "endReached": "You've reached the end of the list."
+  },
+  "card": {
+    "customInterval": "Custom interval",
+    "lastScrapedLabel": "last scraped:",
+    "never": "Never",
+    "intervalLabel": "Interval:",
+    "trackedLabel": "Tracked:",
+    "urlSuffix": "URL",
+    "urlsSuffix": "URLs",
+    "deletedToast": "Website deleted successfully",
+    "statusActive": "ACTIVE",
+    "statusPaused": "PAUSED",
+    "deleteTitle": "Delete website?",
+    "deleteDescription": "This will permanently remove {name} and its tracked URLs and jobs.",
+    "deleteConfirm": "Delete",
+    "deleteCancel": "Cancel"
+  },
+  "formDialog": {
+    "editTitle": "Edit website",
+    "addTitle": "Add website"
+  },
+  "form": {
+    "sectionBasicInfo": "Basic information",
+    "platformNameLabel": "Platform name",
+    "platformNamePlaceholder": "e.g., LinkedIn, Indeed",
+    "scrapeIntervalLabel": "Scrape interval",
+    "targetUrlsLabel": "Target URLs",
+    "activeStatusLabel": "Active status",
+    "activeStatusDescription": "Enable or disable background scraping for this platform",
+    "sectionSelectors": "Data selectors",
+    "selectorsHelper": "Use AI to detect selectors from a URL, or add them manually.",
+    "jobCardLabel": "Job card wrapper",
+    "jobCardPlaceholder": ".job-card-container",
+    "jobLinkLabel": "Job link",
+    "jobLinkPlaceholder": "a.apply-btn",
+    "jobTitleLabel": "Job title",
+    "jobTitlePlaceholder": "h3.title",
+    "companyNameLabel": "Company name",
+    "companyNamePlaceholder": ".company-link",
+    "locationLabel": "Location",
+    "locationPlaceholder": ".job-location",
+    "salaryLabel": "Salary range",
+    "salaryPlaceholder": ".salary-metadata",
+    "dateLabel": "Posting date",
+    "datePlaceholder": "time.posted-on",
+    "descriptionLabel": "Description summary",
+    "descriptionPlaceholder": ".job-snippet",
+    "cancel": "Cancel",
+    "saveChanges": "Save changes",
+    "savePlatform": "Save platform",
+    "toastCreated": "Website created successfully",
+    "toastUpdated": "Website updated successfully"
+  },
+  "urlsDialog": {
+    "button": "Manage URLs",
+    "titleSuffix": "URLs",
+    "description": "These pages will be scraped on the configured interval.",
+    "cancel": "Cancel",
+    "save": "Save URLs",
+    "toastUpdated": "Website URLs updated successfully",
+    "validationAddOneUrl": "Add at least one target URL."
+  },
+  "urlsEditor": {
+    "inputPlaceholder": "https://example.com/jobs...",
+    "removeAria": "Remove URL",
+    "addUrl": "Add URL",
+    "maxUrlsError": "You can only add up to 10 URLs"
+  },
+  "autofill": {
+    "button": "Autofill with AI",
+    "title": "Extract Selectors from HTML",
+    "description": "Automated selector discovery tool.",
+    "info": "AI will analyze it and try to find the correct CSS selectors. Paste the snippet below to begin the analysis.",
+    "htmlLabel": "HTML Code",
+    "htmlPlaceholder": "Paste the HTML code of a single job card here...",
+    "cancel": "Cancel",
+    "extract": "Extract Selectors",
+    "toastExtracted": "Selectors extracted successfully"
+  },
+  "interval": {
+    "placeholder": "Select interval",
+    "every10": "Every 10 minutes",
+    "every15": "Every 15 minutes",
+    "every30": "Every 30 minutes",
+    "every60": "Every 1 hour",
+    "every180": "Every 3 hours",
+    "every360": "Every 6 hours"
+  }
+}

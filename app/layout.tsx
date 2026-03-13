@@ -1,16 +1,18 @@
-import { Figtree, Geist_Mono } from "next/font/google"
-import type { Metadata, Viewport } from "next"
-
 import ClientSideLayout from "@/components/layouts/clientSideLayout"
-import { cn } from "@/lib/utils"
+import { defaultLocale, locales, type Locale } from "@/i18n"
+import { getMessages } from "@/i18n/getMessages"
+import type { Metadata, Viewport } from "next"
+import { NextIntlClientProvider } from "next-intl"
+import { Inter, Noto_Kufi_Arabic } from "next/font/google"
+import { cookies } from "next/headers"
 import { NuqsAdapter } from "nuqs/adapters/next/app"
 import "./globals.css"
 
-const figtree = Figtree({ subsets: ["latin"], variable: "--font-sans" })
-
 const baseUrl =
   process.env.NEXT_PUBLIC_APP_URL ||
-  (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : "https://dorly.io")
+  (process.env.VERCEL_URL
+    ? `https://${process.env.VERCEL_URL}`
+    : "https://dorly.io")
 
 export const viewport: Viewport = {
   width: "device-width",
@@ -24,42 +26,62 @@ export const viewport: Viewport = {
 export const metadata: Metadata = {
   metadataBase: new URL(baseUrl),
   applicationName: "Dorly",
-  title: { template: "%s | Dorly", default: "Dorly — Find New Jobs Before Everyone Else" },
+  title: {
+    template: "%s | Dorly",
+    default: "Dorly — Find New Jobs Before Everyone Else",
+  },
   referrer: "origin-when-cross-origin",
   formatDetection: { telephone: false, email: false },
 }
 
-const fontMono = Geist_Mono({
+const inter = Inter({
   subsets: ["latin"],
-  variable: "--font-mono",
+  weight: ["400", "500", "600", "700"],
 })
 
-export default function RootLayout({
+const noto_kufi_arabic = Noto_Kufi_Arabic({
+  subsets: ["arabic"],
+  weight: ["400", "500", "600", "700"],
+})
+
+async function getCurrentLocale(): Promise<Locale> {
+  const store = await cookies()
+  const cookieLocale = store.get("locale")?.value as Locale | undefined
+
+  if (cookieLocale && (locales as readonly string[]).includes(cookieLocale)) {
+    return cookieLocale
+  }
+
+  return defaultLocale
+}
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode
 }>) {
+  const locale = await getCurrentLocale()
+  const messages = await getMessages(locale)
   return (
     <html
-      lang="en"
+      lang={locale}
+      dir={locale === "ar" ? "rtl" : "ltr"}
       suppressHydrationWarning
-      className={cn(
-        "antialiased",
-        fontMono.variable,
-        "font-sans",
-        figtree.variable
-      )}
+      className={`antialiased ${
+        locale === "ar" ? noto_kufi_arabic.className : inter.className
+      }`}
     >
       <body>
-        <a
-          href="#main-content"
-          className="absolute -left-[9999px] top-4 z-[100] rounded bg-primary px-4 py-2 text-primary-foreground focus:left-4 focus:outline-none"
-        >
-          Skip to main content
-        </a>
-        <NuqsAdapter>
-          <ClientSideLayout>{children}</ClientSideLayout>
-        </NuqsAdapter>
+        <NextIntlClientProvider messages={messages}>
+          <a
+            href="#main-content"
+            className="absolute top-4 -left-[9999px] z-[100] rounded bg-primary px-4 py-2 text-primary-foreground focus:left-4 focus:outline-none"
+          >
+            Skip to main content
+          </a>
+          <NuqsAdapter>
+            <ClientSideLayout>{children}</ClientSideLayout>
+          </NuqsAdapter>
+        </NextIntlClientProvider>
       </body>
     </html>
   )

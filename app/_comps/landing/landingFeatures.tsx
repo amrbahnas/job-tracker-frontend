@@ -1,29 +1,29 @@
 import { Lock, LayoutGrid, Bell } from "lucide-react"
 import { cn } from "@/lib/utils"
 import Container from "@/components/ui/container"
+import { getTranslations } from "next-intl/server"
 
-const features = [
-  {
-    icon: Lock,
-    title: "All Features, Always Free",
-    description:
-      "Dorly is built for job seekers, not recruiters. You get every feature, unlimited boards, and unlimited searches — with zero cost.",
-  },
-  {
-    icon: LayoutGrid,
-    title: "Multi‑platform Job Aggregation",
-    description:
-      "Connect searches from LinkedIn, Indeed, Bayt, and other job boards so new roles appear in a single, unified job feed.",
-  },
-  {
-    icon: Bell,
-    title: "Instant New‑Job Alerts",
-    description:
-      "Get notified as soon as new matching jobs appear so you can be among the very first to apply.",
-  },
-] as const
+export async function LandingFeatures() {
+  const t = await getTranslations("landing.features")
 
-export function LandingFeatures() {
+  const featureItems = [
+    {
+      icon: Lock,
+      title: t("items.allFeaturesTitle"),
+      description: t("items.allFeaturesDescription"),
+    },
+    {
+      icon: LayoutGrid,
+      title: t("items.multiPlatformTitle"),
+      description: t("items.multiPlatformDescription"),
+    },
+    {
+      icon: Bell,
+      title: t("items.alertsTitle"),
+      description: t("items.alertsDescription"),
+    },
+  ] as const
+
   return (
     <Container
       id="features"
@@ -32,21 +32,19 @@ export function LandingFeatures() {
     >
       <div className="mx-auto max-w-4xl px-6">
         <p className="mb-2 text-center text-xs font-medium tracking-wider text-muted-foreground uppercase">
-          Why Dorly
+          {t("eyebrow")}
         </p>
         <h2
           id="features-heading"
           className="mb-4 text-center text-2xl font-semibold sm:text-3xl"
         >
-          Beat Other Candidates to New Roles
+          {t("title")}
         </h2>
         <p className="mx-auto mb-12 max-w-xl text-center text-muted-foreground">
-          Dorly automates the repetitive parts of job hunting — checking
-          multiple sites, refreshing tabs, and copying links — so you can focus
-          on sending stronger applications earlier than everyone else.
+          {t("description")}
         </p>
         <ul className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3" role="list">
-          {features.map(({ icon: Icon, title, description }, i) => (
+          {featureItems.map(({ icon: Icon, title, description }, i) => (
             <li
               key={title}
               className={cn(

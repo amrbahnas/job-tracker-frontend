@@ -1,5 +1,6 @@
 "use client"
 import DarkModeToggle from "@/components/common/darkModeToggle"
+import { LanguageToggle } from "@/components/common/language-toggle"
 import Logo from "@/components/common/logo"
 import { Avatar, AvatarFallback } from "@/components/ui/avatar"
 import Container from "@/components/ui/container"
@@ -131,6 +132,7 @@ const Navbar = () => {
         </div>
 
         <div className="flex items-center gap-4">
+          <LanguageToggle />
           <DarkModeToggle />
           {user && (
             <Popover open={openProfile} onOpenChange={setOpenProfile}>

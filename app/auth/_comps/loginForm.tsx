@@ -11,6 +11,7 @@ import { useAuthActions } from "../_api/mutations"
 import Link from "next/link"
 import PasswordInput from "@/components/ui/password-input"
 import ReCAPTCHA from "./ReCAPTCHA"
+import { useTranslations } from "next-intl"
 
 const loginSchema = z.object({
   email: z.email("Invalid email"),
@@ -23,6 +24,7 @@ type LoginValues = z.infer<typeof loginSchema>
 
 export function LoginForm() {
   const { login, loading } = useAuthActions()
+  const t = useTranslations("auth.login")
 
   const form = useForm<LoginValues>({
     resolver: zodResolver(loginSchema as any),
@@ -45,19 +47,19 @@ export function LoginForm() {
         <FormItem name="email">
           <Input
             type="email"
-            label="Email Address"
-            placeholder="alex@company.com"
-            aria-label="Email Address"
+            label={t("emailLabel")}
+            placeholder={t("emailPlaceholder")}
+            aria-label={t("emailLabel")}
           />
         </FormItem>
         <div className="space-y-3">
           <div className="flex items-center justify-between">
-            <Label htmlFor="login-password">Password</Label>
+            <Label htmlFor="login-password">{t("passwordLabel")}</Label>
             <Link
               href="/auth/reset-password"
               className="text-sm text-primary hover:underline"
             >
-              Forgot?
+              {t("forgot")}
             </Link>
           </div>
           <FormItem name="password">
@@ -84,13 +86,13 @@ export function LoginForm() {
           size="lg"
           loading={loading}
         >
-          Submit
+          {t("submit")}
         </Button>
       </Form>
       <p className="mt-4 text-center text-sm text-muted-foreground">
-        Don&apos;t have an account?{" "}
+        {t("noAccount")}{" "}
         <Link href="/auth?tab=signup" className="text-primary hover:underline">
-          Create an account
+          {t("createAccount")}
         </Link>
       </p>
     </>

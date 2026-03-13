@@ -11,6 +11,7 @@ import { toast } from "sonner"
 import { DangerConfirmButton } from "@/components/common/DangerConfirmButton"
 import { useWebsitesActions } from "../_api/mutations"
 import { WebsiteUrlsDialog } from "./websiteUrlsDialog"
+import { useTranslations } from "next-intl"
 dayjs.extend(relativeTime)
 
 type WebsiteCardProps = {
@@ -32,25 +33,29 @@ export function WebsiteCard({ website, onEditWebsite }: WebsiteCardProps) {
   const { deleteWebsite, deleteWebsiteLoading } = useWebsitesActions(
     website._id
   )
+  const t = useTranslations("websites.card")
   const urlsCount = website.urls?.length ?? 0
   const CardBody = [
     {
       icon: History,
-      label: "last scraped:",
+      label: t("lastScrapedLabel"),
       value: website.lastScrapedAt
         ? dayjs(website.lastScrapedAt).fromNow()
-        : "Never",
+        : t("never"),
     },
     {
       icon: Clock,
-      label: "Interval:",
-      value: formatInterval(website.scrapeIntervalMinutes),
+      label: t("intervalLabel"),
+      value:
+        website.scrapeIntervalMinutes && website.scrapeIntervalMinutes > 0
+          ? formatInterval(website.scrapeIntervalMinutes)
+          : t("customInterval"),
     },
     {
       icon: Link,
-      label: "Tracked:",
+      label: t("trackedLabel"),
       value: urlsCount,
-      extra: urlsCount === 1 ? "URL" : "URLs",
+      extra: urlsCount === 1 ? t("urlSuffix") : t("urlsSuffix"),
     },
   ]
 
@@ -59,7 +64,7 @@ export function WebsiteCard({ website, onEditWebsite }: WebsiteCardProps) {
       {},
       {
         onSuccess: () => {
-          toast.success("Website deleted successfully")
+          toast.success(t("deletedToast"))
         },
       }
     )
@@ -113,10 +118,10 @@ export function WebsiteCard({ website, onEditWebsite }: WebsiteCardProps) {
             className="size-7 text-muted-foreground hover:text-destructive"
             onConfirm={handleDelete}
             disabled={deleteWebsiteLoading}
-            title="Delete website?"
-            description={`This will permanently remove ${website.name} and its tracked URLs and jobs.`}
-            confirmText="Delete"
-            cancelText="Cancel"
+            title={t("deleteTitle")}
+            description={t("deleteDescription", { name: website.name })}
+            confirmText={t("deleteConfirm")}
+            cancelText={t("deleteCancel")}
           >
             <Trash2 className="size-3.5" />
           </DangerConfirmButton>
@@ -127,6 +132,7 @@ export function WebsiteCard({ website, onEditWebsite }: WebsiteCardProps) {
 }
 
 const WebsiteStatusBadge = ({ website }: { website: Website }) => {
+  const t = useTranslations("websites.card")
   return (
     <span className="flex items-center gap-1 text-[10px] font-medium">
       <span
@@ -140,7 +146,7 @@ const WebsiteStatusBadge = ({ website }: { website: Website }) => {
           website.enabled ? "text-emerald-600" : "text-muted-foreground"
         )}
       >
-        {website.enabled ? "ACTIVE" : "PAUSED"}
+        {website.enabled ? t("statusActive") : t("statusPaused")}
       </span>
     </span>
   )

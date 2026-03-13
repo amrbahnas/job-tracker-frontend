@@ -1,0 +1,55 @@
+{
+  "meta": {
+    "title": "Jobs",
+    "description": "Your unified job feed from LinkedIn, Indeed, Bayt and more. Track applications and see new roles first."
+  },
+  "header": {
+    "title": "Jobs Dashboard",
+    "subtitle": "Track and manage your career opportunities across the web."
+  },
+  "filters": {
+    "ariaLabel": "Jobs filters"
+  },
+  "statusTabs": {
+    "all": "All Jobs",
+    "new": "New",
+    "applied": "Applied",
+    "archived": "Archived"
+  },
+  "list": {
+    "error": "Something went wrong while loading your jobs.",
+    "noData": "No jobs yet.",
+    "noDataDescription": "Add a website in the Websites section to start scraping job listings.",
+    "loading": "Loading more jobs…",
+    "endReached": "You've reached the end of the list."
+  },
+  "card": {
+    "statusUpdated": "Job status updated to {status} successfully",
+    "deleted": "Job deleted successfully",
+    "archivedFooter": "Moved to archive on {date}",
+    "appliedFooter": "Submitted on {date}",
+    "viewScrapedPage": "View Scraped Page",
+    "noDescription": "No description available",
+    "deleteAria": "Delete job",
+    "deleteTitle": "Delete job?",
+    "deleteDescription": "This will permanently remove this job from your list.",
+    "deleteConfirm": "Delete",
+    "deleteCancel": "Cancel",
+    "restore": "Restore",
+    "markUnapplied": "Mark Unapplied",
+    "archiveAria": "Archive job"
+  },
+  "applyDialog": {
+    "button": "Apply Now",
+    "title": "Have you applied to this job?",
+    "description": "After you finish your application on the job page, let us know so we can update this job's status.",
+    "notYet": "Not yet",
+    "yesApplied": "Yes, I applied"
+  },
+  "scrape": {
+    "button": "Scrape Now",
+    "toastTitle": "Scraping started",
+    "toastDescription": "You will be notified when it completes.",
+    "toastAction": "Close"
+  }
+}

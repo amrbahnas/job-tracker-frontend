@@ -9,15 +9,17 @@ import JOBS_KEYS from "../_api/keys"
 import useJobsFilters from "../hooks/useJobsFilters"
 import JobStatusTabs from "./jobStatusTabs"
 import ScrapeBTN from "./scraptBTN"
+import { useTranslations } from "next-intl"
 
 export function JobsFilters() {
   const { filters, setFilters } = useJobsFilters()
   const { status, sort, websiteId, search } = filters
+  const t = useTranslations("jobs.filters")
 
   return (
     <section
       className="flex flex-col-reverse justify-between gap-4 rounded-md sm:flex-row sm:items-center sm:border sm:bg-card sm:p-4"
-      aria-label="Jobs filters"
+      aria-label={t("ariaLabel")}
     >
       <div className="flex flex-1 gap-2 overflow-hidden">
         <SearchInput

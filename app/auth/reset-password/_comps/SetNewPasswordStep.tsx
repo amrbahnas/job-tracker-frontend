@@ -9,6 +9,7 @@ import { useResetPasswordMutation } from "../../_api/mutations"
 import PasswordInput from "@/components/ui/password-input"
 import Link from "next/link"
 import { ArrowLeft, RotateCcw } from "lucide-react"
+import { useTranslations } from "next-intl"
 
 const setPasswordSchema = z
   .object({
@@ -36,6 +37,7 @@ export function SetNewPasswordStep({
   const { mutate: resetPassword, loading } = useResetPasswordMutation({
     onSuccess,
   })
+  const t = useTranslations("auth.resetPassword.setNew")
 
   const form = useForm<SetNewPasswordValues>({
     resolver: zodResolver(setPasswordSchema as any),
@@ -46,10 +48,10 @@ export function SetNewPasswordStep({
     <>
       <div className="flex flex-col gap-2">
         <h1 className="text-2xl font-bold tracking-tight text-foreground">
-          Set new password
+          {t("title")}
         </h1>
         <p className="text-sm text-muted-foreground">
-          Your new password must be different from previously used passwords.
+          {t("description")}
         </p>
       </div>
 
@@ -62,15 +64,15 @@ export function SetNewPasswordStep({
       >
         <FormItem name="newPassword">
           <PasswordInput
-            label="New Password"
-            placeholder="Min. 8 characters"
+            label={t("newPasswordLabel")}
+            placeholder={t("newPasswordPlaceholder")}
             checkStrength={true}
           />
         </FormItem>
         <FormItem name="confirmPassword">
           <PasswordInput
-            label="Confirm New Password"
-            placeholder="Re-enter password"
+            label={t("confirmLabel")}
+            placeholder={t("confirmPlaceholder")}
             checkStrength={false}
           />
         </FormItem>
@@ -82,7 +84,7 @@ export function SetNewPasswordStep({
           loading={loading}
         >
           <RotateCcw className="mr-2 size-4" aria-hidden />
-          Reset Password
+          {t("submit")}
         </Button>
       </Form>
 
@@ -91,7 +93,7 @@ export function SetNewPasswordStep({
         className="inline-flex items-center gap-2 text-sm text-primary hover:underline"
       >
         <ArrowLeft className="size-4" />
-        Back to sign in
+        {t("backToSignIn")}
       </Link>
     </>
   )

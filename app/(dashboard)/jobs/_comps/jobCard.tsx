@@ -18,6 +18,7 @@ import { toast } from "sonner"
 import { ApplyButton } from "./applyButton"
 import dayjs from "dayjs"
 import relativeTime from "dayjs/plugin/relativeTime"
+import { useTranslations } from "next-intl"
 dayjs.extend(relativeTime)
 type JobCardProps = {
   job: Job
@@ -28,6 +29,7 @@ export function JobCard({ job }: JobCardProps) {
     useJobActions({
       id: job._id,
     })
+  const t = useTranslations("jobs.card")
 
   const isArchived = job.status === "archived"
   const isApplied = job.status === "applied"
@@ -42,7 +44,11 @@ export function JobCard({ job }: JobCardProps) {
       { status: nextStatus },
       {
         onSuccess: () => {
-          toast.success(`Job status updated to ${nextStatus} successfully`)
+          toast.success(
+            t("statusUpdated", {
+              status: nextStatus,
+            })
+          )
         },
       }
     )
@@ -51,7 +57,7 @@ export function JobCard({ job }: JobCardProps) {
   const handleDelete = () => {
     deleteJob(undefined, {
       onSuccess: () => {
-        toast.success(`Job deleted successfully`)
+        toast.success(t("deleted"))
       },
     })
   }
@@ -70,7 +76,9 @@ export function JobCard({ job }: JobCardProps) {
     if (isArchived) {
       return (
         <p className="text-[11px] text-[#9CA3AF] dark:text-slate-500">
-          Moved to archive on {dayjs(job.createdAt).format("MMM D, YYYY")}
+          {t("archivedFooter", {
+            date: dayjs(job.createdAt).format("MMM D, YYYY"),
+          })}
         </p>
       )
     }
@@ -79,7 +87,9 @@ export function JobCard({ job }: JobCardProps) {
       return (
         <p className="inline-flex items-center gap-1.5 text-[11px] font-medium text-emerald-600 dark:text-emerald-400">
           <Check className="size-3.5 shrink-0" aria-hidden="true" />
-          submitted on {dayjs(job.createdAt).format("MMM D, YYYY")}
+          {t("appliedFooter", {
+            date: dayjs(job.createdAt).format("MMM D, YYYY"),
+          })}
         </p>
       )
     }
@@ -93,7 +103,7 @@ export function JobCard({ job }: JobCardProps) {
             rel="noopener noreferrer"
             className="flex items-start gap-1 text-xs text-foreground/50 hover:underline"
           >
-            <span>View Scraped Page</span>
+            <span>{t("viewScrapedPage")}</span>
             <ExternalLink className="size-3" aria-hidden="true" />
           </a>
         )}
@@ -117,7 +127,7 @@ export function JobCard({ job }: JobCardProps) {
           disabled={isMutating}
           onClick={() => updateStatus("new")}
         >
-          Restore
+          {t("restore")}
         </Button>
       )
     }
@@ -129,7 +139,7 @@ export function JobCard({ job }: JobCardProps) {
             type="button"
             size="icon-sm"
             variant="ghost"
-            aria-label="Archive job"
+          aria-label={t("archiveAria")}
             disabled={isMutating}
             onClick={() => updateStatus("archived")}
           >
@@ -143,7 +153,7 @@ export function JobCard({ job }: JobCardProps) {
             disabled={isMutating}
             onClick={() => updateStatus("new")}
           >
-            Mark Unapplied
+          {t("markUnapplied")}
           </Button>
         </>
       )
@@ -223,7 +233,7 @@ export function JobCard({ job }: JobCardProps) {
         </header>
 
         <p className="mt-2 line-clamp-2 flex-1 text-xs text-[#6B7280] sm:text-sm dark:text-slate-400">
-          {job.description ? job.description : "No description available"}
+          {job.description ? job.description : t("noDescription")}
         </p>
 
         <footer
@@ -233,16 +243,16 @@ export function JobCard({ job }: JobCardProps) {
 
           <div className="ml-auto flex items-center gap-1.5">
             <DangerConfirmButton
-              aria-label="Delete job"
+              aria-label={t("deleteAria")}
               disabled={isMutating}
               onConfirm={handleDelete}
               size="icon-sm"
               variant="ghost"
               className="text-[#6B7280] hover:text-red-500 dark:text-slate-400 dark:hover:text-red-400"
-              title="Delete job?"
-              description="This will permanently remove this job from your list."
-              confirmText="Delete"
-              cancelText="Cancel"
+              title={t("deleteTitle")}
+              description={t("deleteDescription")}
+              confirmText={t("deleteConfirm")}
+              cancelText={t("deleteCancel")}
             >
               <Trash2 className="size-3.5" />
             </DangerConfirmButton>

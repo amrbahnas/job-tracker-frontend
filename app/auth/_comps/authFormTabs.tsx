@@ -2,12 +2,14 @@
 
 import { useQueryState, parseAsStringLiteral } from "nuqs"
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import { useTranslations } from "next-intl"
 
 const tabParser = parseAsStringLiteral(["login", "signup"]).withDefault("login")
 export type AuthTab = "login" | "signup"
 
 export function AuthFormTabs() {
   const [tab, setTab] = useQueryState("tab", tabParser)
+  const t = useTranslations("auth.tabs")
 
   return (
     <Tabs
@@ -22,7 +24,7 @@ export function AuthFormTabs() {
           variant="card"
           className="flex-1"
         >
-          Login
+          {t("login")}
         </TabsTrigger>
         <TabsTrigger
           value="signup"
@@ -30,7 +32,7 @@ export function AuthFormTabs() {
           variant="card"
           className="flex-1"
         >
-          Sign Up
+          {t("signup")}
         </TabsTrigger>
       </TabsList>
     </Tabs>

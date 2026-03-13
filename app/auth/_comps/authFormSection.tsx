@@ -5,11 +5,13 @@ import { AuthFormTabs } from "./authFormTabs"
 import { LoginForm } from "./loginForm"
 import { SignupForm } from "./signupForm"
 import { cn } from "@/lib/utils"
+import { useTranslations } from "next-intl"
 
 const tabParser = parseAsStringLiteral(["login", "signup"]).withDefault("login")
 
 export function AuthFormSection({ className }: { className?: string }) {
   const [tab] = useQueryState("tab", tabParser)
+  const t = useTranslations("auth")
 
   return (
     <section
@@ -21,10 +23,10 @@ export function AuthFormSection({ className }: { className?: string }) {
           id="auth-form-heading"
           className="text-2xl font-bold tracking-tight text-foreground"
         >
-          Welcome back
+          {t("login.title")}
         </h1>
         <p className="mt-1 text-sm text-muted-foreground">
-          Ready to take the next step in your career?
+          {t("login.subtitle")}
         </p>
       </header>
       <AuthFormTabs />

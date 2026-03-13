@@ -1,8 +1,10 @@
 import Logo from "@/components/common/logo"
 import Container from "@/components/ui/container"
 import Link from "next/link"
+import { getTranslations } from "next-intl/server"
 
-export function LandingFooter() {
+export async function LandingFooter() {
+  const t = await getTranslations("landing.footer")
   const year = new Date().getFullYear()
 
   return (
@@ -19,17 +21,17 @@ export function LandingFooter() {
           aria-label="Footer"
         >
           <Link href="/privacy" className="hover:underline">
-            Privacy Policy
+            {t("privacy")}
           </Link>
           <Link href="/terms" className="hover:underline">
-            Terms of service
+            {t("terms")}
           </Link>
           <Link href="/contact" className="hover:underline">
-            Contact
+            {t("contact")}
           </Link>
         </nav>
         <p className="text-sm text-muted-foreground">
-          © {year} Dorly. All rights reserved.
+          {t("copyright", { year })}
         </p>
       </Container>
     </footer>

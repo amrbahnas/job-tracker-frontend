@@ -3,6 +3,7 @@
 import { Error } from "@/components/common/error"
 import { Button } from "@/components/ui/button"
 import { Plus, Trash2 } from "lucide-react"
+import { useTranslations } from "next-intl"
 
 type WebsiteUrlsEditorProps = {
   urls: string[]
@@ -15,6 +16,7 @@ export function WebsiteUrlsEditor({
   onChange,
   errorMessage,
 }: WebsiteUrlsEditorProps) {
+  const t = useTranslations("websites.urlsEditor")
   const handleChange = (index: number, value: string) => {
     const next = [...urls]
     next[index] = value
@@ -39,7 +41,7 @@ export function WebsiteUrlsEditor({
           <input
             type="url"
             className="h-10 w-full min-w-0 rounded-lg border border-input bg-background px-3 py-2 text-sm shadow-xs outline-none placeholder:text-muted-foreground focus-visible:border-ring focus-visible:ring-2 focus-visible:ring-ring/50"
-            placeholder="https://example.com/jobs..."
+            placeholder={t("inputPlaceholder")}
             value={url}
             onChange={(event) => handleChange(index, event.target.value)}
           />
@@ -49,7 +51,7 @@ export function WebsiteUrlsEditor({
             size="icon-sm"
             className="shrink-0 rounded-lg bg-muted/80 text-muted-foreground hover:bg-muted hover:text-foreground"
             onClick={() => handleRemove(index)}
-            aria-label="Remove URL"
+            aria-label={t("removeAria")}
           >
             <Trash2 className="size-4" />
           </Button>
@@ -62,12 +64,12 @@ export function WebsiteUrlsEditor({
         className="flex h-10 w-full cursor-pointer items-center justify-center gap-2 rounded-lg border border-dashed border-input bg-transparent text-sm font-medium text-muted-foreground transition-colors hover:border-muted-foreground/50 hover:bg-muted/30 hover:text-foreground disabled:cursor-not-allowed"
       >
         <Plus className="size-4" />
-        Add URL
+        {t("addUrl")}
       </button>
       <Error
         error={
           errorMessage ||
-          (urls.length >= 10 ? "You can only add up to 10 URLs" : undefined)
+          (urls.length >= 10 ? t("maxUrlsError") : undefined)
         }
         hideOkButton
       />

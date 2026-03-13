@@ -1,0 +1,106 @@
+{
+  "meta": {
+    "title": "المواقع",
+    "description": "إدارة مصادر البحث عن الوظائف مثل لينكدإن، إنديد، بيت وغيرها. أضف عمليات بحث جديدة واحصل على الفرص في موجز واحد."
+  },
+  "header": {
+    "title": "المواقع",
+    "subtitle": "إدارة أدوات سحب الوظائف الآلية وفترات التتبع.",
+    "addWebsite": "إضافة موقع"
+  },
+  "list": {
+    "addSource": "إضافة مصدر",
+    "error": "فشل في جلب المواقع",
+    "noData": "لا توجد مواقع بعد",
+    "noDataDescription": "أضف موقعاً في قسم المواقع لبدء جلب إعلانات الوظائف.",
+    "loading": "جاري تحميل المواقع...",
+    "endReached": "لقد وصلت إلى نهاية القائمة."
+  },
+  "card": {
+    "customInterval": "فترة مخصصة",
+    "lastScrapedLabel": "آخر سحب:",
+    "never": "لم يتم أبداً",
+    "intervalLabel": "الفترة:",
+    "trackedLabel": "المتابع:",
+    "urlSuffix": "رابط",
+    "urlsSuffix": "روابط",
+    "deletedToast": "تم حذف الموقع بنجاح",
+    "statusActive": "مُفَعَّل",
+    "statusPaused": "مُوَقَّف",
+    "deleteTitle": "حذف الموقع؟",
+    "deleteDescription": "سيتم حذف {name} نهائياً مع جميع الروابط والوظائف المرتبطة به.",
+    "deleteConfirm": "حذف",
+    "deleteCancel": "إلغاء"
+  },
+  "formDialog": {
+    "editTitle": "تعديل موقع",
+    "addTitle": "إضافة موقع"
+  },
+  "form": {
+    "sectionBasicInfo": "البيانات الأساسية",
+    "platformNameLabel": "اسم المنصة",
+    "platformNamePlaceholder": "مثال: LinkedIn, Indeed",
+    "scrapeIntervalLabel": "فترة السحب",
+    "targetUrlsLabel": "روابط الاستهداف",
+    "activeStatusLabel": "حالة التفعيل",
+    "activeStatusDescription": "تفعيل أو إيقاف السحب في الخلفية لهذه المنصة",
+    "sectionSelectors": "محددات البيانات",
+    "selectorsHelper": "استخدم الذكاء الاصطناعي لاستخراج المحددات من رابط، أو قم بإضافتها يدوياً.",
+    "jobCardLabel": "عنصر بطاقة الوظيفة",
+    "jobCardPlaceholder": ".job-card-container",
+    "jobLinkLabel": "رابط الوظيفة",
+    "jobLinkPlaceholder": "a.apply-btn",
+    "jobTitleLabel": "عنوان الوظيفة",
+    "jobTitlePlaceholder": "h3.title",
+    "companyNameLabel": "اسم الشركة",
+    "companyNamePlaceholder": ".company-link",
+    "locationLabel": "الموقع الجغرافي",
+    "locationPlaceholder": ".job-location",
+    "salaryLabel": "نطاق الراتب",
+    "salaryPlaceholder": ".salary-metadata",
+    "dateLabel": "تاريخ النشر",
+    "datePlaceholder": "time.posted-on",
+    "descriptionLabel": "وصف مختصر",
+    "descriptionPlaceholder": ".job-snippet",
+    "cancel": "إلغاء",
+    "saveChanges": "حفظ التغييرات",
+    "savePlatform": "حفظ المنصة",
+    "toastCreated": "تم إنشاء الموقع بنجاح",
+    "toastUpdated": "تم تحديث الموقع بنجاح"
+  },
+  "urlsDialog": {
+    "button": "إدارة الروابط",
+    "titleSuffix": "الروابط",
+    "description": "سيتم سحب هذه الصفحات وفق الفترة المحددة.",
+    "cancel": "إلغاء",
+    "save": "حفظ الروابط",
+    "toastUpdated": "تم تحديث روابط الموقع بنجاح",
+    "validationAddOneUrl": "أضف رابط استهداف واحداً على الأقل."
+  },
+  "urlsEditor": {
+    "inputPlaceholder": "https://example.com/jobs...",
+    "removeAria": "إزالة الرابط",
+    "addUrl": "إضافة رابط",
+    "maxUrlsError": "يمكنك إضافة حتى 10 روابط فقط"
+  },
+  "autofill": {
+    "button": "إكمال تلقائي بالذكاء الاصطناعي",
+    "title": "استخراج المحددات من HTML",
+    "description": "أداة آلية لاكتشاف المحددات.",
+    "info": "سيقوم الذكاء الاصطناعي بتحليل الكود ومحاولة إيجاد محددات CSS الصحيحة. الصق المقطع أدناه لبدء التحليل.",
+    "htmlLabel": "كود HTML",
+    "htmlPlaceholder": "الصق كود HTML لبطاقة وظيفة واحدة هنا...",
+    "cancel": "إلغاء",
+    "extract": "استخراج المحددات",
+    "toastExtracted": "تم استخراج المحددات بنجاح"
+  },
+  "interval": {
+    "placeholder": "اختر الفترة",
+    "every10": "كل 10 دقائق",
+    "every15": "كل 15 دقيقة",
+    "every30": "كل 30 دقيقة",
+    "every60": "كل ساعة",
+    "every180": "كل 3 ساعات",
+    "every360": "كل 6 ساعات"
+  }
+}

@@ -13,6 +13,7 @@ import {
   DialogTrigger,
   DialogClose,
 } from "@/components/ui/dialog"
+import { useTranslations } from "next-intl"
 
 type ApplyButtonProps = {
   jobLink?: string | null
@@ -26,6 +27,7 @@ export function ApplyButton({
   onConfirmApplied,
 }: ApplyButtonProps) {
   const [open, setOpen] = React.useState(false)
+  const t = useTranslations("jobs.applyDialog")
 
   if (!jobLink) return null
 
@@ -40,18 +42,15 @@ export function ApplyButton({
             disabled={disabled}
             onClick={() => setOpen(true)}
           >
-            Apply Now
+            {t("button")}
           </Button>
         </a>
       </DialogTrigger>
 
       <DialogContent>
         <DialogHeader>
-          <DialogTitle>Have you applied to this job?</DialogTitle>
-          <DialogDescription>
-            After you finish your application on the job page, let us know so we
-            can update this job&apos;s status.
-          </DialogDescription>
+          <DialogTitle>{t("title")}</DialogTitle>
+          <DialogDescription>{t("description")}</DialogDescription>
         </DialogHeader>
         <DialogFooter className="mt-4 flex justify-end gap-2">
           <DialogClose asChild>
@@ -61,7 +60,7 @@ export function ApplyButton({
               size="sm"
               onClick={() => setOpen(false)}
             >
-              Not yet
+              {t("notYet")}
             </Button>
           </DialogClose>
           <Button
@@ -72,7 +71,7 @@ export function ApplyButton({
               setOpen(false)
             }}
           >
-            Yes, I applied
+            {t("yesApplied")}
           </Button>
         </DialogFooter>
       </DialogContent>

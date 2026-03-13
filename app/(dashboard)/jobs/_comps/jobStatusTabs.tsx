@@ -1,19 +1,22 @@
+"use client"
+
 import { Button } from "@/components/ui/button"
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Briefcase, Check, FolderPlus, Tag } from "lucide-react"
 import React from "react"
+import { useTranslations } from "next-intl"
 
 const STATUS_OPTIONS: {
   value: string
-  label: string
+  labelKey: string
   icon: React.ReactNode
 }[] = [
-  { value: "all", label: "All Jobs", icon: <Briefcase className="size-4" /> },
-  { value: "new", label: "New", icon: <Tag className="size-4" /> },
-  { value: "applied", label: "Applied", icon: <Check className="size-4" /> },
+  { value: "all", labelKey: "all", icon: <Briefcase className="size-4" /> },
+  { value: "new", labelKey: "new", icon: <Tag className="size-4" /> },
+  { value: "applied", labelKey: "applied", icon: <Check className="size-4" /> },
   {
     value: "archived",
-    label: "Archived",
+    labelKey: "archived",
     icon: <FolderPlus className="size-4" />,
   },
 ]
@@ -25,6 +28,7 @@ type JobStatusTabsProps = {
 
 function JobStatusTabs({ value, onChange }: JobStatusTabsProps) {
   const currentValue = value || "all"
+  const t = useTranslations()
 
   return (
     <>
@@ -44,7 +48,7 @@ function JobStatusTabs({ value, onChange }: JobStatusTabsProps) {
             >
               <div className="flex items-center justify-center gap-2">
                 {option.icon}
-                {option.label}
+                {t(`jobs.statusTabs.${option.labelKey}` as never)}
               </div>
             </TabsTrigger>
           ))}
@@ -60,7 +64,7 @@ function JobStatusTabs({ value, onChange }: JobStatusTabsProps) {
           >
             <div className="flex items-center justify-center gap-2">
               {option.icon}
-              {option.label}
+              {t(`jobs.statusTabs.${option.labelKey}` as never)}
             </div>
           </Button>
         ))}

@@ -9,6 +9,7 @@ import { Button } from "@/components/ui/button"
 import { useSendResetCode } from "../../_api/mutations"
 import Link from "next/link"
 import { Lock, ArrowRight, ArrowLeft, Mail } from "lucide-react"
+import { useTranslations } from "next-intl"
 
 const forgotSchema = z.object({
   email: z
@@ -25,6 +26,7 @@ type ForgotPasswordStepProps = {
 
 export function ForgotPasswordStep({ onSuccess }: ForgotPasswordStepProps) {
   const { mutate: sendCode, loading } = useSendResetCode({})
+  const t = useTranslations("auth.resetPassword.forgot")
 
   const form = useForm<ForgotPasswordValues>({
     resolver: zodResolver(forgotSchema as any),
@@ -41,11 +43,10 @@ export function ForgotPasswordStep({ onSuccess }: ForgotPasswordStepProps) {
           <Lock className="size-7" />
         </span>
         <h1 className="text-2xl font-bold tracking-tight text-foreground">
-          Forgot Password?
+          {t("title")}
         </h1>
         <p className="text-sm text-muted-foreground">
-          No worries, it happens. Enter your email address and we&apos;ll send
-          you a code to reset your password.
+          {t("description")}
         </p>
       </div>
 
@@ -63,10 +64,10 @@ export function ForgotPasswordStep({ onSuccess }: ForgotPasswordStepProps) {
         <FormItem name="email">
           <Input
             type="email"
-            label="Email Address"
-            placeholder="alex@example.com"
+            label={t("emailLabel")}
+            placeholder={t("emailPlaceholder")}
             iconStart={<Mail className="size-5 text-muted-foreground" />}
-            aria-label="Email Address"
+            aria-label={t("emailLabel")}
           />
         </FormItem>
         <Button
@@ -76,7 +77,7 @@ export function ForgotPasswordStep({ onSuccess }: ForgotPasswordStepProps) {
           size="lg"
           loading={loading}
         >
-          Send Reset Code
+          {t("sendCode")}
           <ArrowRight className="ml-2 size-4" />
         </Button>
       </Form>
@@ -86,11 +87,11 @@ export function ForgotPasswordStep({ onSuccess }: ForgotPasswordStepProps) {
         className="mx-auto inline-flex items-center gap-2 text-sm text-primary hover:underline"
       >
         <ArrowLeft className="size-4" />
-        Back to Login
+        {t("backToLogin")}
       </Link>
 
       <p className="text-center text-xs tracking-wide text-muted-foreground uppercase">
-        Secure • Encrypted • Private
+        {t("secureLine")}
       </p>
     </>
   )

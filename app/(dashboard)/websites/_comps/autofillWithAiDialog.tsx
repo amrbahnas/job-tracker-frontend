@@ -17,6 +17,7 @@ import { Code, Info, Sparkles } from "lucide-react"
 import { useCallback, useState } from "react"
 import { toast } from "sonner"
 import { useExtractSelectors } from "../_api/mutations"
+import { useTranslations } from "next-intl"
 
 export type ExtractedSelectors = {
   jobCard?: string
@@ -40,6 +41,7 @@ export function AutofillWithAiDialog({
   const [cardHtml, setCardHtml] = useState("")
 
   const { extractSelectors, extractSelectorsLoading } = useExtractSelectors()
+  const t = useTranslations("websites.autofill")
 
   const handleExtract = useCallback(() => {
     const trimmed = cardHtml?.trim()
@@ -62,7 +64,7 @@ export function AutofillWithAiDialog({
             })
             setCardHtml("")
             setOpen(false)
-            toast.success("Selectors extracted successfully")
+            toast.success(t("toastExtracted"))
           }
         },
       }
@@ -79,17 +81,17 @@ export function AutofillWithAiDialog({
           className="cursor-pointer border border-primary/20 bg-primary/10 text-primary dark:text-primary-foreground"
         >
           <Sparkles className="size-4" />
-          Autofill with AI
+          {t("button")}
         </Button>
       </DialogTrigger>
       <DialogContent className="">
         <DialogHeader>
           <DialogTitle className="flex items-center gap-2">
             <Code className="size-5" aria-hidden />
-            Extract Selectors from HTML
+            {t("title")}
           </DialogTitle>
           <DialogDescription>
-            Automated selector discovery tool.
+            {t("description")}
           </DialogDescription>
         </DialogHeader>
 
@@ -100,18 +102,17 @@ export function AutofillWithAiDialog({
         >
           <Info className="mt-0.5 size-4 shrink-0 text-primary" aria-hidden />
           <p className="text-muted-foreground">
-            AI will analyze it and try to find the correct CSS selectors. Paste
-            the snippet below to begin the analysis.
+            {t("info")}
           </p>
         </div>
 
         <div className="space-y-2">
-          <Label htmlFor="autofill-html">HTML Code</Label>
+          <Label htmlFor="autofill-html">{t("htmlLabel")}</Label>
           <textarea
             id="autofill-html"
             value={cardHtml}
             onChange={(e) => setCardHtml(e.target.value)}
-            placeholder="Paste the HTML code of a single job card here..."
+            placeholder={t("htmlPlaceholder")}
             className="min-h-[160px] w-full resize-y rounded-lg border border-input bg-background px-3 py-2 text-sm shadow-xs outline-none placeholder:text-muted-foreground focus-visible:border-ring focus-visible:ring-2 focus-visible:ring-ring/50"
             disabled={extractSelectorsLoading}
           />
@@ -124,7 +125,7 @@ export function AutofillWithAiDialog({
               variant="outline"
               disabled={extractSelectorsLoading}
             >
-              Cancel
+              {t("cancel")}
             </Button>
           </DialogClose>
           <Button
@@ -133,7 +134,7 @@ export function AutofillWithAiDialog({
             disabled={!cardHtml?.trim() || extractSelectorsLoading}
           >
             <Sparkles className="size-4" aria-hidden />
-            Extract Selectors
+            {t("extract")}
           </Button>
         </DialogFooter>
       </DialogContent>

@@ -17,12 +17,14 @@ import { Link2 } from "lucide-react"
 import { toast } from "sonner"
 import { useWebsitesActions } from "../_api/mutations"
 import getPlatformBadge from "@/utilies/getPlatformBadge"
+import { useTranslations } from "next-intl"
 
 type WebsiteUrlsDialogProps = {
   website: Website
 }
 
 export function WebsiteUrlsDialog({ website }: WebsiteUrlsDialogProps) {
+  const t = useTranslations("websites.urlsDialog")
   const [urlsDialogOpen, setUrlsDialogOpen] = useState(false)
   const [urls, setUrls] = useState<string[]>(website.urls)
   const [errorMessage, setErrorMessage] = useState<string | undefined>(
@@ -41,7 +43,7 @@ export function WebsiteUrlsDialog({ website }: WebsiteUrlsDialogProps) {
     event.preventDefault()
     const cleanedUrls = urls.map((u) => u.trim()).filter(Boolean)
     if (!cleanedUrls.length) {
-      setErrorMessage("Add at least one target URL.")
+      setErrorMessage(t("validationAddOneUrl"))
       return
     }
 
@@ -49,7 +51,7 @@ export function WebsiteUrlsDialog({ website }: WebsiteUrlsDialogProps) {
       { urls: cleanedUrls },
       {
         onSuccess: () => {
-          toast.success("Website URLs updated successfully")
+          toast.success(t("toastUpdated"))
           handleClose()
         },
       }
@@ -72,7 +74,7 @@ export function WebsiteUrlsDialog({ website }: WebsiteUrlsDialogProps) {
           onClick={() => setUrlsDialogOpen(true)}
         >
           <Link2 className="mr-1 size-3" />
-          Manage URLs
+          {t("button")}
         </Button>
       </DialogTrigger>
       <DialogContent className="py-0 sm:max-w-3xl">
@@ -81,7 +83,7 @@ export function WebsiteUrlsDialog({ website }: WebsiteUrlsDialogProps) {
             <DialogTitle className="text-md flex items-center gap-1 leading-tight font-semibold">
               {getPlatformBadge(website.name, 8)}
               <span className="capitalize">{website.name}</span>
-              <span>URLs</span>
+              <span>{t("titleSuffix")}</span>
             </DialogTitle>
           </DialogHeader>
 
@@ -94,7 +96,7 @@ export function WebsiteUrlsDialog({ website }: WebsiteUrlsDialogProps) {
             errorMessage={errorMessage}
           />
           <DialogDescription>
-            These pages will be scraped on the configured interval.
+            {t("description")}
           </DialogDescription>
           <DialogFooter className="mt-12 py-6">
             <Button
@@ -104,7 +106,7 @@ export function WebsiteUrlsDialog({ website }: WebsiteUrlsDialogProps) {
               onClick={handleClose}
               disabled={updateUrlsLoading}
             >
-              Cancel
+              {t("cancel")}
             </Button>
             <Button
               type="submit"
@@ -112,7 +114,7 @@ export function WebsiteUrlsDialog({ website }: WebsiteUrlsDialogProps) {
               disabled={updateUrlsLoading}
               loading={updateUrlsLoading}
             >
-              Save URLs
+              {t("save")}
             </Button>
           </DialogFooter>
         </form>

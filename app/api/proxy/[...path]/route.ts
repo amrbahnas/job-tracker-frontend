@@ -38,9 +38,13 @@ async function handleRequest(request: NextRequest, method: RequestMethod) {
       requestData = await request.json().catch(() => ({}))
     }
 
+    const localeCookie = request.cookies.get("locale")?.value
+    const lang = localeCookie === "ar" ? "ar" : "en"
+
     const config = {
       headers: {
         Cookie: request.headers.get("cookie") || "",
+        lang,
       },
     }
 

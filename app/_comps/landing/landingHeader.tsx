@@ -1,16 +1,17 @@
 "use client"
 
-import Link from "next/link"
-import { Button } from "@/components/ui/button"
-import DarkModeToggle from "../../../components/common/darkModeToggle"
-import Container from "@/components/ui/container"
-import { Send } from "lucide-react"
-import { useEffect, useState } from "react"
-import { cn } from "@/lib/utils"
-import Image from "next/image"
+import { LanguageToggle } from "@/components/common/language-toggle"
 import Logo from "@/components/common/logo"
+import { Button } from "@/components/ui/button"
+import Container from "@/components/ui/container"
+import { cn } from "@/lib/utils"
+import { useTranslations } from "next-intl"
+import Link from "next/link"
+import { useEffect, useState } from "react"
+import DarkModeToggle from "../../../components/common/darkModeToggle"
 
 export function LandingHeader() {
+  const t = useTranslations("landing.header")
   const [scrolled, setScrolled] = useState(false)
 
   useEffect(() => {
@@ -52,28 +53,29 @@ export function LandingHeader() {
               href="#features"
               className="text-sm font-medium transition-colors hover:text-foreground"
             >
-              Features
+              {t("navFeatures")}
             </Link>
             <Link
               href="#pricing"
               className="text-sm font-medium transition-colors hover:text-foreground"
             >
-              Pricing
+              {t("navPricing")}
             </Link>
             <Link
               href="#about"
               className="text-sm font-medium transition-colors hover:text-foreground"
             >
-              About
+              {t("navAbout")}
             </Link>
           </div>
           <DarkModeToggle />
+          <LanguageToggle />
           <div className="flex items-center gap-2">
             <Button className="px-4" asChild>
-              <Link href="/auth?tab=signup">Sign Up</Link>
+              <Link href="/auth?tab=signup">{t("signUp")}</Link>
             </Button>
             <Button variant="secondary" className="px-4" asChild>
-              <Link href="/auth">Login</Link>
+              <Link href="/auth">{t("login")}</Link>
             </Button>
           </div>
         </nav>

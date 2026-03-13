@@ -2,16 +2,19 @@
 
 import Image from "next/image"
 import { cn } from "@/lib/utils"
+import { useTranslations } from "next-intl"
 
 const AUTH_HERO_IMAGE = "/images/auth.png"
 
-const FEATURES = [
-  "Visual application pipeline",
-  "Interview reminders & notes",
-  "Salary benchmarking tools",
-] as const
-
 export function AuthPromo({ className }: { className?: string }) {
+  const t = useTranslations("auth.promo")
+
+  const FEATURES = [
+    t("featurePipeline"),
+    t("featureReminders"),
+    t("featureSalary"),
+  ] as const
+
   return (
     <section
       className={cn(
@@ -36,12 +39,11 @@ export function AuthPromo({ className }: { className?: string }) {
             id="auth-promo-heading"
             className="text-2xl font-bold tracking-tight text-foreground md:text-3xl"
           >
-            Land your dream job{" "}
-            <span className="text-primary">faster than ever.</span>
+            {t("title")}{" "}
+            <span className="text-primary">{t("titleHighlight")}</span>
           </h2>
           <p className="text-sm text-muted-foreground md:text-base">
-            Join 10,000+ professionals tracking their applications, managing
-            interviews, and organizing their career growth.
+            {t("description")}
           </p>
         </figcaption>
       </figure>

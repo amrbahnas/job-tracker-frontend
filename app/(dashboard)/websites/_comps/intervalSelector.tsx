@@ -7,14 +7,15 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select"
+import { useTranslations } from "next-intl"
 
 const SCRAPE_INTERVAL_OPTIONS = [
-  { label: "Every 10 minutes", value: 10 },
-  { label: "Every 15 minutes", value: 15 },
-  { label: "Every 30 minutes", value: 30 },
-  { label: "Every 1 hour", value: 60 },
-  { label: "Every 3 hours", value: 180 },
-  { label: "Every 6 hours", value: 360 },
+  { key: "every10", value: 10 },
+  { key: "every15", value: 15 },
+  { key: "every30", value: 30 },
+  { key: "every60", value: 60 },
+  { key: "every180", value: 180 },
+  { key: "every360", value: 360 },
 ]
 
 const IntervalSelector = ({
@@ -24,18 +25,19 @@ const IntervalSelector = ({
   value: number
   onChange: (value: number) => void
 }) => {
+  const t = useTranslations("websites.interval")
   return (
     <Select
       value={String(value)}
       onValueChange={(value) => onChange(Number(value))}
     >
       <SelectTrigger className="w-full">
-        <SelectValue placeholder="Select interval" />
+        <SelectValue placeholder={t("placeholder")} />
       </SelectTrigger>
       <SelectContent>
         {SCRAPE_INTERVAL_OPTIONS.map((option) => (
           <SelectItem key={option.value} value={String(option.value)}>
-            {option.label}
+            {t(option.key)}
           </SelectItem>
         ))}
       </SelectContent>
