@@ -5,6 +5,7 @@ import { useState } from "react"
 import { useGetWebsites } from "../_api/queries"
 import { WebsiteCard } from "./WebsiteCard"
 import WebsiteFormDialog from "./websiteFormDialog"
+import { Plus } from "lucide-react"
 
 export function WebsitesList() {
   const [isFormOpen, setIsFormOpen] = useState(false)
@@ -35,7 +36,7 @@ export function WebsitesList() {
                 setEditingWebsite(null)
               }}
             >
-              <span className="text-lg">＋</span>
+              <Plus />
               <span>Add source</span>
             </button>
           ) : (

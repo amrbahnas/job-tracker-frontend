@@ -5,8 +5,10 @@ import { Form, FormItem } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
 import { Switch } from "@/components/ui/switch"
 import { Code, Info } from "lucide-react"
-import { useEffect } from "react"
+import { useCallback, useEffect, useState } from "react"
 import { Controller, useForm } from "react-hook-form"
+import { zodResolver } from "@hookform/resolvers/zod"
+import * as z from "zod"
 
 import {
   Collapsible,
@@ -19,22 +21,32 @@ import { AutofillWithAiDialog } from "./autofillWithAiDialog"
 import IntervalSelector from "./intervalSelector"
 import { WebsiteUrlsEditor } from "./websiteUrlsEditor"
 
-export type WebsiteFormValues = {
-  name: string
-  urls: string[]
-  scrapeIntervalMinutes: number
-  enabled: boolean
-  selectors: {
-    jobCard: string
-    title: string
-    company?: string
-    link: string
-    location?: string
-    salary?: string
-    date?: string
-    description?: string
-  }
-}
+const websiteFormSchema = z.object({
+  name: z.string().min(1, "Platform name is required"),
+  urls: z
+    .array(z.string())
+    .refine(
+      (arr) => arr.some((u) => u.trim().length > 0),
+      "Add at least one target URL."
+    ),
+  scrapeIntervalMinutes: z
+    .number()
+    .min(1, "Interval must be at least 1 minute")
+    .max(10080, "Interval cannot exceed 1 week (10080 minutes)"),
+  enabled: z.boolean(),
+  selectors: z.object({
+    jobCard: z.string().min(1, "Job card wrapper is required"),
+    title: z.string().min(1, "Job title selector is required"),
+    company: z.string().optional(),
+    link: z.string().min(1, "Job link selector is required"),
+    location: z.string().optional(),
+    salary: z.string().optional(),
+    date: z.string().optional(),
+    description: z.string().optional(),
+  }),
+})
+
+export type WebsiteFormValues = z.infer<typeof websiteFormSchema>
 
 type WebsiteFormProps = {
   website?: Website | null
@@ -45,6 +57,7 @@ export function WebsiteForm({ website, onCancel }: WebsiteFormProps) {
   const isEditing = Boolean(website?._id)
 
   const form = useForm<WebsiteFormValues>({
+    resolver: zodResolver(websiteFormSchema as any),
     defaultValues: {
       name: website?.name ?? "",
       urls:
@@ -105,76 +118,83 @@ export function WebsiteForm({ website, onCancel }: WebsiteFormProps) {
 
   const submitting = isSubmitting || createLoading || updateLoading
 
-  const onSubmit = (values: WebsiteFormValues) => {
-    const urls = (values.urls || []).map((u) => u.trim()).filter(Boolean)
-    if (urls.length === 0) {
-      setError("urls", {
-        type: "manual",
-        message: "Add at least one target URL.",
+  const onSubmit = useCallback(
+    (values: WebsiteFormValues) => {
+      const urls = (values.urls || []).map((u) => u.trim()).filter(Boolean)
+
+      const payload = {
+        name: values.name.trim(),
+        urls,
+        selectors: {
+          jobCard: values.selectors.jobCard.trim(),
+          title: values.selectors.title.trim(),
+          company: values.selectors.company?.trim() || undefined,
+          link: values.selectors.link.trim(),
+          location: values.selectors.location?.trim() || undefined,
+          salary: values.selectors.salary?.trim() || undefined,
+          date: values.selectors.date?.trim() || undefined,
+          description: values.selectors.description?.trim() || undefined,
+        },
+        enabled: values.enabled,
+        scrapeIntervalMinutes: values.scrapeIntervalMinutes || 60,
+      }
+
+      const mutation = isEditing ? update : create
+
+      mutation(payload, {
+        onSuccess: () => {
+          toast.success(
+            isEditing
+              ? "Website updated successfully"
+              : "Website created successfully"
+          )
+          onCancel?.()
+        },
       })
-      return Promise.reject()
-    }
-
-    const payload = {
-      name: values.name.trim(),
-      urls,
-      selectors: {
-        jobCard: values.selectors.jobCard.trim(),
-        title: values.selectors.title.trim(),
-        company: values.selectors.company?.trim() || undefined,
-        link: values.selectors.link.trim(),
-        location: values.selectors.location?.trim() || undefined,
-        salary: values.selectors.salary?.trim() || undefined,
-        date: values.selectors.date?.trim() || undefined,
-        description: values.selectors.description?.trim() || undefined,
-      },
-      enabled: values.enabled,
-      scrapeIntervalMinutes: values.scrapeIntervalMinutes || 60,
-    }
-
-    const mutation = isEditing ? update : create
-
-    mutation(payload, {
-      onSuccess: () => {
-        toast.success(
-          isEditing
-            ? "Website updated successfully"
-            : "Website created successfully"
-        )
-        onCancel?.()
-      },
-    })
-  }
+    },
+    [create, createLoading, update, updateLoading, isEditing, website?._id]
+  )
 
   const selectedInterval = watch("scrapeIntervalMinutes") ?? 60
+  const [selectorsOpen, setSelectorsOpen] = useState(false)
+  const hasSelectorErrors = Boolean(errors.selectors)
 
-  const handleSelectorsExtracted = (selectors: {
-    jobCard?: string
-    title?: string
-    company?: string
-    location?: string
-    link?: string
-    description?: string
-    salary?: string
-    date?: string
-  }) => {
-    setValue("selectors.jobCard", selectors.jobCard ?? "", {
-      shouldDirty: true,
-    })
-    setValue("selectors.title", selectors.title ?? "", { shouldDirty: true })
-    setValue("selectors.company", selectors.company ?? "", {
-      shouldDirty: true,
-    })
-    setValue("selectors.location", selectors.location ?? "", {
-      shouldDirty: true,
-    })
-    setValue("selectors.link", selectors.link ?? "", { shouldDirty: true })
-    setValue("selectors.description", selectors.description ?? "", {
-      shouldDirty: true,
-    })
-    setValue("selectors.salary", selectors.salary ?? "", { shouldDirty: true })
-    setValue("selectors.date", selectors.date ?? "", { shouldDirty: true })
-  }
+  useEffect(() => {
+    if (hasSelectorErrors) setSelectorsOpen(true)
+  }, [hasSelectorErrors])
+
+  const handleSelectorsExtracted = useCallback(
+    (selectors: {
+      jobCard?: string
+      title?: string
+      company?: string
+      location?: string
+      link?: string
+      description?: string
+      salary?: string
+      date?: string
+    }) => {
+      setValue("selectors.jobCard", selectors.jobCard ?? "", {
+        shouldDirty: true,
+      })
+      setValue("selectors.title", selectors.title ?? "", { shouldDirty: true })
+      setValue("selectors.company", selectors.company ?? "", {
+        shouldDirty: true,
+      })
+      setValue("selectors.location", selectors.location ?? "", {
+        shouldDirty: true,
+      })
+      setValue("selectors.link", selectors.link ?? "", { shouldDirty: true })
+      setValue("selectors.description", selectors.description ?? "", {
+        shouldDirty: true,
+      })
+      setValue("selectors.salary", selectors.salary ?? "", {
+        shouldDirty: true,
+      })
+      setValue("selectors.date", selectors.date ?? "", { shouldDirty: true })
+    },
+    [setValue]
+  )
 
   return (
     <Form<WebsiteFormValues>
@@ -260,7 +280,7 @@ export function WebsiteForm({ website, onCancel }: WebsiteFormProps) {
             onSelectorsExtracted={handleSelectorsExtracted}
           />
         </div>
-        <Collapsible>
+        <Collapsible open={selectorsOpen} onOpenChange={setSelectorsOpen}>
           <p className="text-sm text-muted-foreground">
             Use AI to detect selectors from a URL,{" "}
             <CollapsibleTrigger className="cursor-pointer text-primary/70 underline dark:text-primary-foreground/70">
@@ -275,20 +295,20 @@ export function WebsiteForm({ website, onCancel }: WebsiteFormProps) {
                   placeholder=".job-card-container"
                 />
               </FormItem>
+              <FormItem name="selectors.link">
+                <Input label="Job link" placeholder="a.apply-btn" />
+              </FormItem>
+              <FormItem name="selectors.title">
+                <Input label="Job title" placeholder="h3.title" />
+              </FormItem>
               <FormItem name="selectors.company">
                 <Input label="Company name" placeholder=".company-link" />
               </FormItem>
 
-              <FormItem name="selectors.title">
-                <Input label="Job title" placeholder="h3.title" />
-              </FormItem>
               <FormItem name="selectors.location">
                 <Input label="Location" placeholder=".job-location" />
               </FormItem>
 
-              <FormItem name="selectors.link">
-                <Input label="Job link" placeholder="a.apply-btn" />
-              </FormItem>
               <FormItem name="selectors.salary">
                 <Input label="Salary range" placeholder=".salary-metadata" />
               </FormItem>

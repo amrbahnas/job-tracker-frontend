@@ -14,7 +14,7 @@ const HERO_IMAGE = "/images/HeroSection3.png"
 export function LandingHero() {
   return (
     <section
-      className="relative mb-16 flex h-dvh items-center justify-start overflow-hidden text-start"
+      className="relative mb-16 flex h-svh items-center justify-start overflow-hidden text-start"
       aria-labelledby="hero-heading"
     >
       {/* Background image with dark purple overlay */}

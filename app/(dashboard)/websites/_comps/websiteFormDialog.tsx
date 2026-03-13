@@ -17,8 +17,8 @@ const WebsiteFormDialog = ({
 }) => {
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="no-scrollbar max-h-[95vh] overflow-y-auto pb-0 sm:max-w-5xl">
-        <DialogHeader>
+      <DialogContent className="no-scrollbar max-h-[95vh] overflow-y-auto py-0 sm:max-w-5xl">
+        <DialogHeader className="z-10 bg-white py-6">
           <DialogTitle>
             {editingWebsite ? "Edit website" : "Add website"}
           </DialogTitle>

@@ -37,7 +37,9 @@ export function WebsiteCard({ website, onEditWebsite }: WebsiteCardProps) {
     {
       icon: History,
       label: "last scraped:",
-      value: dayjs(website.lastScrapedAt).fromNow(),
+      value: website.lastScrapedAt
+        ? dayjs(website.lastScrapedAt).fromNow()
+        : "Never",
     },
     {
       icon: Clock,

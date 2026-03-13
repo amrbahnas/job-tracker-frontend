@@ -90,10 +90,10 @@ export function JobCard({ job }: JobCardProps) {
             href={job.scrapedFrom}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-1 text-xs text-foreground/50 hover:underline"
+            className="flex items-start gap-1 text-xs text-foreground/50 hover:underline"
           >
             <span>View Scraped Page</span>
-            <ExternalLink className="size-3.5" aria-hidden="true" />
+            <ExternalLink className="size-3" aria-hidden="true" />
           </a>
         )}
         {job.salary && (
@@ -161,21 +161,21 @@ export function JobCard({ job }: JobCardProps) {
           >
             <Archive className="size-3.5 text-[#6B7280] dark:text-slate-400" />
           </Button>
-          <a
-            href={job.link}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex"
+          <Button
+            size="sm"
+            className="text-xs sm:text-sm"
+            disabled={isMutating}
+            asChild
           >
-            <Button
-              onClick={() => updateStatus("applied")}
-              size="sm"
-              className="text-xs sm:text-sm"
-              disabled={isMutating}
+            <a
+              href={job.link}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex"
             >
               Apply Now
-            </Button>
-          </a>
+            </a>
+          </Button>
         </>
       )
     }
@@ -192,9 +192,16 @@ export function JobCard({ job }: JobCardProps) {
       <div className="flex min-w-0 flex-1 flex-col gap-2">
         <header className="min-w-0 space-y-1">
           <div className="flex flex-wrap items-center justify-between gap-2">
-            <h2 className="max-w-[75%] truncate text-sm leading-tight font-semibold text-foreground sm:text-base">
-              {job.title}
-            </h2>
+            <a
+              href={job.link}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex max-w-[75%]"
+            >
+              <h2 className="truncate text-sm leading-tight font-semibold text-foreground hover:underline sm:text-base">
+                {job.title}
+              </h2>
+            </a>
             <span
               className={`inline-flex items-center rounded-full px-2.5 py-0.5 text-[11px] font-medium uppercase ${statusClassName}`}
             >
@@ -205,9 +212,7 @@ export function JobCard({ job }: JobCardProps) {
           <div className="flex flex-wrap items-center gap-3 text-xs text-[#6B7280] dark:text-slate-400">
             <div className="inline-flex max-w-[40%] items-center gap-1 truncate">
               <Building2 className="size-3.5 shrink-0" aria-hidden="true" />
-              <span className="truncate font-medium text-foreground dark:text-slate-200">
-                {job.company}
-              </span>
+              <span className="truncate font-medium">{job.company}</span>
             </div>
 
             {job.location && (
@@ -216,6 +221,10 @@ export function JobCard({ job }: JobCardProps) {
                 <span>{job.location}</span>
               </div>
             )}
+            <div className="flex items-center gap-1">
+              <Clock className="size-3.5 shrink-0" aria-hidden="true" />
+              <span>{job.datePosted ?? dayjs(job.createdAt).fromNow()}</span>
+            </div>
 
             {job.website && (
               <div className="inline-flex max-w-[30%] items-center gap-1 truncate text-blue-600 dark:text-blue-400">
@@ -223,10 +232,6 @@ export function JobCard({ job }: JobCardProps) {
                 <span className="truncate">{job.website.name}</span>
               </div>
             )}
-            <div className="flex items-center gap-1">
-              <Clock className="size-3.5 shrink-0" aria-hidden="true" />
-              <span>{job.datePosted ?? dayjs(job.createdAt).fromNow()}</span>
-            </div>
           </div>
         </header>
 
@@ -235,7 +240,7 @@ export function JobCard({ job }: JobCardProps) {
         </p>
 
         <footer
-          className={`flex flex-wrap items-center justify-between gap-3 text-xs sm:text-sm ${isArchived || isApplied ? "pt-3" : "mt-1 pt-1"}`}
+          className={`flex flex-wrap items-center justify-between gap-3 border-t pt-4 text-xs sm:text-sm ${isArchived || isApplied ? "pt-3" : "mt-1 pt-1"}`}
         >
           <div className="flex flex-col gap-1">{renderFooterMessage()}</div>
 
