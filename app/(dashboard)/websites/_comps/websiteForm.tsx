@@ -211,11 +211,15 @@ export function WebsiteForm({ website, onCancel }: WebsiteFormProps) {
           </label>
           <WebsiteUrlsEditor
             urls={watch("urls") ?? [""]}
-            onChange={(next) =>
+            onChange={(next) => {
               setValue("urls", next, {
                 shouldDirty: true,
               })
-            }
+              setError("urls", {
+                type: "manual",
+                message: undefined,
+              })
+            }}
             errorMessage={
               typeof (errors.urls as any)?.message === "string"
                 ? (errors.urls as any).message

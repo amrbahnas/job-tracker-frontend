@@ -20,7 +20,7 @@ export function WebsitesList() {
   return (
     <>
       <ItemList
-        data={[...(websites || []), { _id: "add-website" }]}
+        data={websites.length > 0 ? [...websites, { _id: "add-website" }] : []}
         pagination={pagination}
         isLoading={isPending}
         error={isError ? new Error("Failed to fetch websites") : null}
