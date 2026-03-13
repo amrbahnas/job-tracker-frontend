@@ -114,7 +114,7 @@ export function WebsiteCard({ website, onEditWebsite }: WebsiteCardProps) {
             onConfirm={handleDelete}
             disabled={deleteWebsiteLoading}
             title="Delete website?"
-            description={`This will permanently remove ${website.name} and its tracked URLs.`}
+            description={`This will permanently remove ${website.name} and its tracked URLs and jobs.`}
             confirmText="Delete"
             cancelText="Cancel"
           >
