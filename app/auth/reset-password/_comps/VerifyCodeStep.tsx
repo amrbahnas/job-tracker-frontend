@@ -50,6 +50,13 @@ export function VerifyCodeStep({
     defaultValues: { code: "" },
   })
 
+  const enteredCode = form.watch("code")
+  useEffect(() => {
+    if (enteredCode.length === 5) {
+      verifyCode({ email, code: enteredCode })
+    }
+  }, [enteredCode, email])
+
   return (
     <>
       <div className="flex flex-col items-center gap-4 text-center">
@@ -75,7 +82,7 @@ export function VerifyCodeStep({
         className="flex flex-col gap-5"
       >
         <FormItem name="code">
-          <OTPInput length={6} />
+          <OTPInput length={5} />
         </FormItem>
         <Button
           type="submit"

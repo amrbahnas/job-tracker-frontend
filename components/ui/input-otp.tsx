@@ -38,7 +38,10 @@ function OTPInput({
       autoFocus={autoFocus}
       pattern={pattern}
       textAlign={textAlign}
-      containerClassName={cn("flex items-center gap-3", containerClassName)}
+      containerClassName={cn(
+        "flex items-center justify-center gap-3",
+        containerClassName
+      )}
       className={cn("disabled:cursor-not-allowed", className)}
       {...props}
     >
@@ -89,7 +92,7 @@ function OTPInputSlot({
         // Border styles
         "border-2",
         "border-[#D0D5DD]", // Light gray border for inactive
-        "data-[active=true]:border-primary-400", // Blue border for active
+        "data-[active=true]:border-primary", // Blue border for active
         // Focus/active states
         "data-[active=true]:ring-0", // Remove default ring
         "outline-none",
@@ -100,7 +103,7 @@ function OTPInputSlot({
       {char}
       {hasFakeCaret && (
         <div className="pointer-events-none absolute inset-0 flex items-end justify-center pb-2">
-          <div className="bg-primary-400 h-0.5 w-6" />
+          <div className="h-0.5 w-6 animate-pulse bg-primary" />
         </div>
       )}
     </div>
