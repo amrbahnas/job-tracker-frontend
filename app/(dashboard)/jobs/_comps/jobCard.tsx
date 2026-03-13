@@ -5,8 +5,8 @@ import {
   Building2,
   Check,
   Clock,
+  Earth,
   ExternalLink,
-  Link2,
   MapPin,
   Trash2,
 } from "lucide-react"
@@ -15,6 +15,7 @@ import { Button } from "@/components/ui/button"
 import { DangerConfirmButton } from "@/components/common/DangerConfirmButton"
 import { useJobActions } from "../_api/mutations"
 import { toast } from "sonner"
+import { ApplyButton } from "./applyButton"
 import dayjs from "dayjs"
 import relativeTime from "dayjs/plugin/relativeTime"
 dayjs.extend(relativeTime)
@@ -161,21 +162,11 @@ export function JobCard({ job }: JobCardProps) {
           >
             <Archive className="size-3.5 text-[#6B7280] dark:text-slate-400" />
           </Button>
-          <Button
-            size="sm"
-            className="text-xs sm:text-sm"
+          <ApplyButton
+            jobLink={job.link}
             disabled={isMutating}
-            asChild
-          >
-            <a
-              href={job.link}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex"
-            >
-              Apply Now
-            </a>
-          </Button>
+            onConfirmApplied={() => updateStatus("applied")}
+          />
         </>
       )
     }
@@ -192,21 +183,17 @@ export function JobCard({ job }: JobCardProps) {
       <div className="flex min-w-0 flex-1 flex-col gap-2">
         <header className="min-w-0 space-y-1">
           <div className="flex flex-wrap items-center justify-between gap-2">
-            <a
-              href={job.link}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex max-w-[75%]"
-            >
-              <h2 className="truncate text-sm leading-tight font-semibold text-foreground hover:underline sm:text-base">
-                {job.title}
-              </h2>
-            </a>
-            <span
-              className={`inline-flex items-center rounded-full px-2.5 py-0.5 text-[11px] font-medium uppercase ${statusClassName}`}
-            >
-              {job.status}
-            </span>
+            <h2 className="max-w-[75%] truncate text-sm leading-tight font-semibold text-foreground hover:underline sm:text-base">
+              {job.title}
+            </h2>
+
+            <div className="flex items-center gap-1">
+              <span
+                className={`inline-flex items-center rounded-full px-2.5 py-0.5 text-[11px] font-medium uppercase ${statusClassName}`}
+              >
+                {job.status}
+              </span>
+            </div>
           </div>
 
           <div className="flex flex-wrap items-center gap-3 text-xs text-[#6B7280] dark:text-slate-400">
@@ -227,8 +214,8 @@ export function JobCard({ job }: JobCardProps) {
             </div>
 
             {job.website && (
-              <div className="inline-flex max-w-[30%] items-center gap-1 truncate text-blue-600 dark:text-blue-400">
-                <Link2 className="size-3.5 shrink-0" aria-hidden="true" />
+              <div className="inline-flex max-w-[30%] items-center gap-1 truncate">
+                <Earth className="size-3.5 shrink-0" aria-hidden="true" />
                 <span className="truncate">{job.website.name}</span>
               </div>
             )}
