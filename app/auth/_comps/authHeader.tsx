@@ -1,6 +1,6 @@
 import DarkModeToggle from "@/components/common/darkModeToggle"
+import Logo from "@/components/common/logo"
 import Container from "@/components/ui/container"
-import { Send } from "lucide-react"
 import Link from "next/link"
 
 export function AuthHeader() {
@@ -10,14 +10,8 @@ export function AuthHeader() {
       role="banner"
     >
       <Container className="flex items-center justify-between">
-        <Link href="/" className="flex items-center gap-2 text-foreground">
-          <span
-            className="flex size-9 items-center justify-center rounded-md bg-primary text-primary-foreground"
-            aria-hidden
-          >
-            <Send className="size-5" />
-          </span>
-          <span className="text-lg font-semibold">JobTracker</span>
+        <Link href="/">
+          <Logo />
         </Link>
         <nav className="flex items-center gap-2">
           <DarkModeToggle />

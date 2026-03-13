@@ -7,6 +7,8 @@ import Container from "@/components/ui/container"
 import { Send } from "lucide-react"
 import { useEffect, useState } from "react"
 import { cn } from "@/lib/utils"
+import Image from "next/image"
+import Logo from "@/components/common/logo"
 
 export function LandingHeader() {
   const [scrolled, setScrolled] = useState(false)
@@ -36,13 +38,7 @@ export function LandingHeader() {
             scrolled && "text-foreground dark:text-white"
           )}
         >
-          <span
-            className="flex size-9 items-center justify-center rounded-md bg-primary text-primary-foreground"
-            aria-hidden
-          >
-            <Send className="size-5" />
-          </span>
-          <span className="text-lg font-semibold">Dorly</span>
+          <Logo />
         </Link>
         <nav
           className={cn(
@@ -51,24 +47,26 @@ export function LandingHeader() {
           )}
           aria-label="Main"
         >
-          <Link
-            href="#features"
-            className="text-sm font-medium transition-colors hover:text-foreground"
-          >
-            Features
-          </Link>
-          <Link
-            href="#pricing"
-            className="text-sm font-medium transition-colors hover:text-foreground"
-          >
-            Pricing
-          </Link>
-          <Link
-            href="#about"
-            className="text-sm font-medium transition-colors hover:text-foreground"
-          >
-            About
-          </Link>
+          <div className="hidden items-center gap-6 sm:flex">
+            <Link
+              href="#features"
+              className="text-sm font-medium transition-colors hover:text-foreground"
+            >
+              Features
+            </Link>
+            <Link
+              href="#pricing"
+              className="text-sm font-medium transition-colors hover:text-foreground"
+            >
+              Pricing
+            </Link>
+            <Link
+              href="#about"
+              className="text-sm font-medium transition-colors hover:text-foreground"
+            >
+              About
+            </Link>
+          </div>
           <DarkModeToggle />
           <div className="flex items-center gap-2">
             <Button className="px-4" asChild>

@@ -1,6 +1,6 @@
-import Link from "next/link"
-import { Send } from "lucide-react"
+import Logo from "@/components/common/logo"
 import Container from "@/components/ui/container"
+import Link from "next/link"
 
 export function LandingFooter() {
   const year = new Date().getFullYear()
@@ -12,13 +12,7 @@ export function LandingFooter() {
           href="/"
           className="flex items-center gap-2 text-muted-foreground transition-colors hover:text-foreground"
         >
-          <span
-            className="flex size-8 items-center justify-center rounded bg-primary/80 text-primary-foreground"
-            aria-hidden
-          >
-            <Send className="size-4" />
-          </span>
-          <span className="font-semibold">Dorly</span>
+          <Logo />
         </Link>
         <nav
           className="flex flex-wrap items-center justify-center gap-6 text-sm text-muted-foreground"

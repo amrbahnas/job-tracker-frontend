@@ -1,5 +1,6 @@
 "use client"
 import DarkModeToggle from "@/components/common/darkModeToggle"
+import Logo from "@/components/common/logo"
 import { Avatar, AvatarFallback } from "@/components/ui/avatar"
 import Container from "@/components/ui/container"
 import {
@@ -106,12 +107,7 @@ const Navbar = () => {
             </DrawerContent>
           </Drawer>
           <Link href="/jobs" className="flex items-center gap-3">
-            <div className="flex h-8 w-8 items-center justify-center rounded-2xl bg-primary text-white">
-              <span className="text-xs font-semibold">DB</span>
-            </div>
-            <span className="text-base font-semibold tracking-tight">
-              JobTracker
-            </span>
+            <Logo />
           </Link>
         </div>
 

@@ -37,14 +37,17 @@ export function LandingHero() {
           >
             Find New Jobs
             <br />
-            Before Everyone
-            <span className="text-primary italic drop-shadow-sm"> Else</span>
+            Before
+            <span className="bg-linear-to-r from-primary to-orange-500 bg-clip-text text-transparent">
+              {" "}
+              Others
+            </span>
           </h1>
           <p className="mt-4 max-w-2xl text-lg text-white/95">
             Dorly automatically scans LinkedIn, Indeed, Bayt, and other job
-            sites for you, then streams the newest roles into one live job
-            feed. Apply earlier, skip the constant refreshing, and stay on top
-            of every application.
+            sites for you, then streams the newest roles into one live job feed.
+            Apply earlier, skip the constant refreshing, and stay on top of
+            every application.
           </p>
           <div
             className="mt-8 flex flex-wrap justify-start gap-4"
@@ -74,10 +77,9 @@ export function LandingHero() {
         >
           <div className="flex flex-wrap items-center justify-center gap-3">
             <AvatarGroup>
-              {["Alex", "John", "Jane"].map((name) => (
+              {[1, 2, 3].map((name) => (
                 <Avatar key={name}>
-                  <AvatarImage src={`https://github.com/${name}.png`} />
-                  <AvatarFallback>{name.charAt(0)}</AvatarFallback>
+                  <AvatarImage src={`/images/avatars/${name}.png`} />
                 </Avatar>
               ))}
             </AvatarGroup>

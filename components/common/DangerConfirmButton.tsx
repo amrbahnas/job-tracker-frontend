@@ -73,7 +73,7 @@ export function DangerConfirmButton({
           <Button
             variant="outline"
             type="button"
-            size="sm"
+            size="lg"
             onClick={() => setOpen(false)}
             disabled={isConfirming}
           >
@@ -82,7 +82,7 @@ export function DangerConfirmButton({
           <Button
             variant="destructive"
             type="button"
-            size="sm"
+            size="lg"
             onClick={handleConfirm}
             disabled={isConfirming}
           >
@@ -93,4 +93,3 @@ export function DangerConfirmButton({
     </Dialog>
   )
 }
-
