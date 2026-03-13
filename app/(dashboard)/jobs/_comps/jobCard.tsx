@@ -183,7 +183,7 @@ export function JobCard({ job }: JobCardProps) {
       <div className="flex min-w-0 flex-1 flex-col gap-2">
         <header className="min-w-0 space-y-1">
           <div className="flex flex-wrap items-center justify-between gap-2">
-            <h2 className="max-w-[75%] truncate text-sm leading-tight font-semibold text-foreground hover:underline sm:text-base">
+            <h2 className="max-w-[75%] truncate text-sm leading-tight font-semibold text-foreground sm:text-base">
               {job.title}
             </h2>
 

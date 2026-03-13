@@ -84,7 +84,7 @@ export function LoginForm() {
           size="lg"
           loading={loading}
         >
-          Sign In
+          Submit
         </Button>
       </Form>
       <p className="mt-4 text-center text-sm text-muted-foreground">
