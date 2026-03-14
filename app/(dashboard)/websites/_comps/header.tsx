@@ -1,10 +1,12 @@
 import { Button } from "@/components/ui/button"
 import { useState } from "react"
 import WebsiteFormDialog from "./websiteFormDialog"
+import WebsiteUrlsDialog from "./websiteUrlsDialog"
 import { useTranslations } from "next-intl"
 
 const Header = () => {
   const [isFormOpen, setIsFormOpen] = useState(false)
+  const [urlsDialogOpen, setUrlsDialogOpen] = useState(false)
   const t = useTranslations("websites.header")
 
   return (
@@ -22,9 +24,16 @@ const Header = () => {
       </div>
 
       <div className="flex items-center gap-2">
-        <Button type="button" size="sm" onClick={() => setIsFormOpen(true)}>
+        <Button
+          type="button"
+          variant="outline"
+          size="sm"
+          onClick={() => setIsFormOpen(true)}
+        >
           {t("addWebsite")}
         </Button>
+
+        <WebsiteUrlsDialog />
       </div>
       <WebsiteFormDialog
         editingWebsite={null}

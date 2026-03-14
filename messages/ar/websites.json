@@ -6,7 +6,8 @@
   "header": {
     "title": "المواقع",
     "subtitle": "إدارة أدوات بحث الوظائف الآلية وفترات التتبع.",
-    "addWebsite": "إضافة موقع"
+    "addWebsite": "إضافة موقع",
+    "addUrl": "إضافة رابط"
   },
   "list": {
     "addSource": "إضافة مصدر",
@@ -78,11 +79,15 @@
   "urlsDialog": {
     "button": "إدارة الروابط",
     "titleSuffix": "الروابط",
+    "selectWebsite": "اختر الموقع",
+    "loading": "جاري تحميل الروابط…",
     "description": "سيتم بحث هذه الصفحات وفق الفترة المحددة.",
     "cancel": "إلغاء",
     "save": "حفظ الروابط",
     "toastUpdated": "تم تحديث روابط الموقع بنجاح",
-    "validationAddOneUrl": "أضف رابط استهداف واحداً على الأقل."
+    "validationAddOneUrl": "أضف رابط استهداف واحداً على الأقل.",
+    "websiteNotFound": "الموقع غير موجود",
+    "addUrl": "إضافة رابط جديد"
   },
   "urlsEditor": {
     "inputPlaceholder": "https://example.com/jobs...",

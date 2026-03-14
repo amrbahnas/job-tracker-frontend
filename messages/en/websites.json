@@ -6,7 +6,8 @@
   "header": {
     "title": "Websites",
     "subtitle": "Manage your automated job board scrapers and tracking intervals.",
-    "addWebsite": "Add website"
+    "addWebsite": "Add website",
+    "addUrl": "Add URL"
   },
   "list": {
     "addSource": "Add source",
@@ -78,11 +79,15 @@
   "urlsDialog": {
     "button": "Manage URLs",
     "titleSuffix": "URLs",
+    "selectWebsite": "Select website",
+    "loading": "Loading URLs…",
     "description": "These pages will be scraped on the configured interval.",
     "cancel": "Cancel",
     "save": "Save URLs",
     "toastUpdated": "Website URLs updated successfully",
-    "validationAddOneUrl": "Add at least one target URL."
+    "validationAddOneUrl": "Add at least one target URL.",
+
+    "addUrl": "Add new URL"
   },
   "urlsEditor": {
     "inputPlaceholder": "https://example.com/jobs...",

@@ -22,6 +22,7 @@ export const useWebsitesActions = (id?: string) => {
   const { mutate: updateUrls, loading: updateUrlsLoading } = useMutation(
     `website-urls/${id}`,
     {
+      method: "patch",
       invalidateQueries: [WEBSITES_KEYS.getWebsites],
     }
   )

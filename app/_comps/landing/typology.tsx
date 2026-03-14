@@ -16,7 +16,7 @@ Typology.title = ({ children }: { children: React.ReactNode }) => {
   return (
     <h2
       id="features-heading"
-      className="text-gradient pb-4 text-center text-2xl leading-16 font-bold sm:text-5xl"
+      className="text-gradient pb-4 text-center text-3xl leading-16 font-bold sm:text-5xl"
     >
       {children}
     </h2>
