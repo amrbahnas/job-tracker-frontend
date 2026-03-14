@@ -1,1 +1,12 @@
-{}
+{
+  "navbar": {
+    "jobs": "Jobs",
+    "websites": "Websites",
+    "scrapeLocally": "Scrape locally",
+    "profile": "Profile",
+    "logout": "Logout",
+    "signOut": "Sign Out",
+    "openMenu": "Open menu"
+  },
+  "refetchedSuccessfully": "Refetched successfully"
+}

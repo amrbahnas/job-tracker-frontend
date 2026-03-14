@@ -24,6 +24,7 @@ export function JobsFilters() {
       <div className="flex flex-1 gap-2 overflow-hidden">
         <SearchInput
           value={search}
+          placeholder={t("searchPlaceholder")}
           onChange={(value) => setFilters({ search: value })}
           className="min transition-all duration-300 focus:w-screen sm:max-w-[380px] focus:sm:w-auto"
         />

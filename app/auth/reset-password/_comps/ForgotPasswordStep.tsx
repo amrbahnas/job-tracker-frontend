@@ -11,14 +11,12 @@ import Link from "next/link"
 import { Lock, ArrowRight, ArrowLeft, Mail } from "lucide-react"
 import { useTranslations } from "next-intl"
 
-const forgotSchema = z.object({
-  email: z
-    .string()
-    .min(1, "Email is required")
-    .email("Please enter a valid email"),
-})
+const forgotSchema = (validationT: ReturnType<typeof useTranslations>) =>
+  z.object({
+    email: z.string().email(validationT("emailInvalid")),
+  })
 
-export type ForgotPasswordValues = z.infer<typeof forgotSchema>
+export type ForgotPasswordValues = z.infer<ReturnType<typeof forgotSchema>>
 
 type ForgotPasswordStepProps = {
   onSuccess: (email: string) => void
@@ -27,9 +25,10 @@ type ForgotPasswordStepProps = {
 export function ForgotPasswordStep({ onSuccess }: ForgotPasswordStepProps) {
   const { mutate: sendCode, loading } = useSendResetCode({})
   const t = useTranslations("auth.resetPassword.forgot")
+  const validationT = useTranslations("auth.validation")
 
   const form = useForm<ForgotPasswordValues>({
-    resolver: zodResolver(forgotSchema as any),
+    resolver: zodResolver(forgotSchema(validationT) as any),
     defaultValues: { email: "" },
   })
 
@@ -45,9 +44,7 @@ export function ForgotPasswordStep({ onSuccess }: ForgotPasswordStepProps) {
         <h1 className="text-2xl font-bold tracking-tight text-foreground">
           {t("title")}
         </h1>
-        <p className="text-sm text-muted-foreground">
-          {t("description")}
-        </p>
+        <p className="text-sm text-muted-foreground">{t("description")}</p>
       </div>
 
       <Form<ForgotPasswordValues>
@@ -78,7 +75,7 @@ export function ForgotPasswordStep({ onSuccess }: ForgotPasswordStepProps) {
           loading={loading}
         >
           {t("sendCode")}
-          <ArrowRight className="ml-2 size-4" />
+          <ArrowRight className="ml-2 size-4 rtl:rotate-180" />
         </Button>
       </Form>
 
@@ -86,7 +83,7 @@ export function ForgotPasswordStep({ onSuccess }: ForgotPasswordStepProps) {
         href="/auth"
         className="mx-auto inline-flex items-center gap-2 text-sm text-primary hover:underline"
       >
-        <ArrowLeft className="size-4" />
+        <ArrowLeft className="size-4 rtl:rotate-180" />
         {t("backToLogin")}
       </Link>
 

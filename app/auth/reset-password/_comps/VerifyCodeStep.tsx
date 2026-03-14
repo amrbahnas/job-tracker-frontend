@@ -14,11 +14,12 @@ import { toast } from "sonner"
 import { useEffect, useState } from "react"
 import { useTranslations } from "next-intl"
 
-const verifySchema = z.object({
-  code: z.string().length(6, "Enter the 6-digit code"),
-})
+const verifySchema = (validationT: ReturnType<typeof useTranslations>) =>
+  z.object({
+    code: z.string().length(6, validationT("resetCodeLength")),
+  })
 
-export type VerifyCodeValues = z.infer<typeof verifySchema>
+export type VerifyCodeValues = z.infer<ReturnType<typeof verifySchema>>
 
 type VerifyCodeStepProps = {
   email: string
@@ -33,10 +34,11 @@ export function VerifyCodeStep({
 }: VerifyCodeStepProps) {
   const [resendCooldown, setResendCooldown] = useState(60)
   const t = useTranslations("auth.resetPassword.verify")
+  const validationT = useTranslations("auth.validation")
 
   const { mutate: resendCode, loading: resendLoading } = useResendCode({
     onSuccess: () => {
-      toast.success("Code resent successfully")
+      toast.success(validationT("codeResent"))
       setResendCooldown(60)
     },
   })
@@ -48,7 +50,7 @@ export function VerifyCodeStep({
   }, [resendCooldown])
 
   const form = useForm<VerifyCodeValues>({
-    resolver: zodResolver(verifySchema as any),
+    resolver: zodResolver(verifySchema(validationT) as any),
     defaultValues: { code: "" },
   })
 
@@ -93,7 +95,7 @@ export function VerifyCodeStep({
         >
           {t("verifyButton")}
           <span className="ml-2" aria-hidden>
-            <ArrowRight className="size-4" />
+            <ArrowRight className="size-4 rtl:rotate-180" />
           </span>
         </Button>
       </Form>

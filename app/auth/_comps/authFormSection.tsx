@@ -23,7 +23,7 @@ export function AuthFormSection({ className }: { className?: string }) {
           id="auth-form-heading"
           className="text-2xl font-bold tracking-tight text-foreground"
         >
-          {t("login.title")}
+          {tab === "login" ? t("login.title") : t("signup.title")}
         </h1>
         <p className="mt-1 text-sm text-muted-foreground">
           {t("login.subtitle")}

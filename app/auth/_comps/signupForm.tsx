@@ -13,22 +13,24 @@ import PasswordInput from "@/components/ui/password-input"
 import ReCAPTCHA from "./ReCAPTCHA"
 import { useTranslations } from "next-intl"
 
-const signupSchema = z.object({
-  fullName: z.string().min(1, "Full name is required"),
-  email: z.email("Invalid email"),
-  password: z.string().min(8, "Password must be at least 8 characters long"),
-  recaptchaToken: z.string().min(1, "Please complete the ReCAPTCHA"),
-  keepLoggedIn: z.boolean().optional(),
-})
+const signupSchema = (validationT: ReturnType<typeof useTranslations>) =>
+  z.object({
+    fullName: z.string().min(1, validationT("fullNameRequired")),
+    email: z.string().email(validationT("emailInvalid")),
+    password: z.string().min(8, validationT("passwordMin")),
+    recaptchaToken: z.string().min(1, validationT("recaptchaRequired")),
+    keepLoggedIn: z.boolean().optional(),
+  })
 
-type SignupValues = z.infer<typeof signupSchema>
+type SignupValues = z.infer<ReturnType<typeof signupSchema>>
 
 export function SignupForm() {
   const { signup, loading } = useAuthActions()
   const t = useTranslations("auth.signup")
+  const validationT = useTranslations("auth.validation")
 
   const form = useForm<SignupValues>({
-    resolver: zodResolver(signupSchema as any),
+    resolver: zodResolver(signupSchema(validationT) as any),
     defaultValues: {
       fullName: "",
       email: "",
@@ -63,7 +65,7 @@ export function SignupForm() {
           />
         </FormItem>
         <FormItem name="password">
-          <PasswordInput label="Password" />
+          <PasswordInput label={t("passwordLabel")} />
         </FormItem>
         {/* <label className="flex cursor-pointer items-center gap-2">
           <input

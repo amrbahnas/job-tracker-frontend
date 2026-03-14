@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button"
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Briefcase, Check, FolderPlus, Tag } from "lucide-react"
 import React from "react"
-import { useTranslations } from "next-intl"
+import { useLocale, useTranslations } from "next-intl"
 
 const STATUS_OPTIONS: {
   value: string
@@ -29,7 +29,7 @@ type JobStatusTabsProps = {
 function JobStatusTabs({ value, onChange }: JobStatusTabsProps) {
   const currentValue = value || "all"
   const t = useTranslations()
-
+  const local = useLocale()
   return (
     <>
       <Tabs
@@ -37,7 +37,10 @@ function JobStatusTabs({ value, onChange }: JobStatusTabsProps) {
         onValueChange={onChange}
         className="hidden w-full sm:block md:w-auto"
       >
-        <TabsList className="w-full md:w-auto">
+        <TabsList
+          dir={local === "ar" ? "rtl" : "ltr"}
+          className="w-full md:w-auto"
+        >
           {STATUS_OPTIONS.map((option) => (
             <TabsTrigger
               key={option.value}

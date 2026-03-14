@@ -8,6 +8,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select"
+import { useTranslations } from "next-intl"
 
 type WebsiteSelectorProps = {
   value: string | null
@@ -27,6 +28,7 @@ export function WebsiteSelector({
       limit: 1000,
     },
   })
+  const t = useTranslations("jobs.filters")
   return (
     <Select
       value={value || "all"}
@@ -36,10 +38,10 @@ export function WebsiteSelector({
     >
       <SelectTrigger className={className ?? "w-full min-w-[180px] md:w-56"}>
         {leftIcon}
-        <SelectValue placeholder="All Platforms" />
+        <SelectValue placeholder={t("websitePlaceholder")} />
       </SelectTrigger>
       <SelectContent>
-        <SelectItem value="all">All Platforms</SelectItem>
+        <SelectItem value="all">{t("allWebsites")}</SelectItem>
         {websites?.map((website) => (
           <SelectItem key={website._id} value={website._id}>
             {website.name}

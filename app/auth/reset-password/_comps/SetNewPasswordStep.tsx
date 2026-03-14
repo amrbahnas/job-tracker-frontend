@@ -11,17 +11,20 @@ import Link from "next/link"
 import { ArrowLeft, RotateCcw } from "lucide-react"
 import { useTranslations } from "next-intl"
 
-const setPasswordSchema = z
-  .object({
-    newPassword: z.string().min(8, "At least 8 characters"),
-    confirmPassword: z.string().min(1, "Re-enter your password"),
-  })
-  .refine((data) => data.newPassword === data.confirmPassword, {
-    message: "Passwords do not match",
-    path: ["confirmPassword"],
-  })
+const setPasswordSchema = (validationT: ReturnType<typeof useTranslations>) =>
+  z
+    .object({
+      newPassword: z.string().min(8, validationT("passwordMin")),
+      confirmPassword: z
+        .string()
+        .min(1, validationT("confirmPasswordRequired")),
+    })
+    .refine((data) => data.newPassword === data.confirmPassword, {
+      message: validationT("passwordsDoNotMatch"),
+      path: ["confirmPassword"],
+    })
 
-export type SetNewPasswordValues = z.infer<typeof setPasswordSchema>
+export type SetNewPasswordValues = z.infer<ReturnType<typeof setPasswordSchema>>
 
 type SetNewPasswordStepProps = {
   email: string
@@ -38,9 +41,10 @@ export function SetNewPasswordStep({
     onSuccess,
   })
   const t = useTranslations("auth.resetPassword.setNew")
+  const validationT = useTranslations("auth.validation")
 
   const form = useForm<SetNewPasswordValues>({
-    resolver: zodResolver(setPasswordSchema as any),
+    resolver: zodResolver(setPasswordSchema(validationT) as any),
     defaultValues: { newPassword: "", confirmPassword: "" },
   })
 
@@ -50,9 +54,7 @@ export function SetNewPasswordStep({
         <h1 className="text-2xl font-bold tracking-tight text-foreground">
           {t("title")}
         </h1>
-        <p className="text-sm text-muted-foreground">
-          {t("description")}
-        </p>
+        <p className="text-sm text-muted-foreground">{t("description")}</p>
       </div>
 
       <Form<SetNewPasswordValues>
@@ -83,7 +85,7 @@ export function SetNewPasswordStep({
           size="lg"
           loading={loading}
         >
-          <RotateCcw className="mr-2 size-4" aria-hidden />
+          <RotateCcw className="mr-2 size-4 rtl:rotate-180" aria-hidden />
           {t("submit")}
         </Button>
       </Form>
@@ -92,7 +94,7 @@ export function SetNewPasswordStep({
         href="/auth"
         className="inline-flex items-center gap-2 text-sm text-primary hover:underline"
       >
-        <ArrowLeft className="size-4" />
+        <ArrowLeft className="size-4 rtl:rotate-180" />
         {t("backToSignIn")}
       </Link>
     </>

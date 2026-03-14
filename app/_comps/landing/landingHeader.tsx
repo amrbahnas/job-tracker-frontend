@@ -51,19 +51,19 @@ export function LandingHeader() {
           <div className="hidden items-center gap-6 sm:flex">
             <Link
               href="#features"
-              className="text-sm font-medium transition-colors hover:text-foreground"
+              className="text-sm font-medium transition-colors hover:text-primary"
             >
               {t("navFeatures")}
             </Link>
             <Link
               href="#pricing"
-              className="text-sm font-medium transition-colors hover:text-foreground"
+              className="text-sm font-medium transition-colors hover:text-primary"
             >
               {t("navPricing")}
             </Link>
             <Link
               href="#about"
-              className="text-sm font-medium transition-colors hover:text-foreground"
+              className="text-sm font-medium transition-colors hover:text-primary"
             >
               {t("navAbout")}
             </Link>
@@ -74,7 +74,7 @@ export function LandingHeader() {
             <Button className="px-4" asChild>
               <Link href="/auth?tab=signup">{t("signUp")}</Link>
             </Button>
-            <Button variant="secondary" className="px-4" asChild>
+            <Button variant="outline" className="bg-transparent px-4" asChild>
               <Link href="/auth">{t("login")}</Link>
             </Button>
           </div>

@@ -2,6 +2,7 @@ import { Lock, LayoutGrid, Bell } from "lucide-react"
 import { cn } from "@/lib/utils"
 import Container from "@/components/ui/container"
 import { getTranslations } from "next-intl/server"
+import Typology from "./typology"
 
 export async function LandingFeatures() {
   const t = await getTranslations("landing.features")
@@ -31,18 +32,11 @@ export async function LandingFeatures() {
       aria-labelledby="features-heading"
     >
       <div className="mx-auto max-w-4xl px-6">
-        <p className="text-md mb-2 text-center font-medium tracking-wider text-muted-foreground uppercase">
-          {t("eyebrow")}
-        </p>
-        <h2
-          id="features-heading"
-          className="text-gradient mb-4 text-center text-2xl font-semibold sm:text-5xl"
-        >
-          {t("title")}
-        </h2>
-        <p className="mx-auto mb-12 max-w-xl text-center text-muted-foreground">
-          {t("description")}
-        </p>
+        <Typology.eyebrow>{t("eyebrow")}</Typology.eyebrow>
+
+        <Typology.title>{t("title")}</Typology.title>
+
+        <Typology.description>{t("description")}</Typology.description>
         <ul className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3" role="list">
           {featureItems.map(({ icon: Icon, title, description }, i) => (
             <li

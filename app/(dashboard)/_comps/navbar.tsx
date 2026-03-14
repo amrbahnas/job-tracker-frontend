@@ -24,19 +24,33 @@ import { Briefcase, Globe, Laptop, LogOut, Menu, User } from "lucide-react"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
 import { useState } from "react"
-
-const NAV_LINKS = [
-  { label: "Jobs", href: "/jobs", icon: <Briefcase className="size-4" /> },
-  { label: "Websites", href: "/websites", icon: <Globe className="size-4" /> },
-  { label: "Scrape locally", href: "/scrape-locally", icon: <Laptop className="size-4" /> },
-]
+import { useTranslations } from "next-intl"
 
 const Navbar = () => {
+  const t = useTranslations("common.navbar")
   const [openProfile, setOpenProfile] = useState(false)
   const [drawerOpen, setDrawerOpen] = useState(false)
   const user = useAppStore((s) => s.user)
   const { authLogout } = useAuthControl()
   const pathname = usePathname()
+
+  const NAV_LINKS = [
+    {
+      label: t("jobs"),
+      href: "/jobs",
+      icon: <Briefcase className="size-4" />,
+    },
+    {
+      label: t("websites"),
+      href: "/websites",
+      icon: <Globe className="size-4" />,
+    },
+    {
+      label: t("scrapeLocally"),
+      href: "/scrape-locally",
+      icon: <Laptop className="size-4" />,
+    },
+  ]
 
   return (
     <nav className="sticky top-0 z-50 border-b bg-white dark:bg-background">
@@ -52,7 +66,7 @@ const Navbar = () => {
               <button
                 type="button"
                 className="text-foreground hover:bg-muted md:hidden"
-                aria-label="Open menu"
+                aria-label={t("openMenu")}
               >
                 <Menu className="size-5" />
               </button>
@@ -102,7 +116,7 @@ const Navbar = () => {
                     className="flex w-full items-center justify-center gap-2 rounded-lg border border-border bg-background px-4 py-2.5 text-sm font-medium text-foreground transition-colors hover:bg-muted"
                   >
                     <LogOut className="size-5 text-red-500" />
-                    Sign Out
+                    {t("signOut")}
                   </button>
                 </DrawerClose>
               </DrawerFooter>
@@ -121,7 +135,7 @@ const Navbar = () => {
                 key={link.href}
                 href={link.href}
                 className={cn(
-                  "flex items-center gap-1 font-medium hover:text-primary",
+                  "flex items-center gap-1 text-sm font-medium hover:text-primary",
                   pathname === link.href && "text-primary"
                 )}
               >
@@ -157,7 +171,7 @@ const Navbar = () => {
                     className="flex cursor-pointer items-center gap-2 rounded-t-md px-4 py-2.5 text-left text-sm font-medium text-foreground transition-colors hover:bg-muted"
                   >
                     <User className="size-4" />
-                    Profile
+                    {t("profile")}
                   </Link>
                   <button
                     type="button"
@@ -168,7 +182,7 @@ const Navbar = () => {
                     className="flex cursor-pointer items-center gap-2 rounded-b-md px-4 py-2.5 text-left text-sm font-medium text-red-500 transition-colors hover:bg-red-50"
                   >
                     <LogOut className="size-4" />
-                    Logout
+                    {t("logout")}
                   </button>
                 </div>
               </PopoverContent>

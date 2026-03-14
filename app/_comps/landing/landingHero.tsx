@@ -32,14 +32,14 @@ export async function LandingHero() {
         <section>
           <h1
             id="hero-heading"
-            className="text-5xl font-bold tracking-tight text-white sm:text-7xl"
+            className="text-6xl font-bold tracking-tight text-white sm:text-8xl"
           >
             {t("titleLine1")}
-            <br />
+            {/* <br /> */}
             {t("titleBefore")}
             <span className="text-gradient"> {t("titleOthersHighlight")}</span>
           </h1>
-          <p className="mt-4 max-w-2xl text-lg text-white/95">
+          <p className="mt-8 max-w-[40rem] text-lg text-white/95">
             {t("description")}
           </p>
           <div

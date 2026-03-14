@@ -1,1 +1,12 @@
-{}
+{
+  "navbar": {
+    "jobs": "الوظائف",
+    "websites": "المواقع",
+    "scrapeLocally": "بحث محلياً",
+    "profile": "الملف الشخصي",
+    "logout": "تسجيل الخروج",
+    "signOut": "تسجيل الخروج",
+    "openMenu": "فتح القائمة"
+  },
+  "refetchedSuccessfully": "تم تحديث البيانات بنجاح"
+}

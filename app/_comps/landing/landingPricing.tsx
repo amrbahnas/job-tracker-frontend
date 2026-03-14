@@ -1,6 +1,7 @@
 import { Check } from "lucide-react"
 import Container from "@/components/ui/container"
 import { getTranslations } from "next-intl/server"
+import Typology from "./typology"
 
 export async function LandingPricing() {
   const t = await getTranslations("landing.pricing")
@@ -20,18 +21,9 @@ export async function LandingPricing() {
       className="border-y bg-muted/40 py-20"
     >
       <Container className="mx-auto max-w-5xl px-6">
-        <p className="text-md mb-2 text-center font-medium tracking-wider text-muted-foreground uppercase">
-          {t("eyebrow")}
-        </p>
-        <h2
-          id="pricing-heading"
-          className="text-gradient mb-4 text-center text-2xl font-semibold sm:text-5xl"
-        >
-          {t("title")}
-        </h2>
-        <p className="mx-auto mb-10 max-w-2xl text-center text-muted-foreground">
-          {t("description")}
-        </p>
+        <Typology.eyebrow>{t("eyebrow")}</Typology.eyebrow>
+        <Typology.title>{t("title")}</Typology.title>
+        <Typology.description>{t("description")}</Typology.description>
 
         <div className="mx-auto max-w-xl rounded-2xl border bg-card p-8 shadow-sm">
           <div className="mb-6 flex items-baseline justify-between gap-4">

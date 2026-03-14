@@ -6,7 +6,7 @@ const Logo = () => {
     <Image
       width={110}
       height={110}
-      className="mt-2 w-18 shrink-0 sm:mt-0 sm:w-24"
+      className="mt-2 w-18 shrink-0 sm:mt-0 sm:w-28"
       src="/images/logo/dawarly.png"
       alt="Dawarly Logo"
     />

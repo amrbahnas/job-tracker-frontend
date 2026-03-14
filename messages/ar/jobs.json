@@ -8,7 +8,10 @@
     "subtitle": "تتبع وأدِر فرصك المهنية عبر الويب."
   },
   "filters": {
-    "ariaLabel": "مرشحات الوظائف"
+    "ariaLabel": "مرشحات الوظائف",
+    "searchPlaceholder": "ابحث عن وظيفة",
+    "websitePlaceholder": "اختر موقعًا",
+    "allWebsites": "كل المواقع"
   },
   "statusTabs": {
     "all": "كل الوظائف",
@@ -28,7 +31,7 @@
     "deleted": "تم حذف الوظيفة بنجاح",
     "archivedFooter": "نُقلت إلى الأرشيف في {date}",
     "appliedFooter": "تم التقديم في {date}",
-    "viewScrapedPage": "عرض صفحة الجلب",
+    "viewScrapedPage": "عرض صفحة البحث",
     "noDescription": "لا توجد وصف متاح",
     "deleteAria": "حذف الوظيفة",
     "deleteTitle": "حذف الوظيفة؟",
@@ -37,7 +40,12 @@
     "deleteCancel": "إلغاء",
     "restore": "استعادة",
     "markUnapplied": "إلغاء علامة التقديم",
-    "archiveAria": "أرشفة الوظيفة"
+    "archiveAria": "أرشفة الوظيفة",
+    "status": {
+      "new": "جديد",
+      "applied": "تم التقديم ",
+      "archived": "مؤرشفة"
+    }
   },
   "applyDialog": {
     "button": "قدّم الآن",
@@ -47,8 +55,8 @@
     "yesApplied": "نعم، تقدمت"
   },
   "scrape": {
-    "button": "ابدأ الجلب الآن",
-    "toastTitle": "تم بدء عملية الجلب",
+    "button": "ابدأ البحث يدوياً",
+    "toastTitle": "تم بدء عملية البحث",
     "toastDescription": "سيتم إشعارك عند اكتمال العملية.",
     "toastAction": "إغلاق"
   }

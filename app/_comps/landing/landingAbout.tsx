@@ -1,5 +1,6 @@
 import Container from "@/components/ui/container"
 import { getTranslations } from "next-intl/server"
+import Typology from "./typology"
 
 export async function LandingAbout() {
   const t = await getTranslations("landing.about")
@@ -11,18 +12,9 @@ export async function LandingAbout() {
       className="bg-muted/20 py-20"
     >
       <Container className="mx-auto max-w-5xl px-6">
-        <p className="text-md mb-2 text-center font-medium tracking-wider text-muted-foreground uppercase">
-          {t("eyebrow")}
-        </p>
-        <h2
-          id="about-heading"
-          className="text-gradient mb-4 text-center text-2xl font-semibold sm:text-5xl"
-        >
-          {t("title")}
-        </h2>
-        <p className="mx-auto mb-6 max-w-3xl text-center text-muted-foreground">
-          {t("description")}
-        </p>
+        <Typology.eyebrow>{t("eyebrow")}</Typology.eyebrow>
+        <Typology.title>{t("title")}</Typology.title>
+        <Typology.description>{t("description")}</Typology.description>
         <div className="mx-auto grid max-w-4xl gap-8 md:grid-cols-2">
           <div className="rounded-xl border bg-background p-6 shadow-sm">
             <h3 className="mb-2 text-lg font-semibold">{t("missionTitle")}</h3>

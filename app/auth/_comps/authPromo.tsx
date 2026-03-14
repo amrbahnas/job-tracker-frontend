@@ -37,7 +37,7 @@ export function AuthPromo({ className }: { className?: string }) {
         <figcaption className="flex flex-col gap-2">
           <h2
             id="auth-promo-heading"
-            className="text-2xl font-bold tracking-tight text-foreground md:text-3xl"
+            className="text-2xl font-bold tracking-tight text-foreground md:text-3xl rtl:leading-12"
           >
             {t("title")}{" "}
             <span className="text-primary">{t("titleHighlight")}</span>

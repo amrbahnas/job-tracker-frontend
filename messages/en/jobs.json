@@ -8,7 +8,10 @@
     "subtitle": "Track and manage your career opportunities across the web."
   },
   "filters": {
-    "ariaLabel": "Jobs filters"
+    "ariaLabel": "Jobs filters",
+    "searchPlaceholder": "Search for a job",
+    "websitePlaceholder": "Select a website",
+    "allWebsites": "All Websites"
   },
   "statusTabs": {
     "all": "All Jobs",
@@ -37,7 +40,12 @@
     "deleteCancel": "Cancel",
     "restore": "Restore",
     "markUnapplied": "Mark Unapplied",
-    "archiveAria": "Archive job"
+    "archiveAria": "Archive job",
+    "status": {
+      "new": "New",
+      "applied": "Applied",
+      "archived": "Archived"
+    }
   },
   "applyDialog": {
     "button": "Apply Now",

@@ -11,15 +11,13 @@ import {
   Trash2,
 } from "lucide-react"
 
-import { Button } from "@/components/ui/button"
 import { DangerConfirmButton } from "@/components/common/DangerConfirmButton"
-import { useJobActions } from "../_api/mutations"
+import { Button } from "@/components/ui/button"
 import { toast } from "sonner"
+import { useJobActions } from "../_api/mutations"
 import { ApplyButton } from "./applyButton"
-import dayjs from "dayjs"
-import relativeTime from "dayjs/plugin/relativeTime"
 import { useTranslations } from "next-intl"
-dayjs.extend(relativeTime)
+import dayjs from "dayjs"
 type JobCardProps = {
   job: Job
 }
@@ -101,10 +99,13 @@ export function JobCard({ job }: JobCardProps) {
             href={job.scrapedFrom}
             target="_blank"
             rel="noopener noreferrer"
-            className="flex items-start gap-1 text-xs text-foreground/50 hover:underline"
+            className="flex items-center gap-1 text-xs text-foreground/50 hover:underline"
           >
             <span>{t("viewScrapedPage")}</span>
-            <ExternalLink className="size-3" aria-hidden="true" />
+            <ExternalLink
+              className="size-3 rtl:scale-x-[-1]"
+              aria-hidden="true"
+            />
           </a>
         )}
         {job.salary && (
@@ -139,7 +140,7 @@ export function JobCard({ job }: JobCardProps) {
             type="button"
             size="icon-sm"
             variant="ghost"
-          aria-label={t("archiveAria")}
+            aria-label={t("archiveAria")}
             disabled={isMutating}
             onClick={() => updateStatus("archived")}
           >
@@ -153,7 +154,7 @@ export function JobCard({ job }: JobCardProps) {
             disabled={isMutating}
             onClick={() => updateStatus("new")}
           >
-          {t("markUnapplied")}
+            {t("markUnapplied")}
           </Button>
         </>
       )
@@ -193,7 +194,10 @@ export function JobCard({ job }: JobCardProps) {
       <div className="flex min-w-0 flex-1 flex-col gap-2">
         <header className="min-w-0 space-y-1">
           <div className="flex flex-wrap items-center justify-between gap-2">
-            <h2 className="max-w-[75%] truncate text-sm leading-tight font-semibold text-foreground sm:text-base">
+            <h2
+              className="max-w-[75%] truncate text-sm leading-tight font-semibold text-foreground sm:text-base"
+              dir="auto"
+            >
               {job.title}
             </h2>
 
@@ -201,7 +205,8 @@ export function JobCard({ job }: JobCardProps) {
               <span
                 className={`inline-flex items-center rounded-full px-2.5 py-0.5 text-[11px] font-medium uppercase ${statusClassName}`}
               >
-                {job.status}
+                {/* @ts-ignore */}
+                {t(`status.${job.status}`)}
               </span>
             </div>
           </div>
@@ -241,7 +246,7 @@ export function JobCard({ job }: JobCardProps) {
         >
           <div className="flex flex-col gap-1">{renderFooterMessage()}</div>
 
-          <div className="ml-auto flex items-center gap-1.5">
+          <div className="ms-auto flex items-center gap-1.5">
             <DangerConfirmButton
               aria-label={t("deleteAria")}
               disabled={isMutating}

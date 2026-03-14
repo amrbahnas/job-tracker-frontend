@@ -13,21 +13,23 @@ import PasswordInput from "@/components/ui/password-input"
 import ReCAPTCHA from "./ReCAPTCHA"
 import { useTranslations } from "next-intl"
 
-const loginSchema = z.object({
-  email: z.email("Invalid email"),
-  password: z.string().min(8, "Password must be at least 8 characters long"),
-  recaptchaToken: z.string().min(1, "Please complete the ReCAPTCHA"),
-  keepLoggedIn: z.boolean().optional(),
-})
+const loginSchema = (validationT: ReturnType<typeof useTranslations>) =>
+  z.object({
+    email: z.string().email(validationT("emailInvalid")),
+    password: z.string().min(8, validationT("passwordMin")),
+    recaptchaToken: z.string().min(1, validationT("recaptchaRequired")),
+    keepLoggedIn: z.boolean().optional(),
+  })
 
-type LoginValues = z.infer<typeof loginSchema>
+type LoginValues = z.infer<ReturnType<typeof loginSchema>>
 
 export function LoginForm() {
   const { login, loading } = useAuthActions()
   const t = useTranslations("auth.login")
+  const validationT = useTranslations("auth.validation")
 
   const form = useForm<LoginValues>({
-    resolver: zodResolver(loginSchema as any),
+    resolver: zodResolver(loginSchema(validationT) as any),
     defaultValues: {
       email: "",
       password: "",
