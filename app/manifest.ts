@@ -2,12 +2,14 @@ import type { MetadataRoute } from "next"
 
 const baseUrl =
   process.env.NEXT_PUBLIC_APP_URL ||
-  (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : "https://dorly.io")
+  (process.env.VERCEL_URL
+    ? `https://${process.env.VERCEL_URL}`
+    : "https://dawarly.io")
 
 export default function manifest(): MetadataRoute.Manifest {
   return {
-    name: "Dorly — Find New Jobs Before Everyone Else",
-    short_name: "Dorly",
+    name: "Dawarly — Find New Jobs Before Everyone Else",
+    short_name: "Dawarly",
     description:
       "Job tracker that monitors LinkedIn, Indeed, Bayt and more. One feed, apply first.",
     start_url: "/",

@@ -1,7 +1,7 @@
 {
   "meta": {
     "title": "Scrape locally",
-    "description": "Get your token and download the Dorly Scraper desktop app to run scraping on your PC."
+    "description": "Get your token and download the Dawarly Scraper desktop app to run scraping on your PC."
   },
   "header": {
     "title": "Scrape locally",
@@ -9,7 +9,7 @@
   },
   "token": {
     "title": "Your token",
-    "description": "Use this token in the Dorly Scraper desktop app to connect to your account.",
+    "description": "Use this token in the Dawarly Scraper desktop app to connect to your account.",
     "getButton": "Get my token",
     "copyTitle": "Copy token",
     "toastCopied": "Token copied to clipboard",
@@ -18,7 +18,7 @@
   },
   "download": {
     "title": "Desktop app",
-    "description": "Download the Dorly Scraper for Windows. Install, paste your token, and click Run scraper.",
+    "description": "Download the Dawarly Scraper for Windows. Install, paste your token, and click Run scraper.",
     "button": "Download for Windows"
   }
 }

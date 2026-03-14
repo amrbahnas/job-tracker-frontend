@@ -7,8 +7,8 @@ const Logo = () => {
       width={110}
       height={110}
       className="mt-2 w-18 shrink-0 sm:mt-0 sm:w-24"
-      src="/images/logo/dorly.png"
-      alt="Dorly Logo"
+      src="/images/logo/dawarly.png"
+      alt="Dawarly Logo"
     />
   )
 }

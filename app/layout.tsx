@@ -12,7 +12,7 @@ const baseUrl =
   process.env.NEXT_PUBLIC_APP_URL ||
   (process.env.VERCEL_URL
     ? `https://${process.env.VERCEL_URL}`
-    : "https://dorly.io")
+    : "https://dawarly.io")
 
 export const viewport: Viewport = {
   width: "device-width",
@@ -25,10 +25,10 @@ export const viewport: Viewport = {
 
 export const metadata: Metadata = {
   metadataBase: new URL(baseUrl),
-  applicationName: "Dorly",
+  applicationName: "Dawarly",
   title: {
-    template: "%s | Dorly",
-    default: "Dorly — Find New Jobs Before Everyone Else",
+    template: "%s | Dawarly",
+    default: "Dawarly — Find New Jobs Before Everyone Else",
   },
   referrer: "origin-when-cross-origin",
   formatDetection: { telephone: false, email: false },

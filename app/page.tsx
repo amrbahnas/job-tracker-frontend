@@ -13,7 +13,7 @@ export async function generateMetadata(): Promise<Metadata> {
     title,
     description,
     keywords: [
-      "Dorly",
+      "Dawarly",
       "job tracker",
       "job search dashboard",
       "job scraping tool",
@@ -24,9 +24,9 @@ export async function generateMetadata(): Promise<Metadata> {
       "find jobs faster",
       "job aggregation platform",
     ],
-    authors: [{ name: "Dorly", url: "https://dorly.io" }],
-    creator: "Dorly",
-    publisher: "Dorly",
+    authors: [{ name: "Dawarly", url: "https://dawarly.io" }],
+    creator: "Dawarly",
+    publisher: "Dawarly",
     robots: {
       index: true,
       follow: true,
@@ -37,7 +37,7 @@ export async function generateMetadata(): Promise<Metadata> {
       locale: "en_US",
       title,
       description,
-      siteName: "Dorly",
+      siteName: "Dawarly",
       url: "/",
     },
     twitter: {

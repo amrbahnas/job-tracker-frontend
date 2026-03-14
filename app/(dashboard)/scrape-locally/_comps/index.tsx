@@ -8,7 +8,7 @@ import { toast } from "sonner"
 import { useGetTokenForDesktop } from "../_api/queries"
 import Container from "@/components/ui/container"
 
-const DOWNLOAD_PATH = "/downloads/dorly-scraper-setup.exe"
+const DOWNLOAD_PATH = "/downloads/dawarly-scraper-setup.exe"
 
 export default function ScrapeLocallyView() {
   const t = useTranslations("scrapeLocally")

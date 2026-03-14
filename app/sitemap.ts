@@ -2,7 +2,9 @@ import type { MetadataRoute } from "next"
 
 const baseUrl =
   process.env.NEXT_PUBLIC_APP_URL ||
-  (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : "https://dorly.io")
+  (process.env.VERCEL_URL
+    ? `https://${process.env.VERCEL_URL}`
+    : "https://dawarly.io")
 
 export default function sitemap(): MetadataRoute.Sitemap {
   return [
