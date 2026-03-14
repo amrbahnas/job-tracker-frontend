@@ -11,12 +11,12 @@ export async function LandingAbout() {
       className="bg-muted/20 py-20"
     >
       <Container className="mx-auto max-w-5xl px-6">
-        <p className="mb-2 text-center text-xs font-medium tracking-wider text-muted-foreground uppercase">
+        <p className="text-md mb-2 text-center font-medium tracking-wider text-muted-foreground uppercase">
           {t("eyebrow")}
         </p>
         <h2
           id="about-heading"
-          className="mb-4 text-center text-2xl font-semibold sm:text-3xl"
+          className="text-gradient mb-4 text-center text-2xl font-semibold sm:text-5xl"
         >
           {t("title")}
         </h2>

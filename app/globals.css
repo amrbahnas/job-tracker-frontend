@@ -125,6 +125,10 @@
   html {
     @apply font-sans;
   }
+
+  .text-gradient {
+    @apply bg-gradient-to-r from-primary to-orange-500 bg-clip-text text-transparent;
+  }
 }
 
 /* Mobile job status tabs: show primary background instead of card overlay */

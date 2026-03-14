@@ -68,7 +68,7 @@ export default function ScrapeLocallyView() {
             {t("token.getButton")}
           </Button>
           {token ? (
-            <div className="flex gap-2">
+            <div className="flex max-w-xl gap-2">
               <Input readOnly value={token} className="font-mono text-sm" />
               <Button
                 type="button"

@@ -31,12 +31,12 @@ export async function LandingFeatures() {
       aria-labelledby="features-heading"
     >
       <div className="mx-auto max-w-4xl px-6">
-        <p className="mb-2 text-center text-xs font-medium tracking-wider text-muted-foreground uppercase">
+        <p className="text-md mb-2 text-center font-medium tracking-wider text-muted-foreground uppercase">
           {t("eyebrow")}
         </p>
         <h2
           id="features-heading"
-          className="mb-4 text-center text-2xl font-semibold sm:text-3xl"
+          className="text-gradient mb-4 text-center text-2xl font-semibold sm:text-5xl"
         >
           {t("title")}
         </h2>

@@ -37,10 +37,7 @@ export async function LandingHero() {
             {t("titleLine1")}
             <br />
             {t("titleBefore")}
-            <span className="bg-linear-to-r from-primary to-orange-500 bg-clip-text text-transparent">
-              {" "}
-              {t("titleOthersHighlight")}
-            </span>
+            <span className="text-gradient"> {t("titleOthersHighlight")}</span>
           </h1>
           <p className="mt-4 max-w-2xl text-lg text-white/95">
             {t("description")}

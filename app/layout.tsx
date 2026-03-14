@@ -3,7 +3,7 @@ import { defaultLocale, locales, type Locale } from "@/i18n"
 import { getMessages } from "@/i18n/getMessages"
 import type { Metadata, Viewport } from "next"
 import { NextIntlClientProvider } from "next-intl"
-import { Inter, Noto_Kufi_Arabic } from "next/font/google"
+import { Inter, Cairo } from "next/font/google"
 import { cookies } from "next/headers"
 import { NuqsAdapter } from "nuqs/adapters/next/app"
 import "./globals.css"
@@ -39,7 +39,7 @@ const inter = Inter({
   weight: ["400", "500", "600", "700"],
 })
 
-const noto_kufi_arabic = Noto_Kufi_Arabic({
+const cairo_arabic = Cairo({
   subsets: ["arabic"],
   weight: ["400", "500", "600", "700"],
 })
@@ -67,17 +67,11 @@ export default async function RootLayout({
       dir={locale === "ar" ? "rtl" : "ltr"}
       suppressHydrationWarning
       className={`antialiased ${
-        locale === "ar" ? noto_kufi_arabic.className : inter.className
+        locale === "ar" ? cairo_arabic.className : inter.className
       }`}
     >
       <body>
         <NextIntlClientProvider messages={messages}>
-          <a
-            href="#main-content"
-            className="absolute top-4 -left-[9999px] z-[100] rounded bg-primary px-4 py-2 text-primary-foreground focus:left-4 focus:outline-none"
-          >
-            Skip to main content
-          </a>
           <NuqsAdapter>
             <ClientSideLayout>{children}</ClientSideLayout>
           </NuqsAdapter>
