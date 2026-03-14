@@ -62,7 +62,7 @@ export function ItemList({
         )}
 
         {!hasJobs && !isLoading && !error && (
-          <div className="rounded-md border bg-muted/40 p-6 text-sm text-muted-foreground">
+          <div className="flex h-40 flex-col items-center justify-center gap-3 rounded-md border bg-muted/40 p-6 text-center text-sm text-muted-foreground">
             <p className="font-medium text-foreground">
               {messages?.noData || "No data yet."}
             </p>
