@@ -20,7 +20,7 @@ import {
 import { useAuthControl } from "@/hooks/useAuthControl"
 import { cn } from "@/lib/utils"
 import useAppStore from "@/store/useAppStore"
-import { Briefcase, Globe, LogOut, Menu, User } from "lucide-react"
+import { Briefcase, Globe, Laptop, LogOut, Menu, User } from "lucide-react"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
 import { useState } from "react"
@@ -28,6 +28,7 @@ import { useState } from "react"
 const NAV_LINKS = [
   { label: "Jobs", href: "/jobs", icon: <Briefcase className="size-4" /> },
   { label: "Websites", href: "/websites", icon: <Globe className="size-4" /> },
+  { label: "Scrape locally", href: "/scrape-locally", icon: <Laptop className="size-4" /> },
 ]
 
 const Navbar = () => {

@@ -1,0 +1,24 @@
+{
+  "meta": {
+    "title": "Scrape locally",
+    "description": "Get your token and download the Dorly Scraper desktop app to run scraping on your PC."
+  },
+  "header": {
+    "title": "Scrape locally",
+    "description": "Run the scraper on your own PC. Get your token and download the desktop app, then paste the token in the app and click Run."
+  },
+  "token": {
+    "title": "Your token",
+    "description": "Use this token in the Dorly Scraper desktop app to connect to your account.",
+    "getButton": "Get my token",
+    "copyTitle": "Copy token",
+    "toastCopied": "Token copied to clipboard",
+    "toastError": "Failed to get token",
+    "toastCopyError": "Could not copy"
+  },
+  "download": {
+    "title": "Desktop app",
+    "description": "Download the Dorly Scraper for Windows. Install, paste your token, and click Run scraper.",
+    "button": "Download for Windows"
+  }
+}

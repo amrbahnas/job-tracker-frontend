@@ -3,6 +3,7 @@ import auth from "./en/auth.json"
 import jobs from "./en/jobs.json"
 import landing from "./en/landing.json"
 import websites from "./en/websites.json"
+import scrapeLocally from "./en/scrape-locally.json"
 
 const messages = {
   common,
@@ -10,6 +11,7 @@ const messages = {
   jobs,
   landing,
   websites,
+  scrapeLocally,
 } as const
 
 export default messages
