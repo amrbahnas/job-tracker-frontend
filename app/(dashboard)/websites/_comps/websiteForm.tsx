@@ -30,6 +30,15 @@ function createWebsiteFormSchema(t: (key: string) => string) {
       .refine(
         (arr) => arr.some((u) => u.trim().length > 0),
         t("validationUrlsRequired")
+      )
+      .refine(
+        (arr) => {
+          const normalize = (u: string) =>
+            u.trim().toLowerCase().replace(/\/+$/, "") || ""
+          const nonEmpty = arr.map(normalize).filter((u) => u !== "")
+          return new Set(nonEmpty).size === nonEmpty.length
+        },
+        t("validationUrlsNoDuplicates")
       ),
     scrapeIntervalMinutes: z
       .number()

@@ -12,6 +12,7 @@ import Link from "next/link"
 import PasswordInput from "@/components/ui/password-input"
 import ReCAPTCHA from "./ReCAPTCHA"
 import { useTranslations } from "next-intl"
+import { Error } from "@/components/common/error"
 
 const loginSchema = (validationT: ReturnType<typeof useTranslations>) =>
   z.object({
@@ -36,6 +37,8 @@ export function LoginForm() {
       keepLoggedIn: false,
     },
   })
+
+  const { errors } = form.formState
 
   return (
     <>
@@ -81,6 +84,7 @@ export function LoginForm() {
             form.setValue("recaptchaToken", token, { shouldValidate: true })
           }}
         />
+        <Error error={errors.recaptchaToken} />
         <Button
           type="submit"
           className="w-full"

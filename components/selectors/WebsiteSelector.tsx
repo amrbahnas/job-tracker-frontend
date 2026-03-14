@@ -8,6 +8,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select"
+import { Globe } from "lucide-react"
 import { useTranslations } from "next-intl"
 
 type WebsiteSelectorProps = {
@@ -23,7 +24,7 @@ export function WebsiteSelector({
   value,
   onChange,
   className,
-  leftIcon,
+
   allowAll = true,
 }: WebsiteSelectorProps) {
   const { data: websites = [] } = usePagination<Website[]>("/websites", {
@@ -40,8 +41,10 @@ export function WebsiteSelector({
       }
     >
       <SelectTrigger className={className ?? "w-full min-w-[180px] md:w-56"}>
-        {leftIcon}
-        <SelectValue placeholder={t("websitePlaceholder")} />
+        <span className="flex items-center gap-2">
+          <Globe className="size-4" />
+          <SelectValue placeholder={t("websitePlaceholder")} />
+        </span>
       </SelectTrigger>
       <SelectContent>
         {allowAll && <SelectItem value="all">{t("allWebsites")}</SelectItem>}

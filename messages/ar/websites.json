@@ -69,6 +69,7 @@
     "toastCreated": "تم إنشاء الموقع بنجاح",
     "toastUpdated": "تم تحديث الموقع بنجاح",
     "validationNameRequired": "اسم المنصة مطلوب",
+    "validationUrlsNoDuplicates": "الروابط المكررة غير مسموحة. يجب أن يكون كل رابط فريداً.",
     "validationUrlsRequired": "أضف رابط استهداف واحداً على الأقل.",
     "validationIntervalMin": "يجب أن تكون الفترة دقيقة واحدة على الأقل",
     "validationIntervalMax": "لا يمكن أن تتجاوز الفترة أسبوعاً (10080 دقيقة)",
@@ -93,7 +94,8 @@
     "inputPlaceholder": "https://example.com/jobs...",
     "removeAria": "إزالة الرابط",
     "addUrl": "إضافة رابط",
-    "maxUrlsError": "يمكنك إضافة حتى 10 روابط فقط"
+    "maxUrlsError": "يمكنك إضافة حتى 10 روابط فقط",
+    "duplicateUrlError": "الروابط المكررة غير مسموحة. يجب أن يكون كل رابط فريداً."
   },
   "autofill": {
     "button": "إكمال تلقائي بالذكاء الاصطناعي",

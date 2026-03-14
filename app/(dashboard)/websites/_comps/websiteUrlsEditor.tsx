@@ -34,6 +34,16 @@ export function WebsiteUrlsEditor({
 
   const safeUrls = urls.length > 0 ? urls : [""]
 
+  const normalizeForCompare = (u: string) =>
+    u.trim().toLowerCase().replace(/\/+$/, "") || ""
+
+  const nonEmptyNormalized = safeUrls
+    .map(normalizeForCompare)
+    .filter((u) => u !== "")
+  const hasDuplicates =
+    nonEmptyNormalized.length > 0 &&
+    new Set(nonEmptyNormalized).size !== nonEmptyNormalized.length
+
   return (
     <div className="space-y-3">
       {safeUrls.map((url, index) => (
@@ -69,7 +79,9 @@ export function WebsiteUrlsEditor({
       </button>
       <Error
         error={
-          errorMessage || (urls.length >= 10 ? t("maxUrlsError") : undefined)
+          errorMessage ||
+          (urls.length >= 10 ? t("maxUrlsError") : undefined) ||
+          (hasDuplicates ? t("duplicateUrlError") : undefined)
         }
         hideOkButton
       />

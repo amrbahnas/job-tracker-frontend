@@ -78,7 +78,7 @@ export function LandingHeader() {
             </Button>
             <Button
               variant="outline"
-              className="hidden bg-transparent px-4 sm:block"
+              className="hidden bg-transparent px-4 sm:flex"
               asChild
             >
               <Link href="/auth">{t("login")}</Link>

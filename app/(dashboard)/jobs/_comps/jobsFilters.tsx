@@ -34,7 +34,6 @@ export function JobsFilters() {
             setFilters({ websiteId: value ?? ("" as string) })
           }
           className="w-full sm:w-40"
-          leftIcon={<Globe className="size-4" />}
         />
         {/* <SortSelector
           value={sort}

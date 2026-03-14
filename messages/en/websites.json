@@ -70,6 +70,7 @@
     "toastUpdated": "Website updated successfully",
     "validationNameRequired": "Platform name is required",
     "validationUrlsRequired": "Add at least one target URL.",
+    "validationUrlsNoDuplicates": "Duplicate URLs are not allowed. Each URL must be unique.",
     "validationIntervalMin": "Interval must be at least 1 minute",
     "validationIntervalMax": "Interval cannot exceed 1 week (10080 minutes)",
     "validationJobCardRequired": "Job card wrapper is required",
@@ -93,7 +94,8 @@
     "inputPlaceholder": "https://example.com/jobs...",
     "removeAria": "Remove URL",
     "addUrl": "Add URL",
-    "maxUrlsError": "You can only add up to 10 URLs"
+    "maxUrlsError": "You can only add up to 10 URLs",
+    "duplicateUrlError": "Duplicate URLs are not allowed. Each URL must be unique."
   },
   "autofill": {
     "button": "Autofill with AI",
