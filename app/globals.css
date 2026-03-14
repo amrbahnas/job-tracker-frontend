@@ -117,7 +117,7 @@
 
 @layer base {
   * {
-    @apply no-scrollbar! border-border outline-ring/50;
+    @apply border-border outline-ring/50;
   }
   body {
     @apply bg-background text-foreground;
@@ -128,6 +128,9 @@
 
   .text-gradient {
     @apply bg-gradient-to-r from-primary to-orange-500 bg-clip-text text-transparent;
+  }
+  .ptr__children {
+    overflow: visible !important;
   }
 }
 

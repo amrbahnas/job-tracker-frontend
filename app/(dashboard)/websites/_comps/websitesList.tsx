@@ -21,7 +21,7 @@ export function WebsitesList() {
   } = useGetWebsites()
 
   return (
-    <>
+    <section className="">
       <ItemList
         data={websites.length > 0 ? [...websites, { _id: "add-website" }] : []}
         pagination={pagination}
@@ -67,6 +67,6 @@ export function WebsitesList() {
         isOpen={isFormOpen}
         onClose={() => setIsFormOpen(false)}
       />
-    </>
+    </section>
   )
 }

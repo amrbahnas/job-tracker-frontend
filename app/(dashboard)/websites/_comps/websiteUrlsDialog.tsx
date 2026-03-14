@@ -150,7 +150,7 @@ export function WebsiteUrlsDialog({
         </Button>
       )}
       <DialogContent className="gap-0 py-0 sm:max-w-xl">
-        <DialogHeader className="py-6">
+        <DialogHeader className="h-fit py-6">
           <DialogTitle className="text-md flex items-center gap-1 leading-tight font-semibold">
             {!websiteProp ? (
               <span className="flex items-center gap-1 text-2xl">
@@ -165,33 +165,37 @@ export function WebsiteUrlsDialog({
           </DialogTitle>
         </DialogHeader>
 
-        {!websiteProp && (
-          <section className="mb-6">
-            <label className="mb-4 block text-sm font-medium">
-              {t("selectWebsite")}
-            </label>
-            <WebsiteSelector
-              value={selectedWebsiteId}
-              onChange={setSelectedWebsiteId}
-              allowAll={false}
+        <section className="min-h-34">
+          {!websiteProp && (
+            <section className="mb-6">
+              <label className="mb-4 block text-sm font-medium">
+                {t("selectWebsite")}
+              </label>
+              <WebsiteSelector
+                value={selectedWebsiteId}
+                onChange={setSelectedWebsiteId}
+                allowAll={false}
+              />
+            </section>
+          )}
+
+          {website && (
+            <WebsiteUrlsForm
+              key={website._id}
+              website={website}
+              onClose={handleClose}
+              onSuccess={handleClose}
             />
-          </section>
-        )}
+          )}
 
-        {website && (
-          <WebsiteUrlsForm
-            key={website._id}
-            website={website}
-            onClose={handleClose}
-            onSuccess={handleClose}
-          />
-        )}
-
-        {loadingUrls && (
-          <p className="mx-auto py-6 text-sm text-muted-foreground">
-            {t("loading")}
-          </p>
-        )}
+          {loadingUrls && (
+            <div className="h-40">
+              <p className="mx-auto py-6 text-sm text-muted-foreground">
+                {t("loading")}
+              </p>
+            </div>
+          )}
+        </section>
       </DialogContent>
     </Dialog>
   )

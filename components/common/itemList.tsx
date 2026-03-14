@@ -88,7 +88,7 @@ export function ItemList({
             overscan={12}
             endReached={handleEndReached}
             listClassName={cn(
-              "grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3",
+              "no-scrollbar grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3",
               listClassName
             )}
             itemClassName={cn("h-46", itemClassName)}
