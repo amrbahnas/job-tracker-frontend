@@ -37,6 +37,7 @@ const IntervalSelector = ({
       <SelectContent>
         {SCRAPE_INTERVAL_OPTIONS.map((option) => (
           <SelectItem key={option.value} value={String(option.value)}>
+            {/* @ts-ignore */}
             {t(option.key)}
           </SelectItem>
         ))}
