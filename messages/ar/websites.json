@@ -26,7 +26,7 @@
     "urlSuffix": "رابط",
     "urlsSuffix": "روابط",
     "deletedToast": "تم حذف الموقع بنجاح",
-    "statusActive": "مُفَعَّل",
+    "statusActive": "نشط",
     "statusPaused": "مُوَقَّف",
     "deleteTitle": "حذف الموقع؟",
     "deleteDescription": "سيتم حذف {name} نهائياً مع جميع الروابط والوظائف المرتبطة به.",

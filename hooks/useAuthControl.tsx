@@ -1,18 +1,18 @@
 import proxyClient from "@/api_config/proxyClient"
 import useAppStore from "@/store/useAppStore"
-import { useQueryClient } from "@tanstack/react-query"
+import { useTranslations } from "next-intl"
 import { useRouter } from "next/navigation"
 import { toast } from "sonner"
 
 export const useAuthControl = () => {
   const { setIsLogin, resetAppData, setUser } = useAppStore()
   const router = useRouter()
-  const queryClient = useQueryClient()
+  const t = useTranslations("auth")
 
   const authSuccess = async (data: any, register = false) => {
     setIsLogin(true)
     setUser(data.user)
-    toast.success(register ? "Registration successful" : "Login successful")
+    toast.success(register ? t("registrationSuccessful") : t("loginSuccessful"))
     router.replace("/jobs")
   }
 

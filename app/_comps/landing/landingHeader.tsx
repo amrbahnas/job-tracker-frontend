@@ -43,7 +43,7 @@ export function LandingHeader() {
         </Link>
         <nav
           className={cn(
-            "flex items-center gap-6 text-white",
+            "flex items-center gap-2 text-white sm:gap-6",
             scrolled && "text-black dark:text-white"
           )}
           aria-label="Main"
@@ -68,13 +68,19 @@ export function LandingHeader() {
               {t("navAbout")}
             </Link>
           </div>
-          <DarkModeToggle />
+
           <LanguageToggle />
+          <DarkModeToggle />
+
           <div className="flex items-center gap-2">
             <Button className="px-4" asChild>
               <Link href="/auth?tab=signup">{t("signUp")}</Link>
             </Button>
-            <Button variant="outline" className="bg-transparent px-4" asChild>
+            <Button
+              variant="outline"
+              className="hidden bg-transparent px-4 sm:block"
+              asChild
+            >
               <Link href="/auth">{t("login")}</Link>
             </Button>
           </div>
