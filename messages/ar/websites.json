@@ -5,7 +5,7 @@
   },
   "header": {
     "title": "المواقع",
-    "subtitle": "إدارة أدوات سحب الوظائف الآلية وفترات التتبع.",
+    "subtitle": "إدارة أدوات بحث الوظائف الآلية وفترات التتبع.",
     "addWebsite": "إضافة موقع"
   },
   "list": {
@@ -18,10 +18,10 @@
   },
   "card": {
     "customInterval": "فترة مخصصة",
-    "lastScrapedLabel": "آخر سحب:",
+    "lastScrapedLabel": "آخر بحث:",
     "never": "لم يتم أبداً",
     "intervalLabel": "الفترة:",
-    "trackedLabel": "المتابع:",
+    "trackedLabel": "الروابط:",
     "urlSuffix": "رابط",
     "urlsSuffix": "روابط",
     "deletedToast": "تم حذف الموقع بنجاح",
@@ -40,10 +40,10 @@
     "sectionBasicInfo": "البيانات الأساسية",
     "platformNameLabel": "اسم المنصة",
     "platformNamePlaceholder": "مثال: LinkedIn, Indeed",
-    "scrapeIntervalLabel": "فترة السحب",
+    "scrapeIntervalLabel": "فترة البحث",
     "targetUrlsLabel": "روابط الاستهداف",
     "activeStatusLabel": "حالة التفعيل",
-    "activeStatusDescription": "تفعيل أو إيقاف السحب في الخلفية لهذه المنصة",
+    "activeStatusDescription": "تفعيل أو إيقاف البحث في الخلفية لهذه المنصة",
     "sectionSelectors": "محددات البيانات",
     "selectorsHelper": "استخدم الذكاء الاصطناعي لاستخراج المحددات من رابط، أو قم بإضافتها يدوياً.",
     "jobCardLabel": "عنصر بطاقة الوظيفة",
@@ -66,12 +66,19 @@
     "saveChanges": "حفظ التغييرات",
     "savePlatform": "حفظ المنصة",
     "toastCreated": "تم إنشاء الموقع بنجاح",
-    "toastUpdated": "تم تحديث الموقع بنجاح"
+    "toastUpdated": "تم تحديث الموقع بنجاح",
+    "validationNameRequired": "اسم المنصة مطلوب",
+    "validationUrlsRequired": "أضف رابط استهداف واحداً على الأقل.",
+    "validationIntervalMin": "يجب أن تكون الفترة دقيقة واحدة على الأقل",
+    "validationIntervalMax": "لا يمكن أن تتجاوز الفترة أسبوعاً (10080 دقيقة)",
+    "validationJobCardRequired": "عنصر بطاقة الوظيفة مطلوب",
+    "validationJobTitleRequired": "محدد عنوان الوظيفة مطلوب",
+    "validationJobLinkRequired": "محدد رابط الوظيفة مطلوب"
   },
   "urlsDialog": {
     "button": "إدارة الروابط",
     "titleSuffix": "الروابط",
-    "description": "سيتم سحب هذه الصفحات وفق الفترة المحددة.",
+    "description": "سيتم بحث هذه الصفحات وفق الفترة المحددة.",
     "cancel": "إلغاء",
     "save": "حفظ الروابط",
     "toastUpdated": "تم تحديث روابط الموقع بنجاح",
@@ -87,9 +94,9 @@
     "button": "إكمال تلقائي بالذكاء الاصطناعي",
     "title": "استخراج المحددات من HTML",
     "description": "أداة آلية لاكتشاف المحددات.",
-    "info": "سيقوم الذكاء الاصطناعي بتحليل الكود ومحاولة إيجاد محددات CSS الصحيحة. الصق المقطع أدناه لبدء التحليل.",
+    "info": "سيقوم الذكاء الاصطناعي بتحليل الكود ومحاولة إيجاد محددات CSS الصحيحة. اضف المقطع أدناه لبدء التحليل.",
     "htmlLabel": "كود HTML",
-    "htmlPlaceholder": "الصق كود HTML لبطاقة وظيفة واحدة هنا...",
+    "htmlPlaceholder": "اضف كود HTML لبطاقة وظيفة واحدة هنا...",
     "cancel": "إلغاء",
     "extract": "استخراج المحددات",
     "toastExtracted": "تم استخراج المحددات بنجاح"

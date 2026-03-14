@@ -94,7 +94,7 @@ export function VerifyCodeStep({
           loading={verifyLoading}
         >
           {t("verifyButton")}
-          <span className="ml-2" aria-hidden>
+          <span className="ms-2" aria-hidden>
             <ArrowRight className="size-4 rtl:rotate-180" />
           </span>
         </Button>

@@ -75,7 +75,7 @@ export function ForgotPasswordStep({ onSuccess }: ForgotPasswordStepProps) {
           loading={loading}
         >
           {t("sendCode")}
-          <ArrowRight className="ml-2 size-4 rtl:rotate-180" />
+          <ArrowRight className="ms-2 size-4 rtl:rotate-180" />
         </Button>
       </Form>
 

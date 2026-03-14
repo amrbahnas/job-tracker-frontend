@@ -73,7 +73,7 @@ export function WebsiteUrlsDialog({ website }: WebsiteUrlsDialogProps) {
           className="px-2 text-[11px]"
           onClick={() => setUrlsDialogOpen(true)}
         >
-          <Link2 className="mr-1 size-3" />
+          <Link2 className="me-1 size-3" />
           {t("button")}
         </Button>
       </DialogTrigger>
@@ -83,10 +83,11 @@ export function WebsiteUrlsDialog({ website }: WebsiteUrlsDialogProps) {
             <DialogTitle className="text-md flex items-center gap-1 leading-tight font-semibold">
               {getPlatformBadge(website.name, 8)}
               <span className="capitalize">{website.name}</span>
-              <span>{t("titleSuffix")}</span>
             </DialogTitle>
           </DialogHeader>
-
+          <label className="mb-4 block text-sm font-medium">
+            {t("titleSuffix")}
+          </label>
           <WebsiteUrlsEditor
             urls={urls}
             onChange={(next) => {
@@ -95,9 +96,7 @@ export function WebsiteUrlsDialog({ website }: WebsiteUrlsDialogProps) {
             }}
             errorMessage={errorMessage}
           />
-          <DialogDescription>
-            {t("description")}
-          </DialogDescription>
+          <DialogDescription>{t("description")}</DialogDescription>
           <DialogFooter className="mt-12 py-6">
             <Button
               type="button"

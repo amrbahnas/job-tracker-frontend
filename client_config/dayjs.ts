@@ -17,8 +17,6 @@ dayjs.extend(weekOfYear)
 // Initialize plugins
 dayjs.extend(relativeTime)
 
-// export const configureDayjs = (locale: string) => {
-//   dayjs.locale(locale)
-// }
-
-export default dayjs
+export const configureDayjs = (locale: string) => {
+  dayjs.locale(locale)
+}

@@ -2,31 +2,22 @@
 
 import { Button } from "@/components/ui/button"
 
+import { DangerConfirmButton } from "@/components/common/DangerConfirmButton"
 import { cn } from "@/lib/utils"
 import getPlatformBadge from "@/utilies/getPlatformBadge"
 import dayjs from "dayjs"
-import relativeTime from "dayjs/plugin/relativeTime"
 import { Clock, History, Link, SquarePenIcon, Trash2 } from "lucide-react"
+import { useTranslations } from "next-intl"
 import { toast } from "sonner"
-import { DangerConfirmButton } from "@/components/common/DangerConfirmButton"
 import { useWebsitesActions } from "../_api/mutations"
 import { WebsiteUrlsDialog } from "./websiteUrlsDialog"
-import { useTranslations } from "next-intl"
-dayjs.extend(relativeTime)
+import { useLocale } from "next-intl"
+import formatInterval from "@/utilies/formatInterval"
 
 type WebsiteCardProps = {
   website: Website
   onEditWebsite?: (website: Website) => void
   refetch?: () => void
-}
-
-function formatInterval(minutes?: number) {
-  if (!minutes || minutes <= 0) return "Custom interval"
-  if (minutes % 60 === 0) {
-    const hours = minutes / 60
-    return `${hours}h `
-  }
-  return `${minutes}m`
 }
 
 export function WebsiteCard({ website, onEditWebsite }: WebsiteCardProps) {
@@ -35,6 +26,7 @@ export function WebsiteCard({ website, onEditWebsite }: WebsiteCardProps) {
   )
   const t = useTranslations("websites.card")
   const urlsCount = website.urls?.length ?? 0
+  const local = useLocale()
   const CardBody = [
     {
       icon: History,
@@ -48,14 +40,14 @@ export function WebsiteCard({ website, onEditWebsite }: WebsiteCardProps) {
       label: t("intervalLabel"),
       value:
         website.scrapeIntervalMinutes && website.scrapeIntervalMinutes > 0
-          ? formatInterval(website.scrapeIntervalMinutes)
+          ? formatInterval(website.scrapeIntervalMinutes, local)
           : t("customInterval"),
     },
     {
       icon: Link,
       label: t("trackedLabel"),
       value: urlsCount,
-      extra: urlsCount === 1 ? t("urlSuffix") : t("urlsSuffix"),
+      extra: urlsCount <= 1 ? t("urlSuffix") : t("urlsSuffix"),
     },
   ]
 
@@ -88,10 +80,10 @@ export function WebsiteCard({ website, onEditWebsite }: WebsiteCardProps) {
               <item.icon className="size-3.5 shrink-0" aria-hidden="true" />
               <dd>
                 {item.label}
-                <span className="ml-1 font-medium text-foreground">
+                <span className="ms-1 font-medium text-foreground">
                   {item.value}
                   {item.extra && (
-                    <span className="ml-1 text-[10px]">{item.extra}</span>
+                    <span className="ms-1 text-[10px]">{item.extra}</span>
                   )}
                 </span>
               </dd>
@@ -100,7 +92,10 @@ export function WebsiteCard({ website, onEditWebsite }: WebsiteCardProps) {
         </dl>
       </header>
 
-      <section className="flex items-center justify-between gap-2 border-t py-4 text-xs">
+      <section
+        className="flex items-center justify-between gap-2 border-t py-4 text-xs"
+        dir="ltr"
+      >
         <WebsiteUrlsDialog website={website} />
         <div className="flex items-center gap-1">
           <Button

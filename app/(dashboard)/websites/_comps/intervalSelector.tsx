@@ -8,6 +8,7 @@ import {
   SelectValue,
 } from "@/components/ui/select"
 import { useTranslations } from "next-intl"
+import { useLocale } from "next-intl"
 
 const SCRAPE_INTERVAL_OPTIONS = [
   { key: "every10", value: 10 },
@@ -26,8 +27,10 @@ const IntervalSelector = ({
   onChange: (value: number) => void
 }) => {
   const t = useTranslations("websites.interval")
+  const local = useLocale()
   return (
     <Select
+      dir={local === "ar" ? "rtl" : "ltr"}
       value={String(value)}
       onValueChange={(value) => onChange(Number(value))}
     >

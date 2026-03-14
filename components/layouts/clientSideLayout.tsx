@@ -7,11 +7,13 @@ import React from "react"
 
 import { Toaster as SonnerToaster } from "sonner"
 import { ThemeProvider } from "../theme-provider"
+import DayjsConfig from "./dayjsConfig"
 
 const ClientSideLayout = ({ children }: { children: React.ReactNode }) => {
   const queryClient = new QueryClient()
   return (
     <QueryClientProvider client={queryClient}>
+      <DayjsConfig />
       {/* <ReactQueryDevtools /> */}
 
       <ThemeProvider>

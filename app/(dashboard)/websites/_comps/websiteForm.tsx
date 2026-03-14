@@ -5,7 +5,7 @@ import { Form, FormItem } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
 import { Switch } from "@/components/ui/switch"
 import { Code, Info } from "lucide-react"
-import { useCallback, useEffect, useState } from "react"
+import { useCallback, useEffect, useMemo, useState } from "react"
 import { Controller, useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import * as z from "zod"
@@ -22,32 +22,36 @@ import IntervalSelector from "./intervalSelector"
 import { WebsiteUrlsEditor } from "./websiteUrlsEditor"
 import { useTranslations } from "next-intl"
 
-const websiteFormSchema = z.object({
-  name: z.string().min(1, "Platform name is required"),
-  urls: z
-    .array(z.string())
-    .refine(
-      (arr) => arr.some((u) => u.trim().length > 0),
-      "Add at least one target URL."
-    ),
-  scrapeIntervalMinutes: z
-    .number()
-    .min(1, "Interval must be at least 1 minute")
-    .max(10080, "Interval cannot exceed 1 week (10080 minutes)"),
-  enabled: z.boolean(),
-  selectors: z.object({
-    jobCard: z.string().min(1, "Job card wrapper is required"),
-    title: z.string().min(1, "Job title selector is required"),
-    company: z.string().optional(),
-    link: z.string().min(1, "Job link selector is required"),
-    location: z.string().optional(),
-    salary: z.string().optional(),
-    date: z.string().optional(),
-    description: z.string().optional(),
-  }),
-})
+function createWebsiteFormSchema(t: (key: string) => string) {
+  return z.object({
+    name: z.string().min(1, t("validationNameRequired")),
+    urls: z
+      .array(z.string())
+      .refine(
+        (arr) => arr.some((u) => u.trim().length > 0),
+        t("validationUrlsRequired")
+      ),
+    scrapeIntervalMinutes: z
+      .number()
+      .min(1, t("validationIntervalMin"))
+      .max(10080, t("validationIntervalMax")),
+    enabled: z.boolean(),
+    selectors: z.object({
+      jobCard: z.string().min(1, t("validationJobCardRequired")),
+      title: z.string().min(1, t("validationJobTitleRequired")),
+      company: z.string().optional(),
+      link: z.string().min(1, t("validationJobLinkRequired")),
+      location: z.string().optional(),
+      salary: z.string().optional(),
+      date: z.string().optional(),
+      description: z.string().optional(),
+    }),
+  })
+}
 
-export type WebsiteFormValues = z.infer<typeof websiteFormSchema>
+export type WebsiteFormValues = z.infer<
+  ReturnType<typeof createWebsiteFormSchema>
+>
 
 type WebsiteFormProps = {
   website?: Website | null
@@ -57,6 +61,10 @@ type WebsiteFormProps = {
 export function WebsiteForm({ website, onCancel }: WebsiteFormProps) {
   const isEditing = Boolean(website?._id)
   const t = useTranslations("websites.form")
+  const websiteFormSchema = useMemo(
+    () => createWebsiteFormSchema(t as (key: string) => string),
+    [t]
+  )
 
   const form = useForm<WebsiteFormValues>({
     resolver: zodResolver(websiteFormSchema as any),

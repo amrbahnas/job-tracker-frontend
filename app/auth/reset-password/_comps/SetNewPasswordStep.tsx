@@ -85,7 +85,7 @@ export function SetNewPasswordStep({
           size="lg"
           loading={loading}
         >
-          <RotateCcw className="mr-2 size-4 rtl:rotate-180" aria-hidden />
+          <RotateCcw className="me-2 size-4 rtl:rotate-180" aria-hidden />
           {t("submit")}
         </Button>
       </Form>

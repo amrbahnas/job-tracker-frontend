@@ -1,0 +1,39 @@
+{
+  "meta": {
+    "title": "Profile",
+    "description": "Manage your Dawarly account and preferences."
+  },
+  "header": {
+    "title": "Account Settings",
+    "description": "Manage your profile information and security preferences."
+  },
+  "userInfo": {
+    "title": "User Information",
+    "fullName": "Full Name",
+    "fullNamePlaceholder": "Your full name",
+    "emailAddress": "Email Address",
+    "saveChanges": "Save Changes"
+  },
+  "security": {
+    "title": "Security",
+    "currentPassword": "Current Password",
+    "currentPasswordPlaceholder": "Enter current password",
+    "newPassword": "New Password",
+    "newPasswordPlaceholder": "Enter new password",
+    "confirmPassword": "Confirm New Password",
+    "confirmPasswordPlaceholder": "Confirm new password",
+    "passwordRequirements": "Password must be at least 8 characters long.",
+    "updatePassword": "Update Password"
+  },
+  "validation": {
+    "fullNameMax": "Full name must be at most 120 characters",
+    "currentPasswordRequired": "Current password is required",
+    "newPasswordMin": "Password must be at least 8 characters",
+    "confirmPasswordRequired": "Please confirm your password",
+    "passwordsDoNotMatch": "Passwords do not match"
+  },
+  "toast": {
+    "profileUpdated": "Profile updated successfully",
+    "passwordUpdated": "Password updated successfully"
+  }
+}

@@ -37,7 +37,7 @@ export default function ScrapeLocallyView() {
   }
 
   return (
-    <Container className="space-y-8">
+    <main className="space-y-8">
       <div>
         <h1 className="text-2xl font-bold tracking-tight text-foreground">
           {t("header.title")}
@@ -105,6 +105,6 @@ export default function ScrapeLocallyView() {
           </a>
         </div>
       </section>
-    </Container>
+    </main>
   )
 }
