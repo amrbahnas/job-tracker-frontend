@@ -15,14 +15,19 @@ export async function LandingCta() {
           {t("description")}
         </Typology.description>
         <div
-          className="mt-8 flex flex-wrap justify-center gap-4"
+          className="mx-auto mt-8 flex max-w-[80%] flex-wrap justify-center gap-4"
           role="group"
           aria-label="Get started"
         >
-          <Button size="lg" asChild className="px-12 py-6!">
+          <Button size="lg" asChild className="w-full px-12 py-6! sm:w-auto">
             <Link href="/auth?tab=signup">{t("primaryCta")}</Link>
           </Button>
-          <Button size="lg" variant="secondary" asChild className="px-8 py-6">
+          <Button
+            size="lg"
+            variant="outline"
+            asChild
+            className="w-full px-12 py-6! sm:w-auto"
+          >
             <Link href="#about">{t("secondaryCta")}</Link>
           </Button>
         </div>

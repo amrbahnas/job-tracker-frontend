@@ -13,7 +13,7 @@ export async function LandingHero() {
 
   return (
     <section
-      className="relative mb-16 flex h-svh items-center justify-start overflow-hidden text-start"
+      className="relative flex h-svh items-center justify-start overflow-hidden text-start"
       aria-labelledby="hero-heading"
     >
       {/* Background image with dark purple overlay */}

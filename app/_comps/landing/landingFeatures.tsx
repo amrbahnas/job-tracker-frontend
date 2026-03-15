@@ -28,7 +28,7 @@ export async function LandingFeatures() {
   return (
     <Container
       id="features"
-      className="rounded-t-3xl border-t bg-muted/30 py-16 sm:rounded-3xl"
+      className="- my-12 rounded-3xl border-t bg-muted/30 py-16"
       aria-labelledby="features-heading"
     >
       <div className="mx-auto max-w-4xl sm:px-6">
