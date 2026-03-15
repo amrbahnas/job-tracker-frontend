@@ -39,6 +39,10 @@ export function LoginForm() {
   })
 
   const { errors } = form.formState
+  console.log(
+    "🚀 ~ file: loginForm.tsx:43 ~  errors.recaptchaToken:",
+    errors.recaptchaToken
+  )
 
   return (
     <>
@@ -84,7 +88,10 @@ export function LoginForm() {
             form.setValue("recaptchaToken", token, { shouldValidate: true })
           }}
         />
-        <Error error={errors.recaptchaToken} />
+        <Error
+          error={errors.recaptchaToken && validationT("recaptchaRequired")}
+          hideOkButton
+        />
         <Button
           type="submit"
           className="w-full"

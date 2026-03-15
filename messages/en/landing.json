@@ -12,11 +12,9 @@
   },
   "hero": {
     "imageAlt": "Job seeker using Dawarly dashboard to find new roles on LinkedIn, Indeed, and Bayt",
-    "titleLine1": "Apply Before",
-    "titleBefore": "",
-    "titleOthersHighlight": "Anyone",
+    "title": "Apply Before <span>Anyone</span>",
     "description": "Dawarly automatically scans the most popular job sites and collects the newest roles in one place. It's free and doesn't require any payment.",
-    "primaryCta": "Start Using Dawarly Free",
+    "primaryCta": "Start Now for Free",
     "secondaryCta": "How Dawarly Works",
     "socialProofPrefix": "5,000+",
     "socialProofSuffix": "job seekers use tools like Dawarly to stay ahead of new postings."

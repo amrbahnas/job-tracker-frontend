@@ -32,14 +32,15 @@ export async function LandingHero() {
         <section>
           <h1
             id="hero-heading"
-            className="text-6xl font-bold tracking-tight text-white sm:text-8xl"
+            className="text-center font-sans text-6xl leading-tight font-bold text-white sm:text-start sm:text-8xl"
           >
-            {t("titleLine1")}
-            {/* <br /> */}
-            {t("titleBefore")}
-            <span className="text-gradient"> {t("titleOthersHighlight")}</span>
+            {t.rich("title", {
+              span: (chunks) => (
+                <span className="text-gradient block sm:inline">{chunks}</span>
+              ),
+            })}
           </h1>
-          <p className="mt-8 max-w-[40rem] text-lg text-white/95">
+          <p className="mt-8 max-w-[40rem] text-center text-lg text-white/95 sm:text-start">
             {t("description")}
           </p>
           <div
@@ -50,7 +51,7 @@ export async function LandingHero() {
             <Button
               size="lg"
               asChild
-              className="border-0 bg-primary px-12 py-6 font-bold text-primary-foreground hover:bg-primary/90"
+              className="w-full border-0 bg-primary px-12 py-6 font-bold text-primary-foreground hover:bg-primary/90 sm:w-auto"
             >
               <Link href="/auth?tab=signup">{t("primaryCta")}</Link>
             </Button>
@@ -58,7 +59,7 @@ export async function LandingHero() {
               size="lg"
               variant="outline"
               asChild
-              className="border-white/80 bg-transparent px-8 py-6 text-white hover:bg-white/10 hover:text-white"
+              className="w-full border-white/80 bg-transparent px-8 py-6 text-white hover:bg-white/10 hover:text-white sm:w-auto"
             >
               <Link href="#about">{t("secondaryCta")}</Link>
             </Button>

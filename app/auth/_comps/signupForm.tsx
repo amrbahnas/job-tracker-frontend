@@ -12,6 +12,7 @@ import { useAuthActions } from "../_api/mutations"
 import PasswordInput from "@/components/ui/password-input"
 import ReCAPTCHA from "./ReCAPTCHA"
 import { useTranslations } from "next-intl"
+import { Error } from "@/components/common/error"
 
 const signupSchema = (validationT: ReturnType<typeof useTranslations>) =>
   z.object({
@@ -79,6 +80,13 @@ export function SignupForm() {
           onChange={(token) => {
             form.setValue("recaptchaToken", token, { shouldValidate: true })
           }}
+        />
+        <Error
+          error={
+            form.formState.errors.recaptchaToken &&
+            validationT("recaptchaRequired")
+          }
+          hideOkButton
         />
         <Button
           type="submit"

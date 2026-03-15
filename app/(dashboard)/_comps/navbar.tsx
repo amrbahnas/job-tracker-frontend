@@ -5,14 +5,6 @@ import Logo from "@/components/common/logo"
 import { Avatar, AvatarFallback } from "@/components/ui/avatar"
 import Container from "@/components/ui/container"
 import {
-  Drawer,
-  DrawerClose,
-  DrawerContent,
-  DrawerFooter,
-  DrawerHeader,
-  DrawerTrigger,
-} from "@/components/ui/drawer"
-import {
   Popover,
   PopoverContent,
   PopoverTrigger,
@@ -20,7 +12,7 @@ import {
 import { useAuthControl } from "@/hooks/useAuthControl"
 import { cn } from "@/lib/utils"
 import useAppStore from "@/store/useAppStore"
-import { Briefcase, Globe, Laptop, LogOut, Menu, User } from "lucide-react"
+import { Briefcase, Globe, Laptop, LogOut, User } from "lucide-react"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
 import { memo, useState } from "react"
@@ -31,8 +23,6 @@ const Navbar = () => {
     <header className="sticky top-0 z-50 border-b bg-white dark:bg-background">
       <Container className="flex items-center justify-between gap-6 py-3">
         <div className="flex items-center gap-3">
-          {/* Mobile: burger + drawer */}
-          <MobileDrawer />
           <Link href="/jobs" className="flex items-center gap-3">
             <Logo />
           </Link>
@@ -48,90 +38,54 @@ const Navbar = () => {
           <ProfilePopover />
         </div>
       </Container>
+
+      <MobileBottomNav />
     </header>
   )
 }
 
-const MobileDrawer = memo(() => {
-  const [drawerOpen, setDrawerOpen] = useState(false)
+const MobileBottomNav = memo(() => {
+  const pathname = usePathname()
   const t = useTranslations("common.navbar")
-  const user = useAppStore((s) => s.user)
-  const { authLogout } = useAuthControl()
+  const NAV_LINKS = getNavLinks(t)
 
   return (
-    <Drawer open={drawerOpen} onOpenChange={setDrawerOpen} direction="left">
-      <DrawerTrigger asChild>
-        <button
-          type="button"
-          className="text-foreground hover:bg-muted md:hidden"
-          aria-label={t("openMenu")}
-        >
-          <Menu className="size-5" />
-        </button>
-      </DrawerTrigger>
-      <DrawerContent className="flex h-full max-w-[280px] flex-col rounded-e-xl border-e">
-        <DrawerHeader className="gap-3 pb-8">
-          {user && (
-            <Link href="/profile" className="flex items-center gap-3">
-              <Avatar className="size-12 shrink-0">
-                <AvatarFallback className="text-base">
-                  {user.fullName.charAt(0)}
-                </AvatarFallback>
-              </Avatar>
-              <div className="min-w-0 flex-1">
-                <p className="truncate font-semibold text-foreground">
-                  {user.fullName}
-                </p>
-                <p className="truncate text-sm text-muted-foreground">
-                  {user.email}
-                </p>
-              </div>
-            </Link>
-          )}
-        </DrawerHeader>
-        <DrawerBody />
-        <DrawerFooter className="border-t pt-4">
-          <DrawerClose asChild>
-            <button
-              type="button"
-              onClick={() => authLogout()}
-              className="flex w-full items-center justify-center gap-2 rounded-lg border border-border bg-background px-4 py-2.5 text-sm font-medium text-foreground transition-colors hover:bg-muted"
+    <nav className="fixed inset-x-0 bottom-0 z-40 border-t bg-background pt-2 pb-3 shadow-[0_-4px_16px_rgba(15,23,42,0.08)] backdrop-blur md:hidden">
+      <div className="mx-auto flex max-w-md justify-around px-6">
+        {NAV_LINKS.map((item) => {
+          const isActive = pathname === item.href
+
+          return (
+            <Link
+              key={item.href}
+              href={item.href}
+              className="flex flex-col items-center gap-1 text-xs font-semibold"
             >
-              <LogOut className="size-5 text-red-500" />
-              {t("signOut")}
-            </button>
-          </DrawerClose>
-        </DrawerFooter>
-      </DrawerContent>
-    </Drawer>
+              <span
+                className={cn(
+                  "flex size-6 items-center justify-center rounded-full transition-colors",
+                  isActive ? "text-primary" : "text-muted-foreground"
+                )}
+              >
+                {item.icon}
+              </span>
+              <span
+                className={cn(
+                  "text-[11px] tracking-wide uppercase transition-colors",
+                  isActive ? "text-primary" : "text-muted-foreground"
+                )}
+              >
+                {item.label}
+              </span>
+            </Link>
+          )
+        })}
+      </div>
+    </nav>
   )
 })
 
-MobileDrawer.displayName = "MobileDrawer"
-const DrawerBody = () => {
-  const t = useTranslations("common.navbar")
-  const pathname = usePathname()
-  const NAV_LINKS = getNavLinks(t)
-  return (
-    <nav className="flex flex-1 flex-col gap-1 overflow-auto px-4">
-      {NAV_LINKS.map((link) => (
-        <DrawerClose asChild key={link.href}>
-          <Link
-            href={link.href}
-            className={cn(
-              "flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium transition-colors hover:bg-muted",
-              pathname === link.href &&
-                "bg-primary/10 text-primary hover:bg-primary/15"
-            )}
-          >
-            {link.icon}
-            {link.label}
-          </Link>
-        </DrawerClose>
-      ))}
-    </nav>
-  )
-}
+MobileBottomNav.displayName = "MobileBottomNav"
 
 const DesktopNavLinks = () => {
   const pathname = usePathname()
