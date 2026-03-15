@@ -91,7 +91,7 @@ export function ItemList({
               "no-scrollbar grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3",
               listClassName
             )}
-            itemClassName={cn("h-46", itemClassName)}
+            itemClassName={cn("h-48", itemClassName)}
             computeItemKey={(_, item) => (item as any)._id ?? ""}
             itemContent={itemContent}
           />

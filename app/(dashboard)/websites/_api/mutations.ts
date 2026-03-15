@@ -41,9 +41,22 @@ export const useWebsitesActions = (id?: string) => {
 
 export const useExtractSelectors = () => {
   const { mutate: extractSelectors, loading: extractSelectorsLoading } =
-    useMutation("/ats/extract-selectors")
+    useMutation("/ai/extract-selectors")
   return {
     extractSelectors,
     extractSelectorsLoading,
+  }
+}
+
+export const useGenerateAndCreateWebsites = () => {
+  const { mutate: generateAndCreate, loading } = useMutation(
+    "websites/generate-and-create",
+    {
+      invalidateQueries: [WEBSITES_KEYS.getWebsites],
+    }
+  )
+  return {
+    generateAndCreate,
+    loading,
   }
 }

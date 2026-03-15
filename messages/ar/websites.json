@@ -11,6 +11,7 @@
   },
   "list": {
     "addSource": "إضافة مصدر",
+    "searchPlaceholder": "البحث بالاسم...",
     "error": "فشل في جلب المواقع",
     "noData": "لا توجد مواقع بعد",
     "noDataDescription": "أضف موقعاً في قسم المواقع لبدء جلب إعلانات الوظائف.",
@@ -46,7 +47,7 @@
     "activeStatusLabel": "حالة التفعيل",
     "activeStatusDescription": "تفعيل أو إيقاف البحث في الخلفية لهذه المنصة",
     "sectionSelectors": "محددات البيانات",
-    "selectorsHelper": "استخدم الذكاء الاصطناعي لاستخراج المحددات من رابط، أو قم بإضافتها يدوياً.",
+    "selectorsHelper": "استخدم الذكاء الاصطناعي لاستخراج المحددات من رابط، أو <span>قم بإضافتها يدوياً</span>.",
     "jobCardLabel": "عنصر بطاقة الوظيفة",
     "jobCardPlaceholder": ".job-card-container",
     "jobLinkLabel": "رابط الوظيفة",
@@ -107,6 +108,15 @@
     "cancel": "إلغاء",
     "extract": "استخراج المحددات",
     "toastExtracted": "تم استخراج المحددات بنجاح"
+  },
+  "generateUrls": {
+    "title": "إعداد بحثك عن الوظائف",
+    "description": "أخبرنا بما تبحث عنه وسنُنشئ روابط بحث عبر منصات الوظائف نيابة عنك.",
+    "placeholder": "مثال: أبحث عن وظيفة frontend بـ React.js في القاهرة، مصر، حضور في المكتب",
+    "submit": "إنشاء روابطي",
+    "cancel": "إلغاء",
+    "generatingTitle": "الذكاء الاصطناعي ينشئ روابطك",
+    "generatingDescription": "نحن نُجهّز روابط البحث على لينكدإن، وزوفز، وإنديد ومنصات أخرى. قد يستغرق ذلك لحظة."
   },
   "interval": {
     "placeholder": "اختر الفترة",

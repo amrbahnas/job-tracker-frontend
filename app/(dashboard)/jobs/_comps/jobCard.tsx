@@ -13,16 +13,21 @@ import {
 
 import { DangerConfirmButton } from "@/components/common/DangerConfirmButton"
 import { Button } from "@/components/ui/button"
+import { Checkbox } from "@/components/ui/checkbox"
 import { toast } from "sonner"
 import { useJobActions } from "../_api/mutations"
 import { ApplyButton } from "./applyButton"
 import { useTranslations } from "next-intl"
 import dayjs from "dayjs"
+import { cn } from "@/lib/utils"
+
 type JobCardProps = {
   job: Job
+  selected?: boolean
+  onToggleSelect?: () => void
 }
 
-export function JobCard({ job }: JobCardProps) {
+export function JobCard({ job, selected, onToggleSelect }: JobCardProps) {
   const { updateJobStatus, isUpdatingJobStatus, deleteJob, isDeletingJob } =
     useJobActions({
       id: job._id,
@@ -186,20 +191,40 @@ export function JobCard({ job }: JobCardProps) {
     return null
   }
 
+  const showCheckbox = typeof onToggleSelect === "function"
+
   return (
     <article
-      className={`flex h-full gap-3 rounded-xl border p-4 shadow-sm transition ${cardBgClass} ${cardStateClasses}`}
+      className={cn(
+        "flex h-full gap-3 rounded-xl border p-4 shadow-sm transition",
+        cardBgClass,
+        cardStateClasses,
+        selected && "border-primary/40"
+      )}
       aria-label={`${job.title} at ${job.company}`}
     >
+      {showCheckbox && (
+        <div className="flex shrink-0 items-start pt-0.5">
+          <Checkbox
+            id={job.title}
+            checked={selected}
+            onCheckedChange={onToggleSelect}
+            aria-label={t("selectAria", { title: job.title })}
+          />
+        </div>
+      )}
       <div className="flex min-w-0 flex-1 flex-col gap-2">
-        <header className="min-w-0 space-y-1">
+        <header className="min-w-0 space-y-2">
           <div className="flex flex-wrap items-center justify-between gap-2">
-            <h2
-              className="max-w-[75%] truncate text-sm leading-tight font-semibold text-foreground sm:text-base"
+            <label
+              className="max-w-[75%] cursor-pointer"
               dir="auto"
+              htmlFor={job.title}
             >
-              {job.title}
-            </h2>
+              <h2 className="truncate text-sm leading-tight font-semibold text-foreground sm:text-base">
+                {job.title}
+              </h2>
+            </label>
 
             <div className="flex items-center gap-1">
               <span
@@ -237,7 +262,7 @@ export function JobCard({ job }: JobCardProps) {
           </div>
         </header>
 
-        <p className="mt-2 line-clamp-2 flex-1 text-xs text-[#6B7280] sm:text-sm dark:text-slate-400">
+        <p className="line-clamp-2 text-xs text-[#6B7280] sm:text-sm dark:text-slate-400">
           {job.description ? job.description : t("noDescription")}
         </p>
 

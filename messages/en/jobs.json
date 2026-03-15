@@ -26,7 +26,23 @@
     "loading": "Loading more jobs…",
     "endReached": "You've reached the end of the list."
   },
+  "bulkActions": {
+    "ariaLabel": "Bulk actions for selected jobs",
+    "label": "Bulk actions:",
+    "markApplied": "Mark Applied",
+    "archive": "Archive",
+    "delete": "Delete",
+    "clearSelection": "Clear selection",
+    "deleteConfirmTitle": "Delete selected jobs?",
+    "deleteConfirmDescription": "This will permanently remove the selected jobs from your list.",
+    "deleteConfirm": "Delete",
+    "deleteCancel": "Cancel",
+    "markAppliedSuccess": "Selected jobs marked as applied.",
+    "archiveSuccess": "Selected jobs archived.",
+    "deleteSuccess": "Selected jobs deleted."
+  },
   "card": {
+    "selectAria": "Select {title}",
     "statusUpdated": "Job status updated to {status} successfully",
     "deleted": "Job deleted successfully",
     "archivedFooter": "Moved to archive on {date}",

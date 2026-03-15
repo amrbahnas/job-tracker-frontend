@@ -1,13 +1,22 @@
 "use client"
 
+import { useCallback, useMemo, useState } from "react"
 import { ItemList } from "@/components/common/itemList"
 import { useGetJobs } from "../_api/quieries"
 import useJobsFilters from "../hooks/useJobsFilters"
 import { JobCard } from "./jobCard"
+
 import { useTranslations } from "next-intl"
+import JobsBulkActionsBar from "./JobsBulkActionsBar"
+import { Button } from "@/components/ui/button"
+import { Check } from "lucide-react"
+import { Checkbox } from "@/components/ui/checkbox"
+import SelectAllCheckbox from "./selectAllCheckbox"
+
 export function JobsList() {
   const { filters } = useJobsFilters()
   const t = useTranslations("jobs.list")
+  const [selectedIds, setSelectedIds] = useState<Set<string>>(new Set())
 
   const {
     data: jobs = [] as Job[],
@@ -19,21 +28,50 @@ export function JobsList() {
     params: filters,
   })
 
+  const toggleSelection = useCallback((id: string) => {
+    setSelectedIds((prev) => {
+      const next = new Set(prev)
+      if (next.has(id)) next.delete(id)
+      else next.add(id)
+      return next
+    })
+  }, [])
+
+  const clearSelection = useCallback(() => setSelectedIds(new Set()), [])
+  const selectedJobs = useMemo(() => Array.from(selectedIds), [selectedIds])
+
   return (
-    <ItemList
-      data={jobs}
-      pagination={pagination}
-      isLoading={isLoading}
-      error={error}
-      refetch={refetch}
-      itemContent={(_, job) => <JobCard job={job as Job} />}
-      messages={{
-        error: t("error"),
-        noData: t("noData"),
-        noDataDescription: t("noDataDescription"),
-        loading: t("loading"),
-        endReached: t("endReached"),
-      }}
-    />
+    <section className="space-y-4">
+      <SelectAllCheckbox
+        selectedJobs={selectedJobs}
+        jobs={jobs}
+        setSelectedIds={setSelectedIds}
+      />
+      <JobsBulkActionsBar
+        selectedIds={selectedJobs}
+        onClearSelection={clearSelection}
+      />
+      <ItemList
+        data={jobs}
+        pagination={pagination}
+        isLoading={isLoading}
+        error={error}
+        refetch={refetch}
+        itemContent={(_, job) => (
+          <JobCard
+            job={job as Job}
+            selected={selectedIds.has((job as Job)._id)}
+            onToggleSelect={() => toggleSelection((job as Job)._id)}
+          />
+        )}
+        messages={{
+          error: t("error"),
+          noData: t("noData"),
+          noDataDescription: t("noDataDescription"),
+          loading: t("loading"),
+          endReached: t("endReached"),
+        }}
+      />
+    </section>
   )
 }

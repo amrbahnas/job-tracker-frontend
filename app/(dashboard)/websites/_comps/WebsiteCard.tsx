@@ -74,11 +74,18 @@ export function WebsiteCard({ website, onEditWebsite }: WebsiteCardProps) {
             <WebsiteStatusBadge website={website} />
           </div>
         </div>
-        <dl className="my-4 flex flex-col items-start gap-3 text-xs text-muted-foreground">
+        <div
+          className="my-4 flex flex-col items-start gap-3 text-xs text-muted-foreground"
+          role="list"
+        >
           {CardBody.map((item) => (
-            <dt className="flex items-center gap-2" key={item.label}>
+            <div
+              className="flex items-center gap-2"
+              key={item.label}
+              role="listitem"
+            >
               <item.icon className="size-3.5 shrink-0" aria-hidden="true" />
-              <dd>
+              <span>
                 {item.label}
                 <span className="ms-1 font-medium text-foreground">
                   {item.value}
@@ -86,10 +93,10 @@ export function WebsiteCard({ website, onEditWebsite }: WebsiteCardProps) {
                     <span className="ms-1 text-[10px]">{item.extra}</span>
                   )}
                 </span>
-              </dd>
-            </dt>
+              </span>
+            </div>
           ))}
-        </dl>
+        </div>
       </header>
 
       <section

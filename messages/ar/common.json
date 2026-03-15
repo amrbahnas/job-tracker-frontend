@@ -8,5 +8,6 @@
     "signOut": "تسجيل الخروج",
     "openMenu": "فتح القائمة"
   },
-  "refetchedSuccessfully": "تم تحديث البيانات بنجاح"
+  "refetchedSuccessfully": "تم تحديث البيانات بنجاح",
+  "selectAll": "تحديد الكل"
 }

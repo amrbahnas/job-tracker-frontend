@@ -8,5 +8,6 @@
     "signOut": "Sign Out",
     "openMenu": "Open menu"
   },
-  "refetchedSuccessfully": "Refetched successfully"
+  "refetchedSuccessfully": "Refetched successfully",
+  "selectAll": "Select all"
 }

@@ -11,6 +11,7 @@
   },
   "list": {
     "addSource": "Add source",
+    "searchPlaceholder": "Search websites by name...",
     "error": "Failed to fetch websites",
     "noData": "No websites yet",
     "noDataDescription": "Add a website in the Websites section to start scraping job listings.",
@@ -46,7 +47,7 @@
     "activeStatusLabel": "Active status",
     "activeStatusDescription": "Enable or disable background scraping for this platform",
     "sectionSelectors": "Data selectors",
-    "selectorsHelper": "Use AI to detect selectors from a URL, or add them manually.",
+    "selectorsHelper": "Use AI to detect selectors from a URL, or <span>add them manually</span>.",
     "jobCardLabel": "Job card wrapper",
     "jobCardPlaceholder": ".job-card-container",
     "jobLinkLabel": "Job link",
@@ -107,6 +108,15 @@
     "cancel": "Cancel",
     "extract": "Extract Selectors",
     "toastExtracted": "Selectors extracted successfully"
+  },
+  "generateUrls": {
+    "title": "Set up your job search",
+    "description": "Tell us what you're looking for and we'll generate search URLs across job boards for you.",
+    "placeholder": "e.g. I'm seeking a frontend React.js position at Cairo, Egypt, onsite",
+    "submit": "Generate my URLs",
+    "cancel": "Cancel",
+    "generatingTitle": "AI is generating your URLs",
+    "generatingDescription": "We're building search links for LinkedIn, Wuzzuf, Indeed and other boards. This may take a moment."
   },
   "interval": {
     "placeholder": "Select interval",

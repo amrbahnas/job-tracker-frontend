@@ -26,7 +26,23 @@
     "loading": "جاري تحميل المزيد من الوظائف…",
     "endReached": "لقد وصلت إلى نهاية القائمة."
   },
+  "bulkActions": {
+    "ariaLabel": "إجراءات جماعية للوظائف المحددة",
+    "label": "إجراءات جماعية:",
+    "markApplied": "تم التقديم ",
+    "archive": "أرشفة",
+    "delete": "حذف",
+    "clearSelection": "إلغاء التحديد",
+    "deleteConfirmTitle": "حذف الوظائف المحددة؟",
+    "deleteConfirmDescription": "سيتم حذف الوظائف المحددة نهائيًا من قائمتك.",
+    "deleteConfirm": "حذف",
+    "deleteCancel": "إلغاء",
+    "markAppliedSuccess": "تم حفظ الوظائف المحددة كمُتقدَّم لها بنجاح.",
+    "archiveSuccess": "تم أرشفة الوظائف المحددة.",
+    "deleteSuccess": "تم حذف الوظائف المحددة."
+  },
   "card": {
+    "selectAria": "تحديد {title}",
     "statusUpdated": "تم تحديث حالة الوظيفة إلى {status} بنجاح",
     "deleted": "تم حذف الوظيفة بنجاح",
     "archivedFooter": "نُقلت إلى الأرشيف في {date}",

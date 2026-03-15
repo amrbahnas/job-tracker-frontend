@@ -1,16 +1,22 @@
 "use client"
 
 import { ItemList } from "@/components/common/itemList"
-import { useState } from "react"
+import { useCallback, useState } from "react"
 import { useGetWebsites } from "../_api/queries"
 import { WebsiteCard } from "./WebsiteCard"
 import WebsiteFormDialog from "./websiteFormDialog"
 import { Plus } from "lucide-react"
 import { useTranslations } from "next-intl"
+import SearchInput from "@/components/ui/searchInput"
+import { parseAsString, useQueryState } from "nuqs"
 
 export function WebsitesList() {
   const [isFormOpen, setIsFormOpen] = useState(false)
   const [editingWebsite, setEditingWebsite] = useState<Website | null>(null)
+  const [search, setSearch] = useQueryState(
+    "search",
+    parseAsString.withDefault("")
+  )
   const t = useTranslations("websites.list")
   const {
     data: websites,
@@ -18,10 +24,21 @@ export function WebsitesList() {
     isError,
     refetch,
     pagination,
-  } = useGetWebsites()
+  } = useGetWebsites({ search })
+
+  const handleCloseForm = useCallback(() => {
+    setIsFormOpen(false)
+    setEditingWebsite(null)
+  }, [])
 
   return (
-    <section className="">
+    <section className="space-y-4">
+      <SearchInput
+        placeholder={t("searchPlaceholder")}
+        value={search}
+        onChange={setSearch}
+        className="max-w-sm"
+      />
       <ItemList
         data={websites.length > 0 ? [...websites, { _id: "add-website" }] : []}
         pagination={pagination}
@@ -65,7 +82,7 @@ export function WebsitesList() {
       <WebsiteFormDialog
         editingWebsite={editingWebsite}
         isOpen={isFormOpen}
-        onClose={() => setIsFormOpen(false)}
+        onClose={handleCloseForm}
       />
     </section>
   )

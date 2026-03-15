@@ -30,3 +30,26 @@ export const useJobActions = ({ id }: { id?: string } = {}) => {
     isScrapingJobs,
   }
 }
+
+export const useBulkJobActions = () => {
+  const { mutate: bulkDeleteJobs, isPending: isBulkDeleting } = useMutation(
+    "/jobs/bulk-delete",
+    {
+      method: "post",
+      invalidateQueries: [JOBS_KEYS.getJobs],
+    }
+  )
+  const { mutate: bulkUpdateStatus, isPending: isBulkUpdatingStatus } =
+    useMutation("/jobs/bulk-status", {
+      method: "patch",
+      invalidateQueries: [JOBS_KEYS.getJobs],
+    })
+
+  return {
+    bulkDeleteJobs,
+    bulkUpdateStatus,
+    isBulkDeleting,
+    isBulkUpdatingStatus,
+    isBulkMutating: isBulkDeleting || isBulkUpdatingStatus,
+  }
+}

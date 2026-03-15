@@ -31,15 +31,12 @@ function createWebsiteFormSchema(t: (key: string) => string) {
         (arr) => arr.some((u) => u.trim().length > 0),
         t("validationUrlsRequired")
       )
-      .refine(
-        (arr) => {
-          const normalize = (u: string) =>
-            u.trim().toLowerCase().replace(/\/+$/, "") || ""
-          const nonEmpty = arr.map(normalize).filter((u) => u !== "")
-          return new Set(nonEmpty).size === nonEmpty.length
-        },
-        t("validationUrlsNoDuplicates")
-      ),
+      .refine((arr) => {
+        const normalize = (u: string) =>
+          u.trim().toLowerCase().replace(/\/+$/, "") || ""
+        const nonEmpty = arr.map(normalize).filter((u) => u !== "")
+        return new Set(nonEmpty).size === nonEmpty.length
+      }, t("validationUrlsNoDuplicates")),
     scrapeIntervalMinutes: z
       .number()
       .min(1, t("validationIntervalMin"))
@@ -162,9 +159,7 @@ export function WebsiteForm({ website, onCancel }: WebsiteFormProps) {
 
       mutation(payload, {
         onSuccess: () => {
-          toast.success(
-            isEditing ? t("toastUpdated") : t("toastCreated")
-          )
+          toast.success(isEditing ? t("toastUpdated") : t("toastCreated"))
           onCancel?.()
         },
       })
@@ -209,6 +204,7 @@ export function WebsiteForm({ website, onCancel }: WebsiteFormProps) {
         shouldDirty: true,
       })
       setValue("selectors.date", selectors.date ?? "", { shouldDirty: true })
+      setSelectorsOpen(true)
     },
     [setValue]
   )
@@ -302,7 +298,18 @@ export function WebsiteForm({ website, onCancel }: WebsiteFormProps) {
         </div>
         <Collapsible open={selectorsOpen} onOpenChange={setSelectorsOpen}>
           <p className="text-sm text-muted-foreground">
-            {t("selectorsHelper")}
+            {t.rich("selectorsHelper", {
+              span: (chunks) => (
+                <button
+                  key="selectors-manual"
+                  type="button"
+                  onClick={() => setSelectorsOpen(!selectorsOpen)}
+                  className="cursor-pointer text-primary hover:underline"
+                >
+                  {chunks}
+                </button>
+              ),
+            })}
           </p>
           <CollapsibleContent className="mt-4">
             <div className="grid gap-4 md:grid-cols-2">

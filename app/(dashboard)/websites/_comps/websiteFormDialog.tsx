@@ -6,6 +6,7 @@ import {
 } from "@/components/ui/dialog"
 import WebsiteForm from "./websiteForm"
 import { useTranslations } from "next-intl"
+import { memo } from "react"
 
 const WebsiteFormDialog = ({
   editingWebsite,
@@ -16,6 +17,7 @@ const WebsiteFormDialog = ({
   isOpen: boolean
   onClose: () => void
 }) => {
+  console.log("🚀 ~ file: websiteFormDialog.tsx:18 ~ isOpen:", isOpen)
   const t = useTranslations("websites.formDialog")
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
@@ -32,4 +34,4 @@ const WebsiteFormDialog = ({
   )
 }
 
-export default WebsiteFormDialog
+export default memo(WebsiteFormDialog)

@@ -69,7 +69,7 @@ export function AutofillWithAiDialog({
         },
       }
     )
-  }, [cardHtml, extractSelectors, onSelectorsExtracted])
+  }, [cardHtml, extractSelectors, onSelectorsExtracted, t])
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
@@ -90,9 +90,7 @@ export function AutofillWithAiDialog({
             <Code className="size-5" aria-hidden />
             {t("title")}
           </DialogTitle>
-          <DialogDescription>
-            {t("description")}
-          </DialogDescription>
+          <DialogDescription>{t("description")}</DialogDescription>
         </DialogHeader>
 
         <div
@@ -101,9 +99,7 @@ export function AutofillWithAiDialog({
           )}
         >
           <Info className="mt-0.5 size-4 shrink-0 text-primary" aria-hidden />
-          <p className="text-muted-foreground">
-            {t("info")}
-          </p>
+          <p className="text-muted-foreground">{t("info")}</p>
         </div>
 
         <div className="space-y-2">
@@ -130,6 +126,7 @@ export function AutofillWithAiDialog({
           </DialogClose>
           <Button
             type="button"
+            loading={extractSelectorsLoading}
             onClick={handleExtract}
             disabled={!cardHtml?.trim() || extractSelectorsLoading}
           >

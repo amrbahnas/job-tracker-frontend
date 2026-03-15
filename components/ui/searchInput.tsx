@@ -17,7 +17,11 @@ const SearchInput = ({
   inputClassName?: string
   className?: string
 }) => {
-  const [searchValue, setSearchValue] = useState(value)
+  const [searchValue, setSearchValue] = useState(value ?? "")
+
+  useEffect(() => {
+    if (value !== undefined) setSearchValue(value)
+  }, [value])
 
   useEffect(() => {
     const timeout = setTimeout(() => {
