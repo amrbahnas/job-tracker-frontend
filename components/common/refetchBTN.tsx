@@ -2,7 +2,7 @@ import { useRefetch } from "@/api_config/useRefetch"
 import { Button } from "@/components/ui/button"
 import { Spinner } from "@/components/ui/spinner"
 import { RefreshCcw } from "lucide-react"
-import { useState } from "react"
+import { memo, useState } from "react"
 
 const RefetchBTN = ({
   queryKey,
@@ -36,4 +36,4 @@ const RefetchBTN = ({
   )
 }
 
-export default RefetchBTN
+export default memo(RefetchBTN)

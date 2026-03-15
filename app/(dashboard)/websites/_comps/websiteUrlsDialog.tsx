@@ -1,6 +1,6 @@
 "use client"
 
-import { WebsiteSelector } from "@/components/selectors/WebsiteSelector"
+import WebsiteSelector from "@/components/selectors/WebsiteSelector"
 import { Button } from "@/components/ui/button"
 import {
   Dialog,

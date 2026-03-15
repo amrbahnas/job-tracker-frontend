@@ -16,7 +16,7 @@ const SelectAllCheckbox = ({
       {selectedJobs.length > 0 && selectedJobs.length < jobs.length ? (
         <button
           onClick={() => setSelectedIds(new Set(jobs.map((job) => job._id)))}
-          className="flex size-5 cursor-pointer items-center justify-center rounded-sm border border-primary bg-[#F7FAFF] p-[3px]"
+          className="flex size-5 cursor-pointer items-center justify-center rounded-sm border border-primary p-[3px]"
         >
           <span className="h-[2px] w-full rounded-full bg-primary" />
         </button>

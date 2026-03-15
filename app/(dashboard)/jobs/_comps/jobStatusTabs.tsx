@@ -3,7 +3,7 @@
 import { Button } from "@/components/ui/button"
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Briefcase, Check, FolderPlus, Tag } from "lucide-react"
-import React from "react"
+import React, { memo } from "react"
 import { useLocale, useTranslations } from "next-intl"
 
 const STATUS_OPTIONS: {
@@ -76,4 +76,4 @@ function JobStatusTabs({ value, onChange }: JobStatusTabsProps) {
   )
 }
 
-export default JobStatusTabs
+export default memo(JobStatusTabs)

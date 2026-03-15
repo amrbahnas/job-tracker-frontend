@@ -20,14 +20,15 @@ import { ApplyButton } from "./applyButton"
 import { useTranslations } from "next-intl"
 import dayjs from "dayjs"
 import { cn } from "@/lib/utils"
+import { memo } from "react"
 
 type JobCardProps = {
   job: Job
   selected?: boolean
-  onToggleSelect?: () => void
+  onToggleSelect?: (job: Job) => void
 }
 
-export function JobCard({ job, selected, onToggleSelect }: JobCardProps) {
+function JobCard({ job, selected, onToggleSelect }: JobCardProps) {
   const { updateJobStatus, isUpdatingJobStatus, deleteJob, isDeletingJob } =
     useJobActions({
       id: job._id,
@@ -208,7 +209,7 @@ export function JobCard({ job, selected, onToggleSelect }: JobCardProps) {
           <Checkbox
             id={job.title}
             checked={selected}
-            onCheckedChange={onToggleSelect}
+            onCheckedChange={() => onToggleSelect(job)}
             aria-label={t("selectAria", { title: job.title })}
           />
         </div>
@@ -293,6 +294,8 @@ export function JobCard({ job, selected, onToggleSelect }: JobCardProps) {
     </article>
   )
 }
+
+export default memo(JobCard)
 
 function getStatusStyles(status: Job["status"]) {
   switch (status) {

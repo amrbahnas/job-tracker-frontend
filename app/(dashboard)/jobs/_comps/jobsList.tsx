@@ -1,16 +1,12 @@
 "use client"
 
-import { useCallback, useMemo, useState } from "react"
 import { ItemList } from "@/components/common/itemList"
+import { useCallback, useMemo, useState } from "react"
 import { useGetJobs } from "../_api/quieries"
 import useJobsFilters from "../hooks/useJobsFilters"
-import { JobCard } from "./jobCard"
-
+import JobCard from "./jobCard"
 import { useTranslations } from "next-intl"
 import JobsBulkActionsBar from "./JobsBulkActionsBar"
-import { Button } from "@/components/ui/button"
-import { Check } from "lucide-react"
-import { Checkbox } from "@/components/ui/checkbox"
 import SelectAllCheckbox from "./selectAllCheckbox"
 
 export function JobsList() {
@@ -28,7 +24,8 @@ export function JobsList() {
     params: filters,
   })
 
-  const toggleSelection = useCallback((id: string) => {
+  const toggleSelection = useCallback((job: Job) => {
+    const id = job._id
     setSelectedIds((prev) => {
       const next = new Set(prev)
       if (next.has(id)) next.delete(id)
@@ -61,7 +58,7 @@ export function JobsList() {
           <JobCard
             job={job as Job}
             selected={selectedIds.has((job as Job)._id)}
-            onToggleSelect={() => toggleSelection((job as Job)._id)}
+            onToggleSelect={toggleSelection}
           />
         )}
         messages={{

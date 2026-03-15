@@ -10,6 +10,7 @@ import {
 } from "@/components/ui/select"
 import { Globe } from "lucide-react"
 import { useTranslations } from "next-intl"
+import { memo } from "react"
 
 type WebsiteSelectorProps = {
   value: string | null
@@ -20,7 +21,7 @@ type WebsiteSelectorProps = {
   allowAll?: boolean
 }
 
-export function WebsiteSelector({
+function WebsiteSelector({
   value,
   onChange,
   className,
@@ -57,3 +58,6 @@ export function WebsiteSelector({
     </Select>
   )
 }
+
+WebsiteSelector.displayName = "WebsiteSelector"
+export default memo(WebsiteSelector)

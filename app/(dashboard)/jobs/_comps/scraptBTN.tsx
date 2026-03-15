@@ -2,6 +2,7 @@ import { Button } from "@/components/ui/button"
 import { useJobActions } from "../_api/mutations"
 import { toast } from "sonner"
 import { useTranslations } from "next-intl"
+import { memo } from "react"
 
 const ScrapeBTN = () => {
   const { scrapeJobs, isScrapingJobs } = useJobActions()
@@ -38,4 +39,4 @@ const ScrapeBTN = () => {
   )
 }
 
-export default ScrapeBTN
+export default memo(ScrapeBTN)

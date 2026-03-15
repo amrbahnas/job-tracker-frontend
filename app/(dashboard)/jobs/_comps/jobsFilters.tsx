@@ -1,20 +1,32 @@
 "use client"
 
 import RefetchBTN from "@/components/common/refetchBTN"
-import SortSelector from "@/components/selectors/sortSelector"
-import { WebsiteSelector } from "@/components/selectors/WebsiteSelector"
+import WebsiteSelector from "@/components/selectors/WebsiteSelector"
 import SearchInput from "@/components/ui/searchInput"
-import { Globe, SortAsc } from "lucide-react"
+import { useTranslations } from "next-intl"
 import JOBS_KEYS from "../_api/keys"
 import useJobsFilters from "../hooks/useJobsFilters"
 import JobStatusTabs from "./jobStatusTabs"
 import ScrapeBTN from "./scraptBTN"
-import { useTranslations } from "next-intl"
+import { useCallback } from "react"
 
 export function JobsFilters() {
   const { filters, setFilters } = useJobsFilters()
   const { status, sort, websiteId, search } = filters
   const t = useTranslations("jobs.filters")
+
+  const handleStatusChange = useCallback(
+    (value: string) => {
+      setFilters({ status: value })
+    },
+    [setFilters]
+  )
+  const handleWebsiteChange = useCallback(
+    (value: string | null) => {
+      setFilters({ websiteId: value ?? ("" as string) })
+    },
+    [setFilters]
+  )
 
   return (
     <section
@@ -30,9 +42,7 @@ export function JobsFilters() {
         />
         <WebsiteSelector
           value={websiteId}
-          onChange={(value) =>
-            setFilters({ websiteId: value ?? ("" as string) })
-          }
+          onChange={handleWebsiteChange}
           className="w-full sm:w-40"
         />
         {/* <SortSelector
@@ -47,10 +57,7 @@ export function JobsFilters() {
         <RefetchBTN queryKey={JOBS_KEYS.getJobs} className="hidden sm:flex" />
       </div>
 
-      <JobStatusTabs
-        value={status}
-        onChange={(value) => setFilters({ status: value })}
-      />
+      <JobStatusTabs value={status} onChange={handleStatusChange} />
     </section>
   )
 }
