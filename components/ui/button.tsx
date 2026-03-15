@@ -65,7 +65,7 @@ function Button({
       className={cn(buttonVariants({ variant, size, className }))}
       {...props}
     >
-      <span className="flex items-center gap-2">
+      <span className="flex items-center gap-2 rtl:flex-row-reverse">
         {loading && <Spinner className="size-4" />}
         {children}
       </span>

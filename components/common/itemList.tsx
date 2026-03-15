@@ -74,10 +74,18 @@ export function ItemList({
         )}
 
         {!hasJobs && isLoading && (
-          <ul className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
-            <li className="h-52 animate-pulse rounded-xl border bg-muted/40" />
-            <li className="h-52 animate-pulse rounded-xl border bg-muted/40" />
-            <li className="h-52 animate-pulse rounded-xl border bg-muted/40" />
+          <ul
+            className={cn(
+              "grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3",
+              listClassName
+            )}
+          >
+            <li className="h-54 animate-pulse rounded-xl border bg-muted/40" />
+            <li className="h-54 animate-pulse rounded-xl border bg-muted/40" />
+            <li className="h-54 animate-pulse rounded-xl border bg-muted/40" />
+            <li className="h-54 animate-pulse rounded-xl border bg-muted/40" />
+            <li className="h-54 animate-pulse rounded-xl border bg-muted/40" />
+            <li className="h-54 animate-pulse rounded-xl border bg-muted/40" />
           </ul>
         )}
 
@@ -91,7 +99,7 @@ export function ItemList({
               "no-scrollbar grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3",
               listClassName
             )}
-            itemClassName={cn("h-48", itemClassName)}
+            itemClassName={cn("h-54", itemClassName)}
             computeItemKey={(_, item) => (item as any)._id ?? ""}
             itemContent={itemContent}
           />

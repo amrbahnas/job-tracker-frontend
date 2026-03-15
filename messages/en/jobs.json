@@ -74,6 +74,6 @@
     "button": "Scrape Now",
     "toastTitle": "Scraping started",
     "toastDescription": "You will be notified when it completes.",
-    "toastAction": "Close"
+    "toastAction": "OK"
   }
 }

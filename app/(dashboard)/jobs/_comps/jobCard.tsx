@@ -214,8 +214,8 @@ function JobCard({ job, selected, onToggleSelect }: JobCardProps) {
           />
         </div>
       )}
-      <div className="flex min-w-0 flex-1 flex-col gap-2">
-        <header className="min-w-0 space-y-2">
+      <div className="flex min-w-0 flex-1 flex-col">
+        <header className="mb-3 min-w-0 space-y-2">
           <div className="flex flex-wrap items-center justify-between gap-2">
             <label
               className="max-w-[75%] cursor-pointer"
@@ -262,10 +262,11 @@ function JobCard({ job, selected, onToggleSelect }: JobCardProps) {
             )}
           </div>
         </header>
-
-        <p className="line-clamp-2 text-xs text-[#6B7280] sm:text-sm dark:text-slate-400">
-          {job.description ? job.description : t("noDescription")}
-        </p>
+        <div className="flex-1">
+          <p className="line-clamp-2 h-10 text-xs text-[#6B7280] sm:text-sm dark:text-slate-400">
+            {job.description ? job.description : t("noDescription")}
+          </p>
+        </div>
 
         <footer
           className={`flex flex-wrap items-center justify-between gap-3 border-t pt-4 text-xs sm:text-sm ${isArchived || isApplied ? "pt-3" : "mt-1 pt-1"}`}

@@ -71,9 +71,9 @@
     "yesApplied": "نعم، تقدمت"
   },
   "scrape": {
-    "button": "ابدأ البحث يدوياً",
-    "toastTitle": "تم بدء عملية البحث",
+    "button": "تحديث الوظائف",
+    "toastTitle": "جاري تحديث الوظائف ...",
     "toastDescription": "سيتم إشعارك عند اكتمال العملية.",
-    "toastAction": "إغلاق"
+    "toastAction": "حسنا"
   }
 }
