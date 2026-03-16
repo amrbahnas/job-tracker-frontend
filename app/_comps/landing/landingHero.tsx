@@ -32,11 +32,14 @@ export async function LandingHero() {
         <section>
           <h1
             id="hero-heading"
-            className="text-center font-sans text-6xl leading-tight font-bold text-white sm:text-start sm:text-8xl"
+            className="text-center text-4xl leading-tight font-bold text-white sm:text-start sm:text-6xl"
           >
             {t.rich("title", {
               span: (chunks) => (
-                <span className="text-gradient block sm:inline">{chunks}</span>
+                <>
+                  <br />
+                  <span className="text-gradient">{chunks}</span>
+                </>
               ),
             })}
           </h1>
