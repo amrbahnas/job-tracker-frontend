@@ -13,6 +13,7 @@ import { useGetTokenForDesktop } from "@/app/(dashboard)/scrape-locally/_api/que
 import { toast } from "sonner"
 import { Field, FieldLabel } from "@/components/ui/field"
 import { parseAsInteger, useQueryState } from "nuqs"
+import { Microphone } from "@/components/common/microphone"
 
 const STEPS = 3
 
@@ -126,8 +127,11 @@ export default function OnboardingView() {
           ) : (
             <form
               onSubmit={handleDescriptionSubmit}
-              className="mt-4 flex flex-col gap-4"
+              className="relative mt-4 flex flex-col gap-4"
             >
+              <span className="absolute inset-e-2 top-2">
+                <Microphone onVoiceInput={setDescription} />
+              </span>
               <textarea
                 value={description}
                 onChange={(e) => setDescription(e.target.value)}
