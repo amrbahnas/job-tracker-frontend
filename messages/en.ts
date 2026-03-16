@@ -5,6 +5,7 @@ import landing from "./en/landing.json"
 import websites from "./en/websites.json"
 import scrapeLocally from "./en/scrape-locally.json"
 import profile from "./en/profile.json"
+import onboarding from "./en/onboarding.json"
 const messages = {
   common,
   auth,
@@ -13,6 +14,7 @@ const messages = {
   websites,
   scrapeLocally,
   profile,
+  onboarding,
 } as const
 
 export default messages

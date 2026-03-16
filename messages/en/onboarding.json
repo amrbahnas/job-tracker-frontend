@@ -1,0 +1,31 @@
+{
+  "meta": {
+    "title": "Get started",
+    "description": "Set up your job search and optional local scraper."
+  },
+  "progress": {
+    "step1": "Your search",
+    "step2": "Local scraper",
+    "step3": "Ready"
+  },
+  "step1": {
+    "title": "What are you looking for?",
+    "description": "Describe your ideal job and we'll generate search URLs across job boards for you.",
+    "placeholder": "e.g. I'm seeking a frontend React.js position at Cairo, Egypt, onsite",
+    "submit": "Generate my URLs",
+    "generatingTitle": "AI is generating your URLs",
+    "generatingDescription": "We're building search links for LinkedIn, Wuzzuf, Indeed and other boards. This may take a moment.",
+    "toastSuccess": "Websites generated successfully"
+  },
+  "step2": {
+    "title": "Run scraper locally (optional)",
+    "description": "For the best experience and results, you can run the scraper on your Windows PC. Download the app, add your token, and click Start scraping.",
+    "continue": "I'm ready, go to jobs",
+    "skip": "Skip for now"
+  },
+  "step3": {
+    "title": "You're ready!",
+    "description": "Your job search is set up. Head to the jobs dashboard to see your listings.",
+    "goToJobs": "Go to jobs"
+  }
+}

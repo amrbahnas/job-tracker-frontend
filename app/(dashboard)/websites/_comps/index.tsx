@@ -1,23 +1,19 @@
 "use client"
 
-import DescriptionModal from "./descriptionModal"
 import Header from "./header"
 import { WebsitesList } from "./websitesList"
 
 function WebsitesView() {
   return (
-    <>
-      <main
-        className="flex flex-col gap-6"
-        aria-labelledby="websites-dashboard-heading"
-      >
-        <section className="flex flex-col gap-2">
-          <Header />
-        </section>
-        <WebsitesList />
-      </main>
-      <DescriptionModal />
-    </>
+    <main
+      className="flex flex-col gap-6"
+      aria-labelledby="websites-dashboard-heading"
+    >
+      <section className="flex flex-col gap-2">
+        <Header />
+      </section>
+      <WebsitesList />
+    </main>
   )
 }
 

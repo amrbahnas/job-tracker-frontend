@@ -14,8 +14,7 @@ export const useAuthActions = () => {
     "/auth/signup",
     {
       onSuccess: (res) => {
-        console.log("🚀 ~ file: mutations.ts:17 ~ res:", res)
-        authSuccess(res.data)
+        authSuccess(res.data, true)
       },
     }
   )

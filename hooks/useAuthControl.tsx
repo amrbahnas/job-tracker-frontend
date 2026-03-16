@@ -13,7 +13,7 @@ export const useAuthControl = () => {
     setIsLogin(true)
     setUser(data.user)
     toast.success(register ? t("registrationSuccessful") : t("loginSuccessful"))
-    router.replace("/jobs")
+    router.replace(register ? "/onboarding" : "/jobs")
   }
 
   const authLogout = async () => {

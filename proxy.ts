@@ -2,7 +2,13 @@ import { cookies } from "next/headers"
 import { NextResponse, type NextRequest } from "next/server"
 import { serverQuery } from "./api_config/serverQuery"
 
-const protectedRoutes = ["/jobs", "/websites", "/profile", "/scrape-locally"]
+const protectedRoutes = [
+  "/jobs",
+  "/websites",
+  "/profile",
+  "/scrape-locally",
+  "/onboarding",
+]
 
 async function isTokenValid(token: string) {
   const { error, data } = await serverQuery("/profile", {
