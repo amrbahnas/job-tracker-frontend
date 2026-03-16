@@ -7,7 +7,7 @@ export default function AuthLayout({
   children: React.ReactNode
 }) {
   return (
-    <div className="flex min-h-svh flex-col gap-6 bg-muted/30">
+    <div className="flex min-h-svh flex-col gap-6 bg-muted dark:bg-muted/30">
       <AuthHeader />
       {children}
       <AuthFooter />

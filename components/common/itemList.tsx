@@ -5,6 +5,7 @@ import { VirtuosoGrid } from "react-virtuoso"
 import { Button } from "@/components/ui/button"
 import PullToRefresh from "react-simple-pull-to-refresh"
 import { cn } from "@/lib/utils"
+import { Skeleton } from "../ui/skeleton"
 
 export function ItemList({
   itemContent,
@@ -80,12 +81,12 @@ export function ItemList({
               listClassName
             )}
           >
-            <li className="h-54 animate-pulse rounded-xl border bg-muted/40" />
-            <li className="h-54 animate-pulse rounded-xl border bg-muted/40" />
-            <li className="h-54 animate-pulse rounded-xl border bg-muted/40" />
-            <li className="h-54 animate-pulse rounded-xl border bg-muted/40" />
-            <li className="h-54 animate-pulse rounded-xl border bg-muted/40" />
-            <li className="h-54 animate-pulse rounded-xl border bg-muted/40" />
+            <Skeleton className="aspect-video w-full" />
+            <Skeleton className="aspect-video w-full" />
+            <Skeleton className="aspect-video w-full" />
+            <Skeleton className="aspect-video w-full" />
+            <Skeleton className="aspect-video w-full" />
+            <Skeleton className="aspect-video w-full" />
           </ul>
         )}
 

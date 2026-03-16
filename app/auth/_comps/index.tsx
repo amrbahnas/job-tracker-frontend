@@ -22,7 +22,7 @@ export default function Auth() {
           <aside className="hidden flex-2 sm:block md:shrink-0">
             <AuthPromo className="h-full w-full" />
           </aside>
-          <div className="order-1 flex flex-col justify-between sm:flex-3">
+          <div className="order-1 bg-muted/30 sm:flex-3">
             <AuthFormSection />
           </div>
         </main>

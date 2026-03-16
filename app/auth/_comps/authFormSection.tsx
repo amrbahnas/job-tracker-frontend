@@ -15,7 +15,7 @@ export function AuthFormSection({ className }: { className?: string }) {
 
   return (
     <section
-      className={cn("flex flex-col bg-muted/30 p-8 md:p-10", className)}
+      className={cn("flex flex-col p-8 md:p-10", className)}
       aria-labelledby="auth-form-heading"
     >
       <header className="mb-6 text-center">
