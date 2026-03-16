@@ -39,11 +39,20 @@ export async function generateMetadata(): Promise<Metadata> {
       description,
       siteName: "Dawarly",
       url: "/",
+      images: [
+        {
+          url: "/images/logo/dawarly.png",
+          width: 1200,
+          height: 630,
+          alt: "Dawarly — Find New Jobs Before Everyone Else",
+        },
+      ],
     },
     twitter: {
       card: "summary_large_image",
       title,
       description,
+      images: ["/images/logo/dawarly.png"],
     },
     alternates: { canonical: "/" },
   }

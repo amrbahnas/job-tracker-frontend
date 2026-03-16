@@ -18,7 +18,7 @@ export default function manifest(): MetadataRoute.Manifest {
     theme_color: "#0a0a0a",
     icons: [
       {
-        src: "/images/logo/image_49817605-6600-435a-bd0a-1171422e842b.svg",
+        src: "/images/logo/dawarly.png",
         sizes: "any",
         type: "image/svg+xml",
         purpose: "any",

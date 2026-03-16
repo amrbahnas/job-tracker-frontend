@@ -32,6 +32,9 @@ export const metadata: Metadata = {
   },
   referrer: "origin-when-cross-origin",
   formatDetection: { telephone: false, email: false },
+  icons: {
+    icon: "/favicon.ico",
+  },
 }
 
 const inter = Inter({
