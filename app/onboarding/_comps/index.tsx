@@ -20,7 +20,7 @@ const STEPS = 3
 
 export default function OnboardingView() {
   const t = useTranslations("onboarding")
-  const { scrapeJobs, isScrapingJobs } = useJobActions()
+  // const { scrapeJobs, isScrapingJobs } = useJobActions()
   const tScrape = useTranslations("scrapeLocally")
   const router = useRouter()
   const [step, setStep] = useQueryState("step", parseAsInteger.withDefault(1))
@@ -154,7 +154,7 @@ export default function OnboardingView() {
                   disabled={!description.trim()}
                   size="lg"
                   className="flex-1 sm:h-12 rtl:flex-row-reverse"
-                  loading={generatingStep}
+                  loading={generating}
                 >
                   {t("step1.submit")}
                   <ArrowRight className="h-4 w-4 rtl:rotate-180" aria-hidden />
@@ -165,7 +165,7 @@ export default function OnboardingView() {
                   variant="secondary"
                   onClick={() => setStep(2)}
                   className="w-full sm:h-12 sm:w-auto sm:min-w-[180px]"
-                  disabled={generatingStep}
+                  disabled={generating}
                 >
                   {t("skip")}
                 </Button>
