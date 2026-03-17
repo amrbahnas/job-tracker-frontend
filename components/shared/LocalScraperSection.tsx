@@ -51,7 +51,12 @@ export default function LocalScraperSection({
           {t("download.description")}
         </p>
         <div className="mt-4">
-          <a href={DOWNLOAD_PATH} download className="inline-flex">
+          <a
+            href={DOWNLOAD_PATH}
+            download
+            className="inline-flex"
+            target="_blank"
+          >
             <Button type="button" variant="default" asChild>
               <span className="flex items-center gap-2">
                 <Download className="size-4" />
