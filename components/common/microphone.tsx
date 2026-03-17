@@ -27,7 +27,7 @@ export const Microphone = ({
   showSpokenText = true,
   microphoneId = "default",
   showExampleVarient = "default",
-  SpokenTextVarient = "default",
+  SpokenTextVarient = "float",
 }: MicrophoneProps) => {
   const language = useLocale()
   const [isExampleExpanded, setIsExampleExpanded] = useState(false)
@@ -108,7 +108,7 @@ export const Microphone = ({
   }
 
   return (
-    <div className="relative">
+    <div className="relative flex w-full justify-end">
       <div
         className={`flex items-center ${showExampleVarient === "tooltip" ? "gap-1" : "gap-4"}`}
       >
@@ -181,13 +181,13 @@ export const Microphone = ({
         <div
           className={`${
             SpokenTextVarient === "float"
-              ? "absolute bottom-full left-0 z-50 mb-2 max-w-[300px] min-w-[200px] shadow-lg"
+              ? "absolute end-0 bottom-full z-50 mb-2 w-full max-w-[400px] min-w-[200px] shadow-lg"
               : "relative mt-4"
           } rounded-lg border border-dashed border-gray-500 bg-gray-50 p-4`}
         >
           <button
             type="button"
-            className="absolute -top-1 -left-1 inline-flex items-center justify-center rounded-full p-1 text-gray-500 transition-colors hover:bg-gray-100"
+            className="absolute top-1 left-1 inline-flex items-center justify-center rounded-full text-gray-500 transition-colors hover:bg-gray-100"
             title={language === "ar" ? "غلق" : "Close"}
             onClick={() => {
               resetTranscript()

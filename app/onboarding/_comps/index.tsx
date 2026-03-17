@@ -2,14 +2,17 @@
 
 import { useJobActions } from "@/app/(dashboard)/jobs/_api/mutations"
 import { useGetTokenForDesktop } from "@/app/(dashboard)/scrape-locally/_api/queries"
-import { useGenerateAndCreateWebsites } from "@/app/(dashboard)/websites/_api/mutations"
+import {
+  useCreatePopularWebsites,
+  useGenerateAndCreateWebsites,
+} from "@/app/(dashboard)/websites/_api/mutations"
 import { Microphone } from "@/components/common/microphone"
 import LocalScraperSection from "@/components/shared/LocalScraperSection"
 import { Button } from "@/components/ui/button"
 import { Field, FieldLabel } from "@/components/ui/field"
 import { Progress } from "@/components/ui/progress"
 import { cn } from "@/lib/utils"
-import { ArrowRight, CheckCircle2, Database, Loader2 } from "lucide-react"
+import { ArrowRight, CheckCircle2, Loader2, Watch } from "lucide-react"
 import { useTranslations } from "next-intl"
 import { useRouter } from "next/navigation"
 import { parseAsInteger, useQueryState } from "nuqs"
@@ -20,7 +23,8 @@ const STEPS = 3
 
 export default function OnboardingView() {
   const t = useTranslations("onboarding")
-  // const { scrapeJobs, isScrapingJobs } = useJobActions()
+  const { createPopularWebsites } = useCreatePopularWebsites()
+  const { scrapeJobs } = useJobActions()
   const tScrape = useTranslations("scrapeLocally")
   const router = useRouter()
   const [step, setStep] = useQueryState("step", parseAsInteger.withDefault(1))
@@ -45,6 +49,7 @@ export default function OnboardingView() {
     generateAndCreate({ description: trimmed }, {
       onSuccess: () => {
         toast.success(t("step1.toastSuccess"))
+        scrapeJobs({})
         setGeneratingStep(false)
         setStep(2)
       },
@@ -87,7 +92,7 @@ export default function OnboardingView() {
   }
 
   return (
-    <main className="mx-auto flex min-h-[calc(100vh-120px)] max-w-4xl flex-col justify-center px-4">
+    <main className="mx-auto flex min-h-[calc(100vh-120px)] max-w-4xl flex-col pt-6 sm:justify-center sm:px-4">
       {step !== 3 && (
         <div className="mb-8">
           <Field className="w-full">
@@ -111,7 +116,7 @@ export default function OnboardingView() {
       )}
 
       {step === 1 && (
-        <section className="animate-fadeIn relative">
+        <section className="relative animate-fadeIn">
           <div className="relative max-w-xl space-y-3">
             <h1 className="text-2xl font-bold tracking-tight text-foreground sm:text-3xl">
               {t("step1.title")}
@@ -126,16 +131,13 @@ export default function OnboardingView() {
               onSubmit={handleDescriptionSubmit}
               className="relative mt-4 flex flex-col gap-4"
             >
-              <div className="mt-4">
+              <div className="relative mt-4">
                 <label
                   htmlFor="description"
                   className="mb-3 block text-sm font-semibold"
                 >
                   {t("step1.label")}
                 </label>
-                <span className="my-2 block">
-                  <Microphone onVoiceInput={setDescription} />
-                </span>
                 <textarea
                   value={description}
                   onChange={(e) => setDescription(e.target.value)}
@@ -147,24 +149,35 @@ export default function OnboardingView() {
                   autoFocus
                   aria-label={t("step1.placeholder")}
                 />
+                <span className="absolute right-0 bottom-4 left-0 w-full px-2">
+                  <Microphone onVoiceInput={setDescription} />
+                </span>
               </div>
               <footer className="mt-4 flex flex-col gap-3 sm:flex-row sm:justify-between sm:gap-4">
                 <Button
                   type="submit"
-                  disabled={!description.trim()}
+                  disabled={!description.trim() || generating}
                   size="lg"
-                  className="flex-1 sm:h-12 rtl:flex-row-reverse"
+                  className="h-12! sm:flex-1"
                   loading={generating}
                 >
-                  {t("step1.submit")}
-                  <ArrowRight className="h-4 w-4 rtl:rotate-180" aria-hidden />
+                  <span className="flex flex-row items-center gap-2">
+                    {t("step1.submit")}
+                    <ArrowRight
+                      className="h-4 w-4 rtl:rotate-180"
+                      aria-hidden
+                    />
+                  </span>
                 </Button>
                 <Button
                   type="button"
                   size="lg"
                   variant="secondary"
-                  onClick={() => setStep(2)}
-                  className="w-full sm:h-12 sm:w-auto sm:min-w-[180px]"
+                  onClick={() => {
+                    createPopularWebsites({})
+                    setStep(2)
+                  }}
+                  className="h-12 w-full sm:w-auto sm:min-w-[180px]"
                   disabled={generating}
                 >
                   {t("skip")}
@@ -181,7 +194,7 @@ export default function OnboardingView() {
       )}
 
       {step === 2 && (
-        <section className="animate-fadeIn space-y-6 rounded-3xl bg-card/80 p-8 shadow-lg ring-1 ring-border/60">
+        <section className="animate-fadeIn space-y-6 rounded-3xl bg-card/80 p-4 shadow-lg ring-1 ring-border/60 sm:p-8">
           <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
             <div className="space-y-2">
               <h2 className="text-2xl font-semibold text-foreground sm:text-3xl">
@@ -193,68 +206,39 @@ export default function OnboardingView() {
             </div>
           </div>
 
-          <div className="grid gap-6 lg:grid-cols-[minmax(0,1.3fr)_minmax(0,1fr)]">
-            <LocalScraperSection
-              token={token}
-              loading={tokenLoading}
-              onGetToken={handleGetToken}
-              onCopyToken={copyToken}
-              showHeader={false}
-            />
+          <LocalScraperSection
+            token={token}
+            loading={tokenLoading}
+            onGetToken={handleGetToken}
+            onCopyToken={copyToken}
+            showHeader={false}
+          />
 
-            <div className="flex flex-col gap-4 rounded-2xl border border-dashed border-primary/20 bg-primary/5 p-5">
-              <div className="flex items-center gap-3">
-                <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-primary text-primary-foreground">
-                  <Database className="h-5 w-5 shrink-0" aria-hidden />
-                </div>
-                <div>
-                  <p className="text-sm font-semibold text-foreground">
-                    {t("step2.boostTitle")}
-                  </p>
-                  <p className="text-xs text-muted-foreground">
-                    {t("step2.boostDescription")}
-                  </p>
-                </div>
-              </div>
-
-              <ul className="space-y-2 text-xs text-muted-foreground sm:text-sm">
-                <li className="flex items-start gap-2">
-                  <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-primary" />
-                  <span>{t("step2.bullet1")}</span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-primary" />
-                  <span>{t("step2.bullet2")}</span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-primary" />
-                  <span>{t("step2.bullet3")}</span>
-                </li>
-              </ul>
-            </div>
-          </div>
-
-          <div className="mt-4 flex flex-col gap-3 sm:flex-row sm:justify-between sm:gap-4">
+          <div className="mt-8 flex flex-col gap-3 sm:mt-12 sm:flex-row sm:gap-4">
             <Button
               variant="outline"
               onClick={() => setStep(3)}
-              className="order-2 w-full sm:order-1 sm:w-auto"
+              className="order-2 h-12 w-full min-w-[180px] sm:order-1 sm:w-auto"
+              size="lg"
             >
               {t("skip")}
             </Button>
             <Button
               onClick={() => setStep(3)}
-              className="order-1 w-full sm:order-2 sm:w-auto"
+              className="order-1 h-12 w-full flex-1 sm:order-2 sm:w-auto"
               size="lg"
             >
-              {t("step2.continue")}
+              <span className="flex flex-row items-center gap-2">
+                {t("step2.continue")}
+                <ArrowRight className="h-4 w-4 rtl:rotate-180" aria-hidden />
+              </span>
             </Button>
           </div>
         </section>
       )}
 
       {step === 3 && (
-        <section className="animate-fadeIn mt-14 flex flex-1 flex-col items-center text-center">
+        <section className="flex flex-1 animate-fadeIn flex-col items-center justify-center text-center">
           <div className="flex h-20 w-20 items-center justify-center rounded-full bg-primary text-primary-foreground shadow-md">
             <CheckCircle2 className="h-10 w-10" aria-hidden />
           </div>
@@ -288,13 +272,13 @@ const GeneratingStep = ({
     if (progress === 80) return
     const interval = setInterval(() => {
       if (progress === 80) return
-      setProgress(progress + 1)
-    }, 100)
+      setProgress(progress + 0.5)
+    }, 300)
     return () => clearInterval(interval)
   }, [progress])
   return (
     <div
-      className="animate-fadeIn flex min-h-[calc(100vh-120px)] items-center justify-center px-4"
+      className="flex min-h-[calc(100vh-120px)] animate-fadeIn items-center justify-center px-4"
       aria-live="polite"
       aria-busy="true"
     >
@@ -357,10 +341,10 @@ const GeneratingStep = ({
 
           <div className="flex items-start gap-2 opacity-70">
             <span className="mt-0.5 rounded-full bg-muted p-1 text-muted-foreground">
-              {progress >= 100 ? (
-                <CheckCircle2 className="h-3.5 w-3.5" aria-hidden />
-              ) : (
+              {progress >= 66 ? (
                 <Loader2 className="h-3.5 w-3.5 animate-spin" aria-hidden />
+              ) : (
+                <Watch className="h-3.5 w-3.5" aria-hidden />
               )}
             </span>
             <div>

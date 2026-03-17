@@ -60,3 +60,14 @@ export const useGenerateAndCreateWebsites = () => {
     loading,
   }
 }
+
+export const useCreatePopularWebsites = () => {
+  const {
+    mutate: createPopularWebsites,
+    loading: createPopularWebsitesLoading,
+  } = useMutation("/websites/create-popular")
+  return {
+    createPopularWebsites,
+    createPopularWebsitesLoading,
+  }
+}

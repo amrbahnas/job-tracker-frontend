@@ -48,12 +48,11 @@ const MobileBottomNav = memo(() => {
   const pathname = usePathname()
   const t = useTranslations("common.navbar")
   const NAV_LINKS = getNavLinks(t)
-  const sortedNAV_LINKS = [NAV_LINKS[1], NAV_LINKS[0], NAV_LINKS[2]]
 
   return (
     <nav className="fixed inset-x-0 bottom-0 z-40 border-t bg-background pt-2 pb-3 shadow-[0_-4px_16px_rgba(15,23,42,0.08)] backdrop-blur md:hidden">
       <div className="mx-auto flex max-w-md justify-around px-6">
-        {sortedNAV_LINKS.map((item) => {
+        {NAV_LINKS.map((item) => {
           const isActive = pathname === item.href
 
           return (
@@ -72,7 +71,7 @@ const MobileBottomNav = memo(() => {
               </span>
               <span
                 className={cn(
-                  "text-[11px] tracking-wide uppercase transition-colors",
+                  "text-[11px] tracking-wide transition-colors",
                   isActive ? "text-primary" : "text-muted-foreground"
                 )}
               >

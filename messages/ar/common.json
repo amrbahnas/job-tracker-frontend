@@ -8,6 +8,15 @@
     "signOut": "تسجيل الخروج",
     "openMenu": "فتح القائمة"
   },
+  "password": {
+    "placeholder": "••••••••",
+    "strengthWeak": "قوة كلمة المرور: ضعيفة",
+    "strengthMedium": "قوة كلمة المرور: متوسطة",
+    "strengthStrong": "قوة كلمة المرور: قوية",
+    "requirementLength": "ثمانية أحرف على الأقل",
+    "requirementUppercase": "حرف كبير واحد على الأقل",
+    "requirementSpecial": "رمز خاص واحد على الأقل (مثل !@#$%)"
+  },
   "refetchedSuccessfully": "تم تحديث البيانات بنجاح",
   "selectAll": "تحديد الكل"
 }

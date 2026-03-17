@@ -8,6 +8,15 @@
     "signOut": "Sign Out",
     "openMenu": "Open menu"
   },
+  "password": {
+    "placeholder": "••••••••",
+    "strengthWeak": "Password strength: weak",
+    "strengthMedium": "Password strength: medium",
+    "strengthStrong": "Password strength: strong",
+    "requirementLength": "At least 8 characters",
+    "requirementUppercase": "At least one uppercase letter",
+    "requirementSpecial": "At least one special character (e.g. !@#$%)"
+  },
   "refetchedSuccessfully": "Refetched successfully",
   "selectAll": "Select all"
 }

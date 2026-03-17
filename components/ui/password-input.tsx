@@ -5,7 +5,8 @@ import {
 } from "@/components/icons"
 import { Input } from "@/components/ui/input"
 import { cn } from "@/lib/utils"
-import { Eye, EyeOff, KeyRound, OctagonAlert } from "lucide-react"
+import { Eye, EyeOff, OctagonAlert } from "lucide-react"
+import { useTranslations } from "next-intl"
 
 import React, { useEffect, useMemo, useRef, useState } from "react"
 
@@ -47,6 +48,7 @@ const PasswordInput = ({
   checkStrength?: boolean
   setIsPasswordStrengthVisible?: (isPasswordStrengthVisible: boolean) => void
 }) => {
+  const t = useTranslations("common.password")
   const [showPassword, setShowPassword] = useState(false)
   const [hasTyped, setHasTyped] = useState(false)
   const [currentValue, setCurrentValue] = useState<string>(
@@ -74,18 +76,18 @@ const PasswordInput = ({
     }
   > = {
     weak: {
-      label: "Password Strength Weak",
+      label: t("strengthWeak"),
       barColor: "bg-red-400",
       iconColor: "text-red-400",
     },
     medium: {
-      label: "Password Strength Medium",
+      label: t("strengthMedium"),
       barColor: "bg-yellow-400",
 
       iconColor: "text-yellow-400",
     },
     strong: {
-      label: "Password Strength Strong",
+      label: t("strengthStrong"),
       barColor: "bg-green-400",
       iconColor: "text-green-400",
     },
@@ -134,7 +136,7 @@ const PasswordInput = ({
           </span>
         }
         onChange={handleChange}
-        placeholder="••••••••"
+        placeholder={t("placeholder")}
         value={value}
         {...props}
       />
@@ -158,10 +160,14 @@ const PasswordInput = ({
                 {activeStrength === "strong" && (
                   <SuccessCheckedIcon size={20} aria-label="checked" />
                 )}
-                <span className="text-gray-700">{activeConfig.label}</span>
+                <span className="text-foreground">{activeConfig.label}</span>
               </div>
               <div className="flex items-center gap-1.5">
-                <div className={cn("h-1.5 flex-1 rounded-full bg-gray-300")}>
+                <div
+                  className={cn(
+                    "h-1.5 flex-1 rounded-full bg-gray-300 dark:bg-gray-700"
+                  )}
+                >
                   <span
                     className={cn(
                       "block h-full w-0 rounded-full transition-all duration-300 ease-out",
@@ -170,7 +176,11 @@ const PasswordInput = ({
                     )}
                   />
                 </div>
-                <div className={cn("h-1.5 flex-1 rounded-full bg-gray-300")}>
+                <div
+                  className={cn(
+                    "h-1.5 flex-1 rounded-full bg-gray-300 dark:bg-gray-700"
+                  )}
+                >
                   <span
                     className={cn(
                       "block h-full w-0 rounded-full transition-all duration-300 ease-out",
@@ -182,7 +192,11 @@ const PasswordInput = ({
                     )}
                   />
                 </div>
-                <div className={cn("h-1.5 flex-1 rounded-full bg-gray-300")}>
+                <div
+                  className={cn(
+                    "h-1.5 flex-1 rounded-full bg-gray-300 dark:bg-gray-700"
+                  )}
+                >
                   <span
                     className={cn(
                       "block h-full w-0 rounded-full transition-all duration-300 ease-out",
@@ -194,13 +208,13 @@ const PasswordInput = ({
               </div>
             </div>
 
-            <ul className="space-y-2 text-xs font-medium text-gray-700">
+            <ul className="space-y-2 text-xs font-medium text-foreground/70">
               {PASSWORD_REQUIREMENTS.map((rule) => {
                 const isMet = rule.test(currentValue)
                 const requirementLabels: Record<string, string> = {
-                  length: "Password Requirement Length",
-                  uppercase: "Password Requirement Uppercase",
-                  special: "Password Requirement Special",
+                  length: t("requirementLength"),
+                  uppercase: t("requirementUppercase"),
+                  special: t("requirementSpecial"),
                 }
                 return (
                   <li key={rule.id} className="flex items-center gap-2">

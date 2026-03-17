@@ -12,7 +12,7 @@
   "stepLabel2": "Analyze preferences",
   "stepLabel3": "Finish",
   "step1": {
-    "label": "Paste the job",
+    "label": "Describe you Dream Job",
     "tip": "The more detail you provide, the better our AI can match job opportunities to your interests.",
     "title": "What are you looking for?",
     "description": "Describe your ideal job and we'll generate search URLs across job boards for you.",
@@ -30,7 +30,7 @@
     "toastSuccess": "Websites generated successfully"
   },
   "step2": {
-    "title": "Run scraper locally (optional)",
+    "title": "Run scraper locally (Opt)",
     "description": "For the best experience and results, you can run the scraper on your Windows PC. Download the app, add your token, and click Start scraping.",
     "boostTitle": "Boost your local search",
     "boostDescription": "Connect the desktop app to securely search across your own files and data sources.",
