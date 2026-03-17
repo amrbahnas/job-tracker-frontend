@@ -31,12 +31,13 @@ const messaging = firebase.messaging()
 messaging.onBackgroundMessage((payload) => {
   console.log("Received background message:", payload)
 
-  const notificationTitle = payload.notification?.title || "New Notification"
+  const notificationTitle =
+    payload.notification?.title || "Dawarly Notification"
   const notificationOptions = {
     body:
       payload.notification?.body ||
       payload.data?.message ||
-      "You have a new notification",
+      "You have a new Dawarly notification",
     icon: "/favicon.ico",
     badge: "/favicon.ico",
     data: payload.data,
