@@ -133,7 +133,7 @@ export default function OnboardingView() {
                 >
                   {t("step1.label")}
                 </label>
-                <span className="my-2">
+                <span className="my-2 block">
                   <Microphone onVoiceInput={setDescription} />
                 </span>
                 <textarea
