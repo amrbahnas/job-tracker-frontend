@@ -119,7 +119,7 @@ export const Microphone = ({
           className={`flex items-center justify-center rounded-full transition-all duration-300 ${
             listening
               ? "bg-red-500 text-white hover:bg-red-600"
-              : "bg-primary text-primary-foreground hover:bg-primary/90"
+              : "bg-primary/10 text-primary hover:bg-primary/90 hover:text-white"
           }`}
           aria-label={
             language === "ar"

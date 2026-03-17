@@ -4,12 +4,14 @@ import * as React from "react"
 import { Progress as ProgressPrimitive } from "radix-ui"
 
 import { cn } from "@/lib/utils"
+import { useLocale } from "next-intl"
 
 function Progress({
   className,
   value,
   ...props
 }: React.ComponentProps<typeof ProgressPrimitive.Root>) {
+  const locale = useLocale()
   return (
     <ProgressPrimitive.Root
       data-slot="progress"
@@ -21,8 +23,14 @@ function Progress({
     >
       <ProgressPrimitive.Indicator
         data-slot="progress-indicator"
+        dir="rtl"
         className="size-full flex-1 bg-primary transition-all"
-        style={{ transform: `translateX(-${100 - (value || 0)}%)` }}
+        style={{
+          transform:
+            locale === "ar"
+              ? `translateX(${100 - (value || 0)}%)`
+              : `translateX(-${100 - (value || 0)}%)`,
+        }}
       />
     </ProgressPrimitive.Root>
   )

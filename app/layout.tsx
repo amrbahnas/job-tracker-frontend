@@ -6,6 +6,7 @@ import { NextIntlClientProvider } from "next-intl"
 import { Inter, Cairo } from "next/font/google"
 import { cookies } from "next/headers"
 import { NuqsAdapter } from "nuqs/adapters/next/app"
+import NextTopLoader from "nextjs-toploader"
 import "./globals.css"
 
 const baseUrl =
@@ -74,6 +75,7 @@ export default async function RootLayout({
       }`}
     >
       <body>
+        <NextTopLoader color="#7008e7" height={4} showSpinner={false} />
         <NextIntlClientProvider messages={messages}>
           <NuqsAdapter>
             <ClientSideLayout>{children}</ClientSideLayout>

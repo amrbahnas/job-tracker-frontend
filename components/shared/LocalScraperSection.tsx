@@ -5,7 +5,7 @@ import { useTranslations } from "next-intl"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 
-export const DOWNLOAD_PATH = "/downloads/dawarly-scraper-setup.exe"
+export const DOWNLOAD_PATH = process.env.NEXT_PUBLIC_SCRAPER_DOWNLOAD_URL
 
 export type LocalScraperSectionProps = {
   token: string
@@ -40,7 +40,27 @@ export default function LocalScraperSection({
           </p>
         </div>
       )}
-
+      <section className="rounded-lg border bg-card p-6 shadow-sm">
+        <div className="flex items-center gap-2">
+          <Laptop className="size-5 text-primary" />
+          <h3 className="text-lg font-semibold text-foreground">
+            {t("download.title")}
+          </h3>
+        </div>
+        <p className="mt-2 text-sm text-muted-foreground">
+          {t("download.description")}
+        </p>
+        <div className="mt-4">
+          <a href={DOWNLOAD_PATH} download className="inline-flex">
+            <Button type="button" variant="default" asChild>
+              <span className="flex items-center gap-2">
+                <Download className="size-4" />
+                {t("download.button")}
+              </span>
+            </Button>
+          </a>
+        </div>
+      </section>
       <section className="rounded-lg border bg-card p-6 shadow-sm">
         <div className="flex items-center gap-2">
           <Key className="size-5 text-primary" />
@@ -75,28 +95,6 @@ export default function LocalScraperSection({
               </Button>
             </div>
           ) : null}
-        </div>
-      </section>
-
-      <section className="rounded-lg border bg-card p-6 shadow-sm">
-        <div className="flex items-center gap-2">
-          <Laptop className="size-5 text-primary" />
-          <h3 className="text-lg font-semibold text-foreground">
-            {t("download.title")}
-          </h3>
-        </div>
-        <p className="mt-2 text-sm text-muted-foreground">
-          {t("download.description")}
-        </p>
-        <div className="mt-4">
-          <a href={DOWNLOAD_PATH} download className="inline-flex">
-            <Button type="button" variant="default" asChild>
-              <span className="flex items-center gap-2">
-                <Download className="size-4" />
-                {t("download.button")}
-              </span>
-            </Button>
-          </a>
         </div>
       </section>
     </div>

@@ -15,8 +15,8 @@ export default function MainLayout({
   return (
     <>
       <OnboardingHeader />
-      <div className="bg-muted/30 pb-16">
-        <Container className="py-6">{children}</Container>
+      <div className="bg-muted/30">
+        <Container className="py-4">{children}</Container>
       </div>
     </>
   )

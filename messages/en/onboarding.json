@@ -8,24 +8,43 @@
     "step2": "Local scraper",
     "step3": "Ready"
   },
+  "stepLabel1": "Customize profile",
+  "stepLabel2": "Analyze preferences",
+  "stepLabel3": "Finish",
   "step1": {
+    "label": "Paste the job",
+    "tip": "The more detail you provide, the better our AI can match job opportunities to your interests.",
     "title": "What are you looking for?",
     "description": "Describe your ideal job and we'll generate search URLs across job boards for you.",
     "placeholder": "e.g. I'm seeking a frontend React.js position at Cairo, Egypt, onsite",
-    "submit": "Generate my URLs",
+    "submit": "Continue",
     "generatingTitle": "AI is generating your URLs",
     "generatingDescription": "We're building search links for LinkedIn, Wuzzuf, Indeed and other boards. This may take a moment.",
+    "generatingIdentityVerifiedTitle": "Identity verified",
+    "generatingIdentityVerifiedDescription": "Your basic details are confirmed. We’ll use them to tailor results to your profile.",
+    "generatingFetchingSourcesTitle": "Fetching data sources…",
+    "generatingFetchingSourcesDescription": "We’re pulling in the most relevant job boards and sources based on your preferences.",
+    "generatingFinalizingDashboardTitle": "Finalizing your dashboard",
+    "generatingFinalizingDashboardDescription": "We’re organizing your personalized job search dashboard and links.",
+    "generatingHelpText": "Need help? Contact support",
     "toastSuccess": "Websites generated successfully"
   },
   "step2": {
     "title": "Run scraper locally (optional)",
     "description": "For the best experience and results, you can run the scraper on your Windows PC. Download the app, add your token, and click Start scraping.",
-    "continue": "I'm ready, go to jobs",
-    "skip": "Skip for now"
+    "boostTitle": "Boost your local search",
+    "boostDescription": "Connect the desktop app to securely search across your own files and data sources.",
+    "bullet1": "Keep your data private on your machine.",
+    "bullet2": "Search documents, job descriptions, and notes faster.",
+    "bullet3": "Sync once, then let the AI do the heavy lifting.",
+    "continue": "I'm ready, go to jobs"
   },
   "step3": {
     "title": "You're ready!",
     "description": "Your job search is set up. Head to the jobs dashboard to see your listings.",
     "goToJobs": "Go to jobs"
-  }
+  },
+  "skip": "Skip for now",
+  "completed": "Completed {progress}%",
+  "step": "Step {step} of {steps}"
 }

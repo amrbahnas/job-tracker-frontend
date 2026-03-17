@@ -39,11 +39,13 @@ export function JobsList() {
 
   return (
     <section className="space-y-4">
-      <SelectAllCheckbox
-        selectedJobs={selectedJobs}
-        jobs={jobs}
-        setSelectedIds={setSelectedIds}
-      />
+      {selectedJobs.length > 0 && !isLoading && (
+        <SelectAllCheckbox
+          selectedJobs={selectedJobs}
+          jobs={jobs}
+          setSelectedIds={setSelectedIds}
+        />
+      )}
       <JobsBulkActionsBar
         selectedIds={selectedJobs}
         onClearSelection={clearSelection}
