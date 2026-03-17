@@ -40,7 +40,11 @@ export function ApplyButton({
             size="sm"
             className="text-xs sm:text-sm"
             disabled={disabled}
-            onClick={() => setOpen(true)}
+            onClick={() => {
+              setTimeout(() => {
+                setOpen(true)
+              }, 2000)
+            }}
           >
             {t("button")}
           </Button>

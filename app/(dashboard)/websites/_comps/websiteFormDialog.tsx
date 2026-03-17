@@ -21,7 +21,7 @@ const WebsiteFormDialog = ({
   const t = useTranslations("websites.formDialog")
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="no-scrollbar max-h-[95svh] overflow-y-auto py-0 sm:max-w-5xl">
+      <DialogContent className="no-scrollbar max-h-[95svh] gap-2 overflow-y-auto py-0 sm:max-w-5xl sm:gap-6">
         <DialogHeader className="z-10 bg-background py-6">
           <DialogTitle>
             {editingWebsite ? t("editTitle") : t("addTitle")}

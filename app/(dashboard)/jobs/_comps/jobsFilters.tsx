@@ -9,6 +9,7 @@ import useJobsFilters from "../hooks/useJobsFilters"
 import JobStatusTabs from "./jobStatusTabs"
 import ScrapeBTN from "./scraptBTN"
 import { useCallback } from "react"
+import { cn } from "@/lib/utils"
 
 export function JobsFilters() {
   const { filters, setFilters } = useJobsFilters()
@@ -38,7 +39,10 @@ export function JobsFilters() {
           value={search}
           placeholder={t("searchPlaceholder")}
           onChange={(value) => setFilters({ search: value })}
-          className="min transition-all duration-300 focus:w-screen sm:max-w-[380px] focus:sm:w-auto"
+          className={cn(
+            "min transition-all duration-300 after:absolute after:inset-s-1 after:top-1 after:size-2 after:rounded-full after:bg-transparent focus:w-screen sm:max-w-[380px] focus:sm:w-auto",
+            search && "after:bg-red-500 sm:after:bg-transparent"
+          )}
         />
         <WebsiteSelector
           value={websiteId}

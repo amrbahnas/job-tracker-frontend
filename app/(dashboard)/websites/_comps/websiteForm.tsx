@@ -226,6 +226,7 @@ export function WebsiteForm({ website, onCancel }: WebsiteFormProps) {
             <Input
               label={t("platformNameLabel")}
               placeholder={t("platformNamePlaceholder")}
+              autoFocus={false}
             />
           </FormItem>
           <div className="space-y-2">
@@ -374,7 +375,7 @@ export function WebsiteForm({ website, onCancel }: WebsiteFormProps) {
           <Button
             type="button"
             variant="outline"
-            size="sm"
+            size="lg"
             onClick={onCancel}
             disabled={submitting}
           >
@@ -383,7 +384,7 @@ export function WebsiteForm({ website, onCancel }: WebsiteFormProps) {
         )}
         <Button
           type="submit"
-          size="sm"
+          size="lg"
           disabled={submitting}
           loading={submitting}
         >

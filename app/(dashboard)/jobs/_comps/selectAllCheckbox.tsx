@@ -31,6 +31,9 @@ const SelectAllCheckbox = ({
       )}
 
       <label htmlFor="select-all">{t("selectAll")}</label>
+      <span className="text-xs text-muted-foreground">
+        ({selectedJobs.length}/{jobs.length})
+      </span>
     </div>
   )
 }
