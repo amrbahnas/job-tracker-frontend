@@ -3,8 +3,10 @@ import { useJobActions } from "../_api/mutations"
 import { toast } from "sonner"
 import { useTranslations } from "next-intl"
 import { memo } from "react"
+import { useQueryState } from "nuqs"
 
 const ScrapeBTN = () => {
+  const [websiteId] = useQueryState("websiteId")
   const { scrapeJobs, isScrapingJobs } = useJobActions()
   const t = useTranslations("jobs.scrape")
 
@@ -12,7 +14,9 @@ const ScrapeBTN = () => {
     <Button
       onClick={() =>
         scrapeJobs(
-          {},
+          {
+            websiteId,
+          },
           {
             onSuccess: (res) => {
               toast.success(t("toastTitle"), {
@@ -34,7 +38,7 @@ const ScrapeBTN = () => {
       variant={"outline"}
       size={"lg"}
     >
-      {t("button")}
+      {websiteId ? t("scrapeSelectedWebsite") : t("button")}
     </Button>
   )
 }

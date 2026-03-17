@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button"
 import PullToRefresh from "react-simple-pull-to-refresh"
 import { cn } from "@/lib/utils"
 import { Skeleton } from "../ui/skeleton"
+import { Database } from "lucide-react"
 
 export function ItemList({
   itemContent,
@@ -63,11 +64,12 @@ export function ItemList({
         )}
 
         {!hasJobs && !isLoading && !error && (
-          <div className="flex h-40 flex-col items-center justify-center gap-3 rounded-md border bg-muted/40 p-6 text-center text-sm text-muted-foreground">
-            <p className="font-medium text-foreground">
+          <div className="flex h-60 flex-col items-center justify-center gap-1 text-center text-muted-foreground">
+            <Database size={40} className="" />
+            <p className="text-lg font-medium">
               {messages?.noData || "No data yet."}
             </p>
-            <p className="mt-1">
+            <p className="text-sm text-muted-foreground">
               {messages?.noDataDescription ||
                 "Add a website in the Websites section to start scraping job listings."}
             </p>

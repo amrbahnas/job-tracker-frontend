@@ -34,7 +34,7 @@ export async function generateMetadata(): Promise<Metadata> {
     },
     openGraph: {
       type: "website",
-      locale: "en_US",
+      locale: "ar_AR",
       title,
       description,
       siteName: "Dawarly",
@@ -52,7 +52,7 @@ export async function generateMetadata(): Promise<Metadata> {
       card: "summary_large_image",
       title,
       description,
-      images: ["/images/logo/dawarly.png"],
+      images: ["/images/HeroSectionAr.png"],
     },
     alternates: { canonical: "/" },
   }

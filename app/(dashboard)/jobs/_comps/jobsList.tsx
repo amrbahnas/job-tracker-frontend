@@ -39,7 +39,7 @@ export function JobsList() {
 
   return (
     <section className="space-y-4">
-      {selectedJobs.length > 0 && !isLoading && (
+      {jobs.length > 0 && !isLoading && (
         <SelectAllCheckbox
           selectedJobs={selectedJobs}
           jobs={jobs}
