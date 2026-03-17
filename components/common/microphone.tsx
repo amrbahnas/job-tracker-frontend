@@ -23,8 +23,8 @@ interface MicrophoneProps {
 export const Microphone = ({
   onVoiceInput,
   exampleText,
-  autoStopRecording = true,
-  showSpokenText = false,
+  autoStopRecording = false,
+  showSpokenText = true,
   microphoneId = "default",
   showExampleVarient = "default",
   SpokenTextVarient = "default",

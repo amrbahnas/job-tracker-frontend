@@ -126,13 +126,16 @@ export default function OnboardingView() {
               onSubmit={handleDescriptionSubmit}
               className="relative mt-4 flex flex-col gap-4"
             >
-              <div className="relative mt-4">
+              <div className="mt-4">
                 <label
                   htmlFor="description"
                   className="mb-3 block text-sm font-semibold"
                 >
                   {t("step1.label")}
                 </label>
+                <span className="my-2">
+                  <Microphone onVoiceInput={setDescription} />
+                </span>
                 <textarea
                   value={description}
                   onChange={(e) => setDescription(e.target.value)}
@@ -144,9 +147,6 @@ export default function OnboardingView() {
                   autoFocus
                   aria-label={t("step1.placeholder")}
                 />
-                <span className="absolute inset-e-3 bottom-3">
-                  <Microphone onVoiceInput={setDescription} />
-                </span>
               </div>
               <footer className="mt-4 flex flex-col gap-3 sm:flex-row sm:justify-between sm:gap-4">
                 <Button
