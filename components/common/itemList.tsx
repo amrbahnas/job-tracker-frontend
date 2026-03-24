@@ -77,19 +77,7 @@ export function ItemList({
         )}
 
         {!hasJobs && isLoading && (
-          <ul
-            className={cn(
-              "grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3",
-              listClassName
-            )}
-          >
-            <Skeleton className="aspect-video w-full" />
-            <Skeleton className="aspect-video w-full" />
-            <Skeleton className="aspect-video w-full" />
-            <Skeleton className="aspect-video w-full" />
-            <Skeleton className="aspect-video w-full" />
-            <Skeleton className="aspect-video w-full" />
-          </ul>
+          <ItemListSkeleton listClassName={listClassName} />
         )}
 
         {hasJobs && (
@@ -126,5 +114,22 @@ export function ItemList({
         )}
       </section>
     </PullToRefresh>
+  )
+}
+function ItemListSkeleton({ listClassName }: { listClassName?: string }) {
+  return (
+    <ul
+      className={cn(
+        "grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3",
+        listClassName
+      )}
+    >
+      <Skeleton className="aspect-video w-full" />
+      <Skeleton className="aspect-video w-full" />
+      <Skeleton className="aspect-video w-full" />
+      <Skeleton className="aspect-video w-full" />
+      <Skeleton className="aspect-video w-full" />
+      <Skeleton className="aspect-video w-full" />
+    </ul>
   )
 }
