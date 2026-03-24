@@ -2,6 +2,7 @@ import { initializeApp } from "firebase/app"
 import {
   getMessaging,
   getToken,
+  isSupported,
   onMessage,
   Messaging,
 } from "firebase/messaging"
@@ -17,10 +18,24 @@ const firebaseConfig = {
 
 const app = initializeApp(firebaseConfig)
 
-let messaging: Messaging | null = null
+let messagingInstance: Messaging | null = null
+let messagingPromise: Promise<Messaging | null> | null = null
 
-if (typeof window !== "undefined") {
-  messaging = getMessaging(app)
+async function resolveMessaging(): Promise<Messaging | null> {
+  if (typeof window === "undefined") return null
+  if (messagingInstance) return messagingInstance
+  if (!messagingPromise) {
+    messagingPromise = (async () => {
+      try {
+        if (!(await isSupported())) return null
+        messagingInstance = getMessaging(app)
+        return messagingInstance
+      } catch {
+        return null
+      }
+    })()
+  }
+  return messagingPromise
 }
 
 const requestPermission = async () => {
@@ -30,7 +45,9 @@ const requestPermission = async () => {
 }
 
 const ensureServiceWorkerReady = async () => {
-  if (typeof window === "undefined" || !("serviceWorker" in navigator)) return
+  if (typeof window === "undefined" || !("serviceWorker" in navigator)) {
+    throw new Error("Service workers are not available")
+  }
 
   const existingRegistration = await navigator.serviceWorker.getRegistration()
 
@@ -96,18 +113,48 @@ const ensureServiceWorkerReady = async () => {
   return registration
 }
 
-export const requestNotificationPermission = async () => {
-  const perm = await requestPermission()
-  await ensureServiceWorkerReady()
-  if (perm !== "granted" || !messaging) return null
-
-  const vapidKey =
-    "BPLgk5nFWqwU7LwMEvuC6EFUtGnUJVcy0IDVRgxS1pRF7vsJzgOIp7JL6uQdc2TkXSA2UrDvidP-ECeUPBQjXIk"
-
-  return await getToken(messaging, { vapidKey })
+export type PushNotificationInitResult = {
+  token: string | null
+  skippedReason?:
+    | "unsupported"
+    | "permission_denied"
+    | "service_worker"
+    | "token_failed"
 }
 
+export const requestNotificationPermission =
+  async (): Promise<PushNotificationInitResult> => {
+    const messaging = await resolveMessaging()
+    if (!messaging) {
+      return { token: null, skippedReason: "unsupported" }
+    }
+
+    const perm = await requestPermission()
+
+    try {
+      await ensureServiceWorkerReady()
+    } catch {
+      return { token: null, skippedReason: "service_worker" }
+    }
+
+    if (perm !== "granted") {
+      return { token: null, skippedReason: "permission_denied" }
+    }
+
+    const vapidKey =
+      "BPLgk5nFWqwU7LwMEvuC6EFUtGnUJVcy0IDVRgxS1pRF7vsJzgOIp7JL6uQdc2TkXSA2UrDvidP-ECeUPBQjXIk"
+
+    try {
+      const token = await getToken(messaging, { vapidKey })
+      if (!token) return { token: null, skippedReason: "token_failed" }
+      return { token }
+    } catch {
+      return { token: null, skippedReason: "token_failed" }
+    }
+  }
+
 export const onMessageListener = async (callback: (payload: any) => void) => {
+  const messaging = await resolveMessaging()
   if (!messaging) return () => {}
   try {
     return onMessage(messaging, callback)
