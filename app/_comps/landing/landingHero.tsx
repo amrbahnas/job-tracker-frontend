@@ -51,21 +51,25 @@ export async function LandingHero() {
             role="group"
             aria-label="Primary actions"
           >
-            <Button
-              size="lg"
-              asChild
-              className="w-full border-0 bg-primary px-12 py-6 font-bold text-primary-foreground hover:bg-primary/90 sm:w-auto"
-            >
-              <Link href="/auth?tab=signup">{t("primaryCta")}</Link>
-            </Button>
-            <Button
-              size="lg"
-              variant="outline"
-              asChild
-              className="w-full border-white/80 bg-transparent px-8 py-6 text-white hover:bg-white/10 hover:text-white sm:w-auto"
-            >
-              <Link href="#about">{t("secondaryCta")}</Link>
-            </Button>
+            <Link href="/auth?tab=signup">
+              <Button
+                size="lg"
+                asChild
+                className="w-full border-0 bg-primary px-12 py-6 font-bold text-primary-foreground hover:bg-primary/90 sm:w-auto"
+              >
+                {t("primaryCta")}
+              </Button>
+            </Link>
+            <Link href="#about">
+              <Button
+                size="lg"
+                variant="outline"
+                asChild
+                className="w-full border-white/80 bg-transparent px-8 py-6 text-white hover:bg-white/10 hover:text-white sm:w-auto"
+              >
+                {t("secondaryCta")}
+              </Button>
+            </Link>
           </div>
         </section>
         <section

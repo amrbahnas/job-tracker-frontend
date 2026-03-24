@@ -231,8 +231,7 @@ function JobCard({ job, selected, onToggleSelect }: JobCardProps) {
               <span
                 className={`inline-flex items-center rounded-full px-2.5 py-0.5 text-[11px] font-medium uppercase ${statusClassName}`}
               >
-                {/* @ts-ignore */}
-                {t(`status.${job.status}`)}
+                {t(`status.${job.status}`) as any}
               </span>
             </div>
           </div>
@@ -263,7 +262,7 @@ function JobCard({ job, selected, onToggleSelect }: JobCardProps) {
           </div>
         </header>
         <div className="flex-1">
-          <p className="line-clamp-2 h-10 text-xs text-[#6B7280] sm:text-sm dark:text-slate-400">
+          <p className="line-clamp-2 no-scrollbar h-10 overflow-scroll text-xs text-[#6B7280] sm:text-sm dark:text-slate-400">
             {job.description ? job.description : t("noDescription")}
           </p>
         </div>
