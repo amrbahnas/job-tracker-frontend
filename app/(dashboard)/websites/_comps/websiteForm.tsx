@@ -25,6 +25,22 @@ import { useTranslations } from "next-intl"
 function createWebsiteFormSchema(t: (key: string) => string) {
   return z.object({
     name: z.string().min(1, t("validationNameRequired")),
+    baseUrl: z
+      .string()
+      .optional()
+      .transform((s) => (s ?? "").trim())
+      .superRefine((s, ctx) => {
+        if (!s) return
+        const href = /^https?:\/\//i.test(s) ? s : `https://${s}`
+        try {
+          new URL(href)
+        } catch {
+          ctx.addIssue({
+            code: z.ZodIssueCode.custom,
+            message: t("validationBaseUrlInvalid"),
+          })
+        }
+      }),
     urls: z
       .array(z.string())
       .refine(
@@ -76,6 +92,7 @@ export function WebsiteForm({ website, onCancel }: WebsiteFormProps) {
     resolver: zodResolver(websiteFormSchema as any),
     defaultValues: {
       name: website?.name ?? "",
+      baseUrl: website?.baseUrl?.trim() ?? "",
       urls:
         Array.isArray(website?.urls) && website.urls.length > 0
           ? website.urls
@@ -118,6 +135,7 @@ export function WebsiteForm({ website, onCancel }: WebsiteFormProps) {
             : [""],
         scrapeIntervalMinutes: website.scrapeIntervalMinutes ?? 60,
         enabled: website.enabled,
+        baseUrl: website.baseUrl ?? "",
         selectors: {
           jobCard: website.selectors?.jobCard ?? "",
           title: website.selectors?.title ?? "",
@@ -141,6 +159,7 @@ export function WebsiteForm({ website, onCancel }: WebsiteFormProps) {
       const payload = {
         name: values.name.trim(),
         urls,
+        baseUrl: values.baseUrl?.trim() ?? "",
         selectors: {
           jobCard: values.selectors.jobCard.trim(),
           title: values.selectors.title.trim(),
@@ -239,6 +258,15 @@ export function WebsiteForm({ website, onCancel }: WebsiteFormProps) {
                 setValue("scrapeIntervalMinutes", value, { shouldDirty: true })
               }
             />
+          </div>
+          <div className="md:col-span-2">
+            <FormItem name="baseUrl">
+              <Input
+                label={t("baseUrlLabel")}
+                placeholder={t("baseUrlPlaceholder")}
+                autoComplete="url"
+              />
+            </FormItem>
           </div>
         </div>
 

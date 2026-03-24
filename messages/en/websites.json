@@ -32,7 +32,8 @@
     "deleteTitle": "Delete website?",
     "deleteDescription": "This will permanently remove {name} and its tracked URLs and jobs.",
     "deleteConfirm": "Delete",
-    "deleteCancel": "Cancel"
+    "deleteCancel": "Cancel",
+    "openSiteAria": "Open {name} website in a new tab"
   },
   "formDialog": {
     "editTitle": "Edit website",
@@ -42,6 +43,8 @@
     "sectionBasicInfo": "Basic information",
     "platformNameLabel": "Platform name",
     "platformNamePlaceholder": "e.g., LinkedIn, Indeed",
+    "baseUrlLabel": "Website URL (optional)",
+    "baseUrlPlaceholder": "https://example.com or example.com",
     "scrapeIntervalLabel": "Scrape interval",
     "targetUrlsLabel": "Target URLs",
     "activeStatusLabel": "Active status",
@@ -76,7 +79,8 @@
     "validationIntervalMax": "Interval cannot exceed 1 week (10080 minutes)",
     "validationJobCardRequired": "Job card wrapper is required",
     "validationJobTitleRequired": "Job title selector is required",
-    "validationJobLinkRequired": "Job link selector is required"
+    "validationJobLinkRequired": "Job link selector is required",
+    "validationBaseUrlInvalid": "Enter a valid website URL"
   },
   "urlsDialog": {
     "button": "Manage URLs",

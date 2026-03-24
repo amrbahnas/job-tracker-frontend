@@ -64,6 +64,7 @@ interface Website {
   _id: string
   userId: string
   name: string
+  baseUrl?: string | null
   urls: string[]
   selectors: Record<string, string>
   scrapeIntervalMinutes?: number

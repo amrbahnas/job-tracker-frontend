@@ -27,6 +27,7 @@ export function WebsiteCard({ website, onEditWebsite }: WebsiteCardProps) {
   const t = useTranslations("websites.card")
   const urlsCount = website.urls?.length ?? 0
   const local = useLocale()
+
   const CardBody = [
     {
       icon: History,
@@ -65,15 +66,22 @@ export function WebsiteCard({ website, onEditWebsite }: WebsiteCardProps) {
   return (
     <article className="group flex h-full flex-col justify-between rounded-lg border bg-card p-4 transition-colors hover:border-primary/30">
       <header>
-        <div className="flex items-start gap-2">
-          {getPlatformBadge(website.name, 8)}
-          <div className="flex flex-col">
-            <h2 className="text-md leading-tight font-semibold capitalize">
-              {website.name}
-            </h2>
-            <WebsiteStatusBadge website={website} />
+        <a
+          href={website.baseUrl ?? ""}
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label={t("openSiteAria", { name: website.name })}
+        >
+          <div className="flex items-start gap-2">
+            {getPlatformBadge(website.name, 8)}
+            <div className="flex flex-col">
+              <h2 className="text-md leading-tight font-semibold capitalize">
+                {website.name}
+              </h2>
+              <WebsiteStatusBadge website={website} />
+            </div>
           </div>
-        </div>
+        </a>
         <div
           className="my-4 flex flex-col items-start gap-3 text-xs text-muted-foreground"
           role="list"

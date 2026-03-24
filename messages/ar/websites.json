@@ -32,7 +32,8 @@
     "deleteTitle": "حذف الموقع؟",
     "deleteDescription": "سيتم حذف {name} نهائياً مع جميع الروابط والوظائف المرتبطة به.",
     "deleteConfirm": "حذف",
-    "deleteCancel": "إلغاء"
+    "deleteCancel": "إلغاء",
+    "openSiteAria": "فتح موقع {name} في تبويب جديد"
   },
   "formDialog": {
     "editTitle": "تعديل موقع",
@@ -42,6 +43,8 @@
     "sectionBasicInfo": "البيانات الأساسية",
     "platformNameLabel": "اسم المنصة",
     "platformNamePlaceholder": "مثال: LinkedIn, Indeed",
+    "baseUrlLabel": "رابط الموقع (اختياري)",
+    "baseUrlPlaceholder": "https://example.com أو example.com",
     "scrapeIntervalLabel": "فترة البحث",
     "targetUrlsLabel": "روابط الاستهداف",
     "activeStatusLabel": "حالة التفعيل",
@@ -76,7 +79,8 @@
     "validationIntervalMax": "لا يمكن أن تتجاوز الفترة أسبوعاً (10080 دقيقة)",
     "validationJobCardRequired": "عنصر بطاقة الوظيفة مطلوب",
     "validationJobTitleRequired": "محدد عنوان الوظيفة مطلوب",
-    "validationJobLinkRequired": "محدد رابط الوظيفة مطلوب"
+    "validationJobLinkRequired": "محدد رابط الوظيفة مطلوب",
+    "validationBaseUrlInvalid": "أدخل رابط موقع صالحاً"
   },
   "urlsDialog": {
     "button": "إدارة الروابط",

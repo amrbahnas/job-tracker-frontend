@@ -157,10 +157,15 @@ export function WebsiteUrlsDialog({
                 {t("addUrl")}
               </span>
             ) : (
-              <>
+              <a
+                href={website?.baseUrl ?? ""}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center gap-1"
+              >
                 {website && getPlatformBadge(website.name, 8)}
                 <span className="capitalize">{website?.name}</span>
-              </>
+              </a>
             )}
           </DialogTitle>
         </DialogHeader>
