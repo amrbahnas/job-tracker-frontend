@@ -39,10 +39,6 @@ export function LoginForm() {
   })
 
   const { errors } = form.formState
-  console.log(
-    "🚀 ~ file: loginForm.tsx:43 ~  errors.recaptchaToken:",
-    errors.recaptchaToken
-  )
 
   return (
     <>

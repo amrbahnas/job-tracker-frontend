@@ -17,7 +17,6 @@ const WebsiteFormDialog = ({
   isOpen: boolean
   onClose: () => void
 }) => {
-  console.log("🚀 ~ file: websiteFormDialog.tsx:18 ~ isOpen:", isOpen)
   const t = useTranslations("websites.formDialog")
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
