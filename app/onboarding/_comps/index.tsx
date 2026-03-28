@@ -218,14 +218,14 @@ export default function OnboardingView() {
             <Button
               variant="outline"
               onClick={() => setStep(3)}
-              className="order-2 h-12 w-full min-w-[180px] sm:order-1 sm:w-auto"
+              className="order-2 h-12! w-full min-w-[180px] shrink-0 sm:order-1 sm:w-auto"
               size="lg"
             >
               {t("skip")}
             </Button>
             <Button
               onClick={() => setStep(3)}
-              className="order-1 h-12 w-full flex-1 sm:order-2 sm:w-auto"
+              className="order-1 h-12! w-full flex-1 shrink-0 sm:order-2 sm:w-auto"
               size="lg"
             >
               <span className="flex flex-row items-center gap-2">
