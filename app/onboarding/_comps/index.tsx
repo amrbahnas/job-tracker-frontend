@@ -14,6 +14,7 @@ import { Progress } from "@/components/ui/progress"
 import { cn } from "@/lib/utils"
 import { ArrowRight, CheckCircle2, Loader2, Watch } from "lucide-react"
 import { useTranslations } from "next-intl"
+import Link from "next/link"
 import { useRouter } from "next/navigation"
 import { parseAsInteger, useQueryState } from "nuqs"
 import { useEffect, useState } from "react"
@@ -248,9 +249,11 @@ export default function OnboardingView() {
           <p className="mt-3 max-w-xl text-sm leading-relaxed text-muted-foreground sm:text-base">
             {t("step3.description")}
           </p>
-          <Button className="mt-7 w-full max-w-xs" size="lg" onClick={goToJobs}>
-            {t("step3.goToJobs")}
-          </Button>
+          <Link href="/jobs" replace>
+            <Button className="mt-7 w-full max-w-xs" size="lg">
+              {t("step3.goToJobs")}
+            </Button>
+          </Link>
         </section>
       )}
     </main>
