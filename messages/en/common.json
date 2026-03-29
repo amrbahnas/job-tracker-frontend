@@ -18,5 +18,10 @@
     "requirementSpecial": "At least one special character (e.g. !@#$%)"
   },
   "refetchedSuccessfully": "Refetched successfully",
-  "selectAll": "Select all"
+  "selectAll": "Select all",
+  "pushNotifications": {
+    "unavailableTitle": "Push notifications unavailable",
+    "unsupportedDescription": "Your browser does not support push notifications, or they are turned off in the browser settings.",
+    "blockedDescription": "We could not enable push notifications. Strict privacy settings or ad blockers often block them. If you use Brave: click the lion icon, turn Shields down for this site (or allow notifications for this site), then refresh the page."
+  }
 }

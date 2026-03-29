@@ -8,6 +8,7 @@ import {
   requestNotificationPermission,
 } from "@/firebase/firebaseClient"
 import { toast } from "sonner"
+import { useTranslations } from "next-intl"
 import { useRefetch } from "@/api_config/useRefetch"
 import JOBS_KEYS from "@/app/(dashboard)/jobs/_api/keys"
 
@@ -22,26 +23,8 @@ const playBeep = () => {
   audio.play()
 }
 
-const showPushUnavailableHint = (kind: "unsupported" | "environment") => {
-  try {
-    if (sessionStorage.getItem(PUSH_HINT_SESSION_KEY)) return
-    sessionStorage.setItem(PUSH_HINT_SESSION_KEY, "1")
-  } catch {
-    // sessionStorage may be unavailable
-  }
-
-  const description =
-    kind === "unsupported"
-      ? "This browser does not support web push, or it is disabled."
-      : "Push could not start (often blocked by strict privacy settings). In Brave, try Shields down for this site or allow notifications, then refresh."
-
-  toast.message("Notifications unavailable", {
-    description,
-    duration: 10_000,
-  })
-}
-
 export const useFirebaseNotifications = (options: Options = {}) => {
+  const tPush = useTranslations("common.pushNotifications")
   const unsubscribeRef = useRef<null | (() => void)>(null)
   const { refetch } = useRefetch(JOBS_KEYS.getJobs)
   const user = useAppStore((s) => s.user)
@@ -59,6 +42,25 @@ export const useFirebaseNotifications = (options: Options = {}) => {
       if (data?.type === "NOTIFICATION_CLICKED") {
         onNotificationReceivedRef.current?.()
       }
+    }
+
+    const showPushUnavailableHint = (kind: "unsupported" | "environment") => {
+      try {
+        if (sessionStorage.getItem(PUSH_HINT_SESSION_KEY)) return
+        sessionStorage.setItem(PUSH_HINT_SESSION_KEY, "1")
+      } catch {
+        // sessionStorage may be unavailable
+      }
+
+      const description =
+        kind === "unsupported"
+          ? tPush("unsupportedDescription")
+          : tPush("blockedDescription")
+
+      toast.message(tPush("unavailableTitle"), {
+        description,
+        duration: 10_000,
+      })
     }
 
     const initializeNotifications = async () => {
@@ -132,7 +134,7 @@ export const useFirebaseNotifications = (options: Options = {}) => {
         unsubscribeRef.current = null
       }
     }
-  }, [refetch, user?._id])
+  }, [refetch, tPush, user?._id])
 }
 
 export default useFirebaseNotifications
