@@ -22,7 +22,7 @@
   "list": {
     "error": "Something went wrong while loading your jobs.",
     "noData": "No jobs yet.",
-    "noDataDescription": "Add a website in the Websites section to start scraping job listings.",
+    "noDataDescription": "Make sure you have running the local search and added links to boost your search results.",
     "loading": "Loading more jobs…",
     "endReached": "You've reached the end of the list."
   },
