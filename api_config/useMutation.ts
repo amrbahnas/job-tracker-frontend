@@ -49,17 +49,15 @@ const useMutation = (
     },
 
     onError: (error, variables, context) => {
-      console.log("🚀 ~ file: useMutation.ts:52 ~ error:", error)
-      console.log("🚀 ~ file: useMutation.ts:52 ~ error:", error?.response)
-      // if (isLogin && error.response?.status === 401) {
-      //   return authLogout()
-      // }
-      // if (error?.response?.status === 409) {
-      //   toast.info(error.response?.data?.message)
-      // } else {
-      //   toast.error(errorMessageHandler(error))
-      // }
-      // options?.onError && options.onError(error, variables, context)
+      if (isLogin && error.response?.status === 401) {
+        return authLogout()
+      }
+      if (error?.response?.status === 409) {
+        toast.info(error.response?.data?.message)
+      } else {
+        toast.error(errorMessageHandler(error))
+      }
+      options?.onError && options.onError(error, variables, context)
     },
   })
 
@@ -77,9 +75,9 @@ export default useMutation
 const errorMessageHandler = (error: any) => {
   if (error) {
     return (
-      error?.response?.error?.message ||
-      error?.response?.data?.message ||
+      error?.response?.data?.error?.message ||
       error?.response?.data?.error ||
+      error?.response?.data?.message ||
       error?.response?.data ||
       "Internal Server Error"
     )
