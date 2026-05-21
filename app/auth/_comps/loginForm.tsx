@@ -18,7 +18,7 @@ const loginSchema = (validationT: ReturnType<typeof useTranslations>) =>
   z.object({
     email: z.string().email(validationT("emailInvalid")),
     password: z.string().min(8, validationT("passwordMin")),
-    // recaptchaToken: z.string().min(1, validationT("recaptchaRequired")),
+    recaptchaToken: z.string().min(1, validationT("recaptchaRequired")),
     keepLoggedIn: z.boolean().optional(),
   })
 
@@ -79,15 +79,15 @@ export function LoginForm() {
           />
           <span className="text-sm">Keep me logged in</span>
         </label> */}
-        {/* <ReCAPTCHA
+        <ReCAPTCHA
           onChange={(token) => {
             form.setValue("recaptchaToken", token, { shouldValidate: true })
           }}
-        /> */}
-        {/* <Error
+        />
+        <Error
           error={errors.recaptchaToken && validationT("recaptchaRequired")}
           hideOkButton
-        /> */}
+        />
         <Button
           type="submit"
           className="w-full"
