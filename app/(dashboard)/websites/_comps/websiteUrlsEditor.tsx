@@ -35,7 +35,7 @@ export function WebsiteUrlsEditor({
   const safeUrls = urls.length > 0 ? urls : [""]
 
   const normalizeForCompare = (u: string) =>
-    u.trim().toLowerCase().replace(/\/+$/, "") || ""
+    u.trim()?.toLowerCase().replace(/\/+$/, "") || ""
 
   const nonEmptyNormalized = safeUrls
     .map(normalizeForCompare)

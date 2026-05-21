@@ -21,11 +21,3 @@ export function Landing() {
     </>
   )
 }
-
-export { LandingHeader } from "./landingHeader"
-export { LandingHero } from "./landingHero"
-export { LandingFeatures } from "./landingFeatures"
-export { LandingPricing } from "./landingPricing"
-export { LandingAbout } from "./landingAbout"
-export { LandingCta } from "./landingCta"
-export { LandingFooter } from "./landingFooter"

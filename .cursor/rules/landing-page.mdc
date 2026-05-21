@@ -1,0 +1,68 @@
+---
+description: Public home / marketing landing — route shape, colocated _comps/landing, i18n, metadata, JSON-LD, and section composition
+globs: app/page.tsx, app/_comps/landing/**/*
+alwaysApply: false
+---
+
+# Landing page pattern (this project)
+
+Use this when building or porting the **public marketing home** so it matches `app/page.tsx` + `app/_comps/landing/`. For stack-wide rules (proxy, auth, i18n wiring), see `nextjs-design-pattern.mdc`.
+
+## Route and file layout
+
+- **Home route:** `app/page.tsx` only — no URL segment for marketing; dashboard lives under route groups elsewhere.
+- **Colocate landing UI** under `app/_comps/landing/` (not under a separate `(marketing)` group unless you intentionally split layouts).
+- **Thin `page.tsx`:** `generateMetadata` + a small default export that wraps the tree (layout shell + JSON-LD + single root view).
+
+## `app/page.tsx` responsibilities
+
+1. **`generateMetadata`:** Use `getTranslations("landing.meta")` from `next-intl/server` for `title` and `description`. Extend with `keywords`, `openGraph`, `twitter`, `alternates.canonical`, `robots`, etc., using the same translated strings where appropriate.
+2. **Default export:** A top-level wrapper, e.g. `flex min-h-svh flex-col`, so the page fills the viewport and footer can sit at the bottom.
+3. **Structured data:** Render a dedicated **JSON-LD** component (e.g. `LandingJsonLd`) **before** the main visual tree so crawlers see it early.
+4. **Composition:** Import one composer from `@/app/_comps/landing` (e.g. `<Landing />`) — avoid inlining large section markup in `page.tsx`.
+
+## `app/_comps/landing/` structure
+
+- **`index.tsx`:** Export the main composer (e.g. `Landing`). It should:
+  - Render **header** (often client — scroll state, theme/language toggles).
+  - Wrap page sections in **`<main id="main-content" className="flex-1" role="main">`** for skip links and semantics.
+  - Order sections in one place: hero → features → pricing → about → CTA (adjust names to product).
+  - Render **footer** after `</main>`.
+- **Section modules:** One file per block, **PascalCase** name aligned with the default export, e.g. `landingHero.tsx` → `LandingHero`, `landingFeatures.tsx` → `LandingFeatures`.
+- **`landingJsonLd.tsx`:** Server-safe component that outputs `<script type="application/ld+json" dangerouslySetInnerHTML={...} />`. Build `baseUrl` from `process.env.NEXT_PUBLIC_APP_URL`, then `VERCEL_URL`, then a sensible production default. Keep Organization / WebSite / WebApplication (or equivalent) objects in an array and `JSON.stringify` once.
+- **`typology.tsx` (optional):** Shared presentational primitives for section headings (eyebrow, title, description) to keep spacing and gradient classes consistent across sections.
+
+## Server vs client components
+
+- **Default to Server Components** for static or `getTranslations`-driven sections (hero, features, pricing, about, CTA) so copy and locale-specific assets (e.g. `getLocale()` for `next/image` `src`) stay on the server.
+- **Add `"use client"`** only where required: `useState` / `useEffect` (e.g. scroll-based header styles), browser-only APIs, or client-only toggles (`useTranslations` from `next-intl` in the header is fine on the client).
+- **Do not** mark the whole `Landing` tree as client unless necessary; keep client boundaries small (header, interactive widgets).
+
+## Internationalization
+
+- **Namespace:** `landing` in message bundles, e.g. `messages/en/landing.json`, `messages/ar/landing.json`.
+- **Sub-keys** mirror sections: `meta`, `header`, `hero`, `features`, `pricing`, `about`, `cta`, `footer`, etc.
+- **Register** the namespace in `messages/en.ts` and `messages/ar.ts` (same pattern as other features).
+- **Server sections:** `getTranslations("landing.section")` / `getLocale()` from `next-intl/server`.
+- **Client sections:** `useTranslations("landing.section")` from `next-intl`.
+
+## Accessibility and SEO habits
+
+- Give major **`<section>`** elements **`aria-labelledby`** pointing at visible heading ids (e.g. hero `h1` id).
+- Use **semantic** `header`, `main`, `footer`; keep **one** `role="main"` and a stable **`id="main-content"`** for “skip to content” if the root layout provides a skip link.
+- **Images:** Meaningful `alt` from translations; hero `priority` + appropriate `sizes` for full-bleed layouts.
+
+## Shared UI
+
+- Reuse **`Container`**, **`Button`**, and other primitives from `components/ui/`.
+- Reuse **cross-route** pieces from `components/common/` (logo, language toggle, dark mode toggle) rather than duplicating them inside landing-only files.
+
+## Checklist for a new project / clone
+
+1. Add `app/page.tsx` with `generateMetadata` + wrapper + `LandingJsonLd` + `<Landing />`.
+2. Add `app/_comps/landing/index.tsx` and section files; split client only where hooks are needed.
+3. Add `landing.json` (per locale) and register `landing` in locale aggregate files.
+4. Point JSON-LD and Open Graph image paths at real assets under `public/`.
+5. Align canonical URL and `siteName` / brand strings with the new product.
+
+When in doubt, **copy the file list and import graph** from this repo’s `app/_comps/landing/` and swap copy, links, and env-specific URLs.

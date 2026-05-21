@@ -1,84 +1,67 @@
 ---
-description: Next.js app design pattern — route groups, colocated _comps/_api, API config, and conventions
-globs: app/**/*.tsx, app/**/*.ts, api_config/**/*.ts, store/**/*.tsx, hooks/**/*.tsx
+description: Next.js App Router layout, API layer, i18n, auth routes, and component conventions for this codebase
 alwaysApply: true
 ---
 
-# Next.js App Design Pattern
+# Next.js design pattern (this project)
 
-Use this structure and conventions when building or extending this Next.js app (or when this rule is copied to a new project).
+Use these conventions when adding features or scaffolding a new app in the same style.
 
-## 1. App Router & Route Groups
+## Tech stack
 
-- **Route groups** (no URL segment): `(auth)` for login/register, `(main)` for authenticated app.
-- **Pages**: Thin — only `page.tsx` with metadata and a single default export that renders a colocated component.
-- **Layouts**: Root `app/layout.tsx` wraps with AntdRegistry, AntdLayout, NuqsAdapter, ClientSideLayout, Toaster. Route-group layouts (e.g. `(main)/layout.tsx`) add Header + main wrapper.
+- **Next.js App Router** (`app/`), TypeScript, Tailwind.
+- **Data fetching (client):** TanStack Query via wrappers in `api_config/`.
+- **HTTP:** Browser calls go through **`/api/proxy`** (`proxyClient`); server/RSC use **`apiServer`** + **`serverQuery`**.
+- **i18n:** `next-intl` with locale from **`locale` cookie** (not URL segments).
+- **Global client shell:** `ClientSideLayout` (QueryClient, theme, toasts, dayjs).
 
-```tsx
-// app/(main)/brands/page.tsx
-import Brands from "./_comps";
+## Folder structure (`app/`)
 
-export const metadata = { title: "Brands | App", description: "..." };
+- **Route groups** for layout boundaries, e.g. `app/(dashboard)/` = logged-in shell (navbar + container). Public marketing stays at `app/page.tsx` with `app/_comps/...`.
+- **Colocate per feature:**
+  - `page.tsx` — thin: `generateMetadata` + render one view component.
+  - `_comps/` — client views and UI pieces for that route only.
+  - `_api/` — feature hooks: `keys.ts`, `queries.ts` / `quieries.ts`, `mutations.ts` (import shared wrappers from `api_config/`).
+- **Shared UI:** `components/ui/` (primitives), `components/common/`, `components/shared/`, `components/layouts/`, `components/selectors/`.
+- **Cross-cutting:** `hooks/`, `store/` (Zustand), `utilies/`, `types/`, `messages/`, `i18n/`.
 
-const Page = () => <Brands />;
-export default Page;
-```
+## Pages
 
-## 2. Colocated Folders (Private to Route)
+- **Server Component `page.tsx`:** `getTranslations` / `generateMetadata` for SEO copy; default export returns a single composed view (often from `./_comps`).
+- **Client-heavy screens:** implement the main tree in `_comps/index.tsx` (or a named view) with `"use client"` where needed.
 
-- **`_comps`**: UI components and containers for that route. Use **`_comps`** (with **s**) consistently.
-- **`_api`**: Data layer for that route — `queries.ts` (useQuery/usePagination), `mutations.ts` (useMutation). Optional **`_api/server/`** for server-only fetchers (e.g. `serverQuery`).
-- **Barrel**: Page imports from `./_comps` or `./_comps/register` (index re-exports the main view).
+## API integration
 
-Structure per feature:
+1. **`api_config/proxyClient.ts`** — Axios `baseURL: "/api/proxy"`, `withCredentials: true`. All client hooks use this unless explicitly bypassing proxy.
+2. **`app/api/proxy/[...path]/route.ts`** — forwards to backend (`apiServer` / `NEXT_PUBLIC_BASE_URL`), forwards cookies, sets `lang` header from `locale` cookie.
+3. **`api_config/apiServer.ts`** — server-only Axios; adds `Accept-Language` from cookie for RSC/server calls.
+4. **`api_config/serverQuery.ts`** — `serverQuery(endpoint, config)` for server-side GETs (errors as `{ data, error }`).
+5. **Wrappers:** `useQuery`, `useMutation`, `usePagination`, `useInfiniteQuery`, `useRefetch` — use them instead of raw `@tanstack/react-query` + axios.
+6. **Query keys:** define stable string keys in feature `_api/keys.ts`; pass to `invalidateQueries` in mutations.
+7. **401 when logged in:** wrappers call `useAuthControl().authLogout()` to clear session and redirect.
 
-```
-app/(main)/brands/
-  page.tsx
-  _comps/
-    index.tsx      ← default export, "use client", uses _api
-    BrandCard.tsx
-    BrandsSkeleton.tsx
-  _api/
-    queries.ts     ← useGetBrands etc.
-```
+## Auth and protected routes
 
-## 3. API Layer (`api_config/`)
+- **Session:** HTTP-only style flow via backend cookies (e.g. `job_tracker_token`); client state mirrored in **`useAppStore`** (`isLogin`, `user`). **`useAuthControl`** handles post-login redirect (`/onboarding` vs `/jobs`), logout via `proxyClient.post("/auth/logout")`, and toasts.
+- **Route protection:** maintain a **protected path list**; validate token with backend (e.g. `serverQuery("/profile", { headers: { Cookie: ... } })`). Redirect unauthenticated users to `/auth`; optionally redirect authenticated users away from auth pages to `/jobs`.
+- **Edge middleware:** Next.js expects root **`middleware.ts`** with a **default** export. If guard logic lives in a helper (e.g. `proxy.ts`), re-export it from `middleware.ts`. In middleware, read cookies from **`request.cookies`**, not `cookies()` from `next/headers`.
 
-- **`proxyClient.ts`**: Axios instance with `baseURL: "/api/proxy"`. All client requests go through this.
-- **`useQuery.ts`**: Wraps TanStack Query + proxyClient; handles 401 + auth logout; returns `{ data, loading, refetch, ... }` with `data` from `res.data.data`.
-- **`useMutation.ts`**: Wraps TanStack Mutation + proxyClient; method option `post` | `put` | `delete` | `patch`; central toast + 401 logout.
-- **`usePagination.tsx`**: Pagination wrapper (e.g. `dataKey` for list shape).
-- **`serverQuery.ts`**: Server-side fetcher for use in RSC or `_api/server/` (cookies/token handled in proxy).
-- **Backend**: Next.js route `app/api/proxy/[...path]/route.ts` forwards to `NEXT_PUBLIC_BASE_URL`, attaches token from cookies (`brand_token` / `company_token`).
+## Translations
 
-## 4. State & Auth
+- **Locales:** `i18n.ts` — `locales`, `defaultLocale`, `Locale` type.
+- **Message modules:** JSON files under `messages/en/` and `messages/ar/`; **`messages/en.ts`** / **`messages/ar.ts`** aggregate namespaces into one object (`common`, `auth`, `jobs`, …).
+- **Loading:** `i18n/getMessages.ts` dynamic-imports the right module by locale.
+- **Server:** `i18n/request.ts` — `getRequestConfig` reads `locale` cookie and returns `{ locale, messages }` (wired via `createNextIntlPlugin()` in `next.config.mjs`).
+- **Root layout:** resolve locale from cookie, `getMessages(locale)`, wrap app in `NextIntlClientProvider`; set `lang`, `dir`, and font class for RTL (`ar`) vs LTR.
+- **Client:** `useTranslations("namespace")`.
+- **Metadata:** `getTranslations("section.meta")` in `generateMetadata`.
+- **UI toggle:** e.g. `components/common/language-toggle.tsx` sets `locale` cookie and refreshes.
 
-- **Store**: Zustand in `store/useAppStore.tsx` with `persist`; holds `user`, `brand_user`, `company_user`, `isLogin`, `mounted`; actions like `setUser`, `resetAppData`, `clearBrandContext`.
-- **Auth**: `hooks/useAuthControl` (e.g. `authLogout`); token set/clear via `app/api/auth/set-token` and `app/api/auth/clear-token`. Middleware/proxy must not redirect for `/api/proxy` and `/api/auth`.
+## Checklist for a new feature (e.g. “orders”)
 
-## 5. Shared App Code
+1. Add route: `app/(dashboard)/orders/page.tsx` + `orders/_comps/` + `orders/_api/keys.ts`, `queries.ts`, `mutations.ts`.
+2. Add namespaces: `messages/en/orders.json`, `messages/ar/orders.json`, register in `messages/en.ts` and `messages/ar.ts`.
+3. If path must be login-only, add pathname to the protected routes list used by middleware.
+4. Use `proxyClient` paths as backend-relative segments (same shape as today: `/orders`, `/orders/:id`, …).
 
-- **`app/_comps/`**: Global UI — `layouts/` (clientSideLayout, antdLayout), `ui/` (table, cardGrid), `selectors/`, `common/` (e.g. serverErrorScreen).
-- **`hooks/`**: App-wide hooks (e.g. `useAuthControl`, `useBrandAccess`).
-- **Path alias**: `@/` → project root (e.g. `@/api_config/useQuery`, `@/store/useAppStore`).
-
-## 6. Conventions
-
-- **Components**: Functional components; use **PascalCase** for component names and files (e.g. `BrandCard.tsx`). Optional **snake_case** for form steps/sections (e.g. `Contact_details.tsx`, `Basic_details.tsx`) — prefer PascalCase for consistency.
-- **Client boundary**: Add `"use client"` only where needed (forms, hooks, layout that uses QueryClient).
-- **Forms**: Ant Design `Form`; validation and shared logic in colocated files (e.g. `phoneValidation.ts`, `constants.ts`).
-- **Errors**: `error.tsx` and `not-found.tsx` at `app/`; use a shared `serverErrorScreen` or similar for API errors in UI.
-
-## 7. Quick Reference
-
-| Concern        | Location / Pattern                                      |
-|----------------|---------------------------------------------------------|
-| Page           | `app/(group)/feature/page.tsx` → render `./_comps`       |
-| Feature UI     | `app/(group)/feature/_comps/` (index + components)       |
-| Feature API    | `app/(group)/feature/_api/queries.ts`, `mutations.ts`    |
-| Server fetch   | `feature/_api/server/queries.ts` using `serverQuery`    |
-| HTTP client    | `api_config/proxyClient` → `/api/proxy`                 |
-| Global layout  | `app/_comps/layouts/`                                   |
-| Global state   | `store/useAppStore` (Zustand + persist)                 |
-| Path alias     | `@/` for root                                          |
+When in doubt, **mirror an existing feature** such as `app/(dashboard)/jobs/` or `websites/` end-to-end.

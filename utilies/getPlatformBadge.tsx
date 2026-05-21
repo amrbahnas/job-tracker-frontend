@@ -1,7 +1,7 @@
 function getPlatformBadge(name?: string, size: number = 6) {
   if (!name) return null
 
-  const normalized = name.toString().toLowerCase()
+  const normalized = name.toString()?.toLowerCase()
 
   const baseClasses = `flex size-${size}  items-center justify-center rounded-full text-[10px] font-semibold uppercase`
 
