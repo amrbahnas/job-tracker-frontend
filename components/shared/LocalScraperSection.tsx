@@ -5,7 +5,11 @@ import { useTranslations } from "next-intl"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 
-export const DOWNLOAD_PATH = process.env.NEXT_PUBLIC_SCRAPER_DOWNLOAD_URL
+export const DEFAULT_SCRAPER_DOWNLOAD_URL =
+  "https://github.com/amrbahnas/windows-scraper-server/releases/download/windows/Dawarly.Setup.1.0.0.exe"
+
+export const DOWNLOAD_PATH =
+  process.env.NEXT_PUBLIC_SCRAPER_DOWNLOAD_URL ?? DEFAULT_SCRAPER_DOWNLOAD_URL
 
 export type LocalScraperSectionProps = {
   token: string

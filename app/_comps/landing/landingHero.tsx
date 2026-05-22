@@ -5,8 +5,8 @@ import { getLocale, getTranslations } from "next-intl/server"
 import Image from "next/image"
 import Link from "next/link"
 
-const HERO_IMAGE = "/images/HeroSectionEn.png"
-const HERO_IMAGE_AR = "/images/HeroSectionAr.png"
+const HERO_IMAGE = "/images/HeroSectionEn6.png"
+const HERO_IMAGE_AR = "/images/HeroSectionAr6.png"
 export async function LandingHero() {
   const t = await getTranslations("landing.hero")
   const locale = await getLocale()

@@ -26,7 +26,7 @@ export async function LandingCta() {
             size="lg"
             variant="outline"
             asChild
-            className="w-full px-12 py-6! sm:w-auto"
+            className="w-full px-12 py-6! text-black sm:w-auto dark:text-white"
           >
             <Link href="#about">{t("secondaryCta")}</Link>
           </Button>

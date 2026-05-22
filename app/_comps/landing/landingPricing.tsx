@@ -27,9 +27,9 @@ export async function LandingPricing() {
 
         <div className="mx-auto max-w-xl rounded-2xl border bg-card p-8 shadow-sm">
           <div className="mb-6 flex items-baseline justify-between gap-4">
-            <div>
+            <div className="space-y-2">
               <h3 className="text-2xl font-semibold">{t("planTitle")}</h3>
-              <p className="mt-1 text-sm text-muted-foreground">
+              <p className="text-sm text-muted-foreground">
                 {t("planDescription")}
               </p>
             </div>

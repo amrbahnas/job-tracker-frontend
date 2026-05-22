@@ -1,15 +1,14 @@
 # Desktop app download
 
-Place the built Dawarly Scraper Windows installer here and name it:
+The "Scrape locally" page downloads the installer from GitHub Releases (see `NEXT_PUBLIC_SCRAPER_DOWNLOAD_URL` in `.env`).
 
-**dawarly-scraper-setup.exe**
+**Current URL:**  
+https://github.com/amrbahnas/windows-scraper-server/releases/download/windows/Dawarly.Setup.1.0.0.exe
 
-So users can download it from the "Scrape locally" page.
+When you publish a new version, bump the URL in `.env` / `.env.local.example` (e.g. `Dawarly.Setup.1.0.1.exe`).
 
-To build the installer, in `windows-scraping-server` run:
+Build & publish from `windows-scraping-server`:
 
 ```bash
-pnpm run dist
+pnpm run dist:publish
 ```
-
-Then copy the `.exe` from `windows-scraping-server/dist/` into this folder and rename it to `dawarly-scraper-setup.exe`.
